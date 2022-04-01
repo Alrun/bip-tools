@@ -1,12 +1,13 @@
+import React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as Emotion10ThemeProvider } from 'emotion-theming';
+import { useDarkMode } from 'storybook-dark-mode';
 import customTheme from '../src/ui/Theme/Theme';
-import CssBaseline from '@mui/material/CssBaseline';
-import React from 'react';
-
-const theme = customTheme('light'); // or your custom theme
 
 const withThemeProvider = (Story, context) => {
+    const theme = customTheme(useDarkMode() ? 'dark' : 'light');
+
     return (
         <Emotion10ThemeProvider theme={theme}>
             <ThemeProvider theme={theme}>
@@ -18,13 +19,3 @@ const withThemeProvider = (Story, context) => {
 };
 
 export const decorators = [withThemeProvider];
-
-export const parameters = {
-    actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-        matchers: {
-            color: /(background|color)$/i,
-            date: /Date$/
-        }
-    },
-};
