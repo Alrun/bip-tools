@@ -35,13 +35,12 @@ module.exports = {
         "import/order": "warn",
         // "prefer-arrow-callback": [ "off", { "allowNamedFunctions": true } ],
         // "no-param-reassign": "off",
-        // "react/jsx-props-no-spreading": "off",
         // "consistent-return": ["warn", { "treatUndefinedAsUnspecified": true }],
         // TODO: Add react props
         "react/require-default-props": ["off", {"forbidDefaultForRequired": false, "ignoreFunctionalComponents": true}],
         "react/prop-types": "off",
         "spaced-comment": "warn",
-        "react/jsx-props-no-spreading": "warn",
+        "react/jsx-props-no-spreading": "off",
         // "jsx-a11y/label-has-associated-control": [ "error", {
         //     "required": {
         //         "some": [ "nesting", "id"  ]
