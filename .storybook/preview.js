@@ -19,3 +19,20 @@ const withThemeProvider = (Story, context) => {
 };
 
 export const decorators = [withThemeProvider];
+
+export const parameters = {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+        expanded: true,
+        sort: 'requiredFirst'
+    //     matchers: {
+    //         color: /(background|color)$/i,
+    //         date: /Date$/
+    //     }
+    },
+    // options: {
+    //     storySort: {
+    //         order: ['UI', ['Button', ['Default', 'Colors']], 'Components'],
+    //     },
+    // },
+};

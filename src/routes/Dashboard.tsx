@@ -12,18 +12,33 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Dashboard = () => {
     const rendersCount = React.useRef<number>(0);
+    const [count, setCount] = React.useState(0);
+    const [value, setValue] = React.useState(0);
+
+    console.log('render');
+
+    const handleClick = () => {
+        setTimeout(() => {
+            setCount(count + 1);
+            setValue(value + 1);
+        });
+    };
 
     return (
         <>
             <Grid container spacing={4}>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                    <Item>xs=6 md=8</Item>
+                    <Item>{count}</Item>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                    <Item>xs=6 md=4</Item>
+                    <Item>{value}</Item>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                    <Item>xs=6 md=4</Item>
+                    <Item>
+                        <button type="button" onClick={handleClick}>
+                            Add
+                        </button>
+                    </Item>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
                     <Item>xs=6 md=8</Item>

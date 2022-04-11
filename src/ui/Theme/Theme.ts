@@ -248,7 +248,7 @@ const customTheme = (mode: 'light' | 'dark') =>
                       },
                       warning: {
                           main: colors.light.warning.main,
-                          contrastText: 'pink'
+                          // contrastText: 'pink'
                       },
                       info: {
                           main: colors.light.info.main
