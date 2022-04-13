@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material';
 import StyledShadows from '../Shadows/ShadowsStyles';
-import typography from '../Typography/Typography';
+import { typoStyles } from '../Typography/Typography';
 
 const colors = {
     light: {
@@ -66,7 +66,8 @@ const colors = {
             main: '#ffa726'
         },
         disabled: {
-            main: '#d1d1d1'
+            main: '#d1d1d1',
+            text: 'rgba(255,255,255,0.3)'
         }
     }
 };
@@ -125,12 +126,12 @@ const customTheme = (mode: 'light' | 'dark') =>
                             height: '100%'
                         }
                     },
-                    h1: typography.h1,
-                    h2: typography.h2,
-                    h3: typography.h3,
-                    h4: typography.h4,
-                    h5: typography.h5,
-                    h6: typography.h6,
+                    h1: typoStyles.h1,
+                    h2: typoStyles.h2,
+                    h3: typoStyles.h3,
+                    h4: typoStyles.h4,
+                    h5: typoStyles.h5,
+                    h6: typoStyles.h6,
                     ul: {
                         '&:not([class])': {
                             paddingLeft: 0,
@@ -233,7 +234,7 @@ const customTheme = (mode: 'light' | 'dark') =>
             mode,
             ...(mode === 'light'
                 ? {
-                      // palette values for light mode
+                      // Palette values for light mode
                       primary: {
                           main: colors.light.primary.main
                       },
@@ -247,7 +248,7 @@ const customTheme = (mode: 'light' | 'dark') =>
                           main: colors.light.error.main
                       },
                       warning: {
-                          main: colors.light.warning.main,
+                          main: colors.light.warning.main
                           // contrastText: 'pink'
                       },
                       info: {
@@ -263,7 +264,7 @@ const customTheme = (mode: 'light' | 'dark') =>
                       }
                   }
                 : {
-                      // palette values for dark mode
+                      // Palette values for dark mode
                       primary: {
                           main: colors.dark.primary.main
                       },
@@ -289,7 +290,8 @@ const customTheme = (mode: 'light' | 'dark') =>
                           paper: colors.dark.paper.background
                       },
                       text: {
-                          primary: colors.dark.body.color
+                          primary: colors.dark.body.color,
+                          disabled: colors.dark.disabled.text
                       }
                   })
         },
@@ -306,12 +308,12 @@ const customTheme = (mode: 'light' | 'dark') =>
                 '"Segoe UI Emoji"',
                 '"Segoe UI Symbol"'
             ].join(','),
-            h1: { ...typography.h1, ...typography.bold },
-            h2: { ...typography.h2, ...typography.bold },
-            h3: { ...typography.h3, ...typography.bold },
-            h4: { ...typography.h4, ...typography.bold },
-            h5: { ...typography.h5, ...typography.bold },
-            h6: { ...typography.h6, ...typography.bold },
+            h1: { ...typoStyles.h1, ...typoStyles.bold },
+            h2: { ...typoStyles.h2, ...typoStyles.bold },
+            h3: { ...typoStyles.h3, ...typoStyles.bold },
+            h4: { ...typoStyles.h4, ...typoStyles.bold },
+            h5: { ...typoStyles.h5, ...typoStyles.bold },
+            h6: { ...typoStyles.h6, ...typoStyles.bold },
             subtitle1: undefined,
             subtitle2: undefined,
             body2: undefined,
@@ -319,40 +321,40 @@ const customTheme = (mode: 'light' | 'dark') =>
             caption: undefined,
             overline: undefined,
             smThin: {
-                ...typography.sm,
-                ...typography.thin
+                ...typoStyles.sm,
+                ...typoStyles.thin
             },
             xsThin: {
-                ...typography.xs,
-                ...typography.thin
+                ...typoStyles.xs,
+                ...typoStyles.thin
             },
             xxsThin: {
-                ...typography.xxs,
-                ...typography.thin
+                ...typoStyles.xxs,
+                ...typoStyles.thin
             },
             smRegular: {
-                ...typography.sm,
-                ...typography.regular
+                ...typoStyles.sm,
+                ...typoStyles.regular
             },
             xsRegular: {
-                ...typography.xs,
-                ...typography.regular
+                ...typoStyles.xs,
+                ...typoStyles.regular
             },
             xxsRegular: {
-                ...typography.xxs,
-                ...typography.regular
+                ...typoStyles.xxs,
+                ...typoStyles.regular
             },
             smBold: {
-                ...typography.sm,
-                ...typography.bold
+                ...typoStyles.sm,
+                ...typoStyles.bold
             },
             xsBold: {
-                ...typography.xs,
-                ...typography.bold
+                ...typoStyles.xs,
+                ...typoStyles.bold
             },
             xxsBold: {
-                ...typography.xxs,
-                ...typography.bold
+                ...typoStyles.xxs,
+                ...typoStyles.bold
             }
         },
         shadows: StyledShadows,
@@ -370,146 +372,3 @@ const customTheme = (mode: 'light' | 'dark') =>
     });
 
 export default customTheme;
-// theme.typography.h2 = typoHeaderStyles(theme).h2;
-// theme.typography.h3 = typoHeaderStyles(theme).h3;
-// theme.typography.h4 = typoHeaderStyles(theme).h4;
-// theme.typography.h5 = typoHeaderStyles(theme).h5;
-// theme.typography.h6 = typoHeaderStyles(theme).h6;
-
-// export const GlobalCss = withStyles((theme: Theme) => ({
-//     '@global': {
-//         ['html, body, #__next']: {
-//             height: '100%'
-//         },
-//         // div: {outline: '1px solid #eee'},
-//         html: {
-//             '-webkit-text-size-adjust': '100%', // disable auto change font size on landscape IOS
-//             fontSize: 14,
-//             [theme.breakpoints.up('sm')]: {
-//                 fontSize: 16
-//             },
-//             [theme.breakpoints.up('xl')]: {
-//                 fontSize: 18
-//             },
-//             '@media (min-width:2560px)': {
-//                 fontSize: 20
-//             },
-//             '@media (min-width:3840px)': {
-//                 fontSize: 24
-//             }
-//         },
-//         body: {
-//             fontSize: '1rem',
-//             lineHeight: '1.5',
-//             letterSpacing: '0.015rem'
-//         },
-//         a: {
-//             textDecoration: 'none',
-//             color: theme.palette.text.primary,
-//             transition: theme.transitions.create('color', {
-//                 duration: theme.transitions.duration.shortest
-//             }),
-//             '&:not([class])': {
-//                 color: theme.palette.secondary.dark
-//             },
-//             '&:hover': {
-//                 color: theme.palette.secondary.main
-//             }
-//         },
-//         img: {
-//             '&:not([class])': {
-//                 maxWidth: '100%'
-//             }
-//         },
-//         ['ul:not([class]), ol:not([class])']: {
-//             paddingLeft: 0,
-//             listStyleType: 'none'
-//         },
-//         ['ul:not([class]) > li, ol:not([class]) > li']: {
-//             position: 'relative',
-//             padding: 0
-//         },
-//         ['ul:not([class]) > li, li > ul:not([class]) > li']: {
-//             padding: '0 0 0 1rem'
-//         },
-//         ['ul:not([class]) > li::before']: {
-//             content: '""',
-//             position: 'absolute',
-//             borderRadius: '50%',
-//             width: '0.375rem',
-//             height: '0.375rem',
-//             color: theme.palette.secondary.dark,
-//             backgroundColor: theme.palette.secondary.dark,
-//             top: '0.65em',
-//             left: 0
-//         },
-//         ['ul:not([class]) > li > ul:not([class]) > li::before']: {
-//             backgroundColor: 'transparent',
-//             border: '1px solid currentColor'
-//         },
-//         ['ol:not([class])']: {
-//             counterReset: 'list 0'
-//         },
-//         ['ol:not([class]) > li::before']: {
-//             content: 'counter(list, decimal) "."',
-//             counterIncrement: 'list',
-//             position: 'absolute',
-//             left: 0,
-//             color: theme.palette.secondary.dark,
-//             fontWeight: 'bolder',
-//             letterSpacing: '-0.05rem'
-//         },
-//         ['ol:not([class]) > li']: {
-//             padding: '0 0 0 1.2rem'
-//         },
-//         ['ol:not([class]) > li > ol:not([class])']: {
-//             counterReset: 'list2 0'
-//         },
-//         ['ol:not([class]) > li > ol:not([class]) > li::before']: {
-//             content: 'counter(list, decimal) "." counter(list2, decimal) "."',
-//             counterIncrement: 'list2'
-//         },
-//         ['ol:not([class]) > li > ol:not([class]) > li']: {
-//             padding: '0 0 0 2em'
-//         },
-//         h1: typoHeaderStyles(theme).h1,
-//         h2: typoHeaderStyles(theme).h2,
-//         h3: typoHeaderStyles(theme).h3,
-//         h4: typoHeaderStyles(theme).h4,
-//         h5: typoHeaderStyles(theme).h5,
-//         h6: typoHeaderStyles(theme).h6,
-//
-//         /* Mozilla */
-//         ['@supports (-moz-appearance:none)']: {
-//             /* Scroll styling */
-//             '*': {
-//                 scrollbarColor: '#eee #ccc',
-//                 scrollbarWidth: 'thin'
-//             }
-//         },
-//
-//         /* Chrome */
-//         /* Scroll styling */
-//         '::-webkit-scrollbar': {
-//             width: 10,
-//             borderRadius: 2
-//         },
-//         '::-webkit-scrollbar-track': {
-//             backgroundColor: '#ccc'
-//         },
-//         '::-webkit-scrollbar-thumb': {
-//             backgroundColor: '#999',
-//             borderRadius: 2
-//         },
-//         /* Change Autocomplete styles */
-//         ['input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus']: {
-//             '-webkit-text-fill-color': theme.palette.text.primary,
-//             '-webkit-box-shadow': '0 0 0px 1000px #fff inset',
-//             height: '0.9em'
-//         }
-//         // ['textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus']
-//         // ['select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus']: {
-//         // -webkit-box-shadow: 0 0 0px 1000px #000 inset;
-//         // transition: background-color 5000s ease-in-out 0s;
-//     }
-// }))(() => null);

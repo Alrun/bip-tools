@@ -1,4 +1,6 @@
 import React from 'react';
+import MuiTypography from '@mui/material/Typography';
+import { TypographyTypeMap } from '@mui/material/Typography/Typography';
 
 declare module '@mui/material/styles' {
     interface TypographyVariants {
@@ -13,7 +15,7 @@ declare module '@mui/material/styles' {
         xxsBold: React.CSSProperties;
     }
 
-    // allow configuration using `createTheme`
+    // Allow configuration using `createTheme`
     interface TypographyVariantsOptions {
         smThin?: React.CSSProperties;
         xsThin?: React.CSSProperties;
@@ -46,7 +48,7 @@ declare module '@mui/material/Typography' {
     }
 }
 
-const typography = {
+export const typoStyles = {
     h1: {
         fontSize: '2.6rem',
         lineHeight: 1.15,
@@ -102,4 +104,11 @@ const typography = {
     }
 };
 
-export default typography;
+type TypographyProps = Pick<
+    TypographyTypeMap['props'],
+    'align' | 'children' | 'classes' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant' | 'variantMapping'
+>;
+
+const Typography = ({ children, ...rest }: TypographyProps) => <MuiTypography {...rest}>{children}</MuiTypography>;
+
+export default Typography;
