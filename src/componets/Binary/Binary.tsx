@@ -22,14 +22,14 @@ const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
     const [list, bin, checksum] = useMnemonic(entropy);
     const [wordCount, setWordCount] = React.useState(initWordCount);
     const [lang, setLang] = React.useState(language);
-
+    // TODO: Remove useCallback
     const checkLength = React.useCallback((val) => ![12, 15, 18, 21, 24].includes((val.length / 8) * 3), []);
-
+    // TODO: Remove useCallback
     const delayedHandleChange = React.useCallback(
         debounce((eventData) => setEntropy(eventData), 500),
         []
     );
-
+    // TODO: Add useCallback
     const handleChangeGroup = (idx: number, val: string) => {
         const binaryArr = strToChunks(binary, 11) || [];
 

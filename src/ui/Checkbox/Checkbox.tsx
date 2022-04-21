@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormGroup } from '@mui/material';
-import { CheckboxPropsInterface } from './Checkbox.d';
+import { CheckboxProps } from './Checkbox.d';
 import { StyledCheckbox, StyledCheckboxFormControlLabel } from './CheckboxStyles';
 
-const Checkbox = ({ label, size = 'medium', labelPlacement, ...props }: CheckboxPropsInterface) =>
+const Checkbox = ({ label, size = 'medium', labelPlacement, ...props }: CheckboxProps) =>
     label ? (
         <FormGroup>
             <StyledCheckboxFormControlLabel

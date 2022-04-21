@@ -8,14 +8,7 @@ export default {
     component: Button,
     parameters: {
         controls: {
-            exclude: [
-                'action',
-                'disableElevation',
-                'focusVisibleClassName',
-                'items',
-                'touchRippleRef',
-                'TouchRippleProps'
-            ]
+            exclude: ['items']
         }
     }
 } as ComponentMeta<typeof Button>;
