@@ -110,5 +110,4 @@ type TypographyProps = Pick<
 >;
 
 const Typography = ({ children, ...rest }: TypographyProps) => <MuiTypography {...rest}>{children}</MuiTypography>;
-
 export default Typography;

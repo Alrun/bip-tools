@@ -19,11 +19,11 @@ export default function SidebarMenu({ width = '100%', handleDrawerOpen }: Sideba
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
-
+    // TODO: Render optimisation
     const handleExpand = (panel: string) => (): void => {
         dispatch(sidebarExpand(sidebarExpanded === panel ? false : panel));
     };
-
+    // TODO: Render optimisation
     const handleLinkClick = (url: string, label: string): void => {
         navigate(url, { state: { label } });
 

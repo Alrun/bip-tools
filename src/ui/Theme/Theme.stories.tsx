@@ -3,7 +3,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '../Typography/Typography';
-import { Base } from '../Typography/Typography.stories';
 
 const PaletteComponent = ({ color, label, caption }: any) => (
     <Box sx={{ display: 'flex', mb: 2 }}>
@@ -29,12 +28,21 @@ const GroupTemplate: ComponentStory<any> = (args) => {
     const { items, ...rest } = args;
 
     return (
-        <>
+        <Box
+            sx={{
+                display: 'grid',
+                gridAutoFlow: 'column',
+                gridAutoColumns: '1fr',
+                gridAutoRows: '1fr',
+                gridTemplateColumns: 'repeat(3,minmax(160px,160px))',
+                gridTemplateRows: 'repeat(6,minmax(60px,60px))'
+            }}
+        >
             {items.map((item: any, idx: number) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <PaletteComponent key={idx} {...rest} {...item} />
             ))}
-        </>
+        </Box>
     );
 };
 
@@ -44,7 +52,6 @@ const GroupTemplate: ComponentStory<any> = (args) => {
 export const Palette = GroupTemplate.bind({});
 
 Palette.args = {
-    ...Base.args,
     items: [
         {
             label: 'Primary',
