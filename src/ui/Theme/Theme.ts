@@ -72,6 +72,33 @@ const colors = {
     }
 };
 
+const transitions = {
+    duration: {
+        shortest: 150,
+        shorter: 200,
+        short: 250,
+        // most basic recommended timing
+        standard: 300,
+        // this is to be used in complex animations
+        complex: 375,
+        // recommended when something is entering screen
+        enteringScreen: 225,
+        // recommended when something is leaving screen
+        leavingScreen: 195,
+    },
+    easing: {
+        // This is the most common easing curve.
+        easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        // Objects enter the screen at full velocity from off-screen and
+        // slowly decelerate to a resting point.
+        easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
+        // Objects leave the screen at full velocity. They do not decelerate when off-screen.
+        easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+        // The sharp curve is used by objects that may return to the screen at any time.
+        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
+    }
+}
+
 const customTheme = (mode: 'light' | 'dark') =>
     createTheme({
         breakpoints: {
@@ -132,6 +159,16 @@ const customTheme = (mode: 'light' | 'dark') =>
                     h4: typoStyles.h4,
                     h5: typoStyles.h5,
                     h6: typoStyles.h6,
+                    a: {
+                        textDecoration: 'none',
+                        color: mode === 'light' ? colors.light.info.main : colors.dark.info.main,
+                        borderBottom: '1px solid transparent',
+                        transition: `border ${transitions.duration.shortest}ms ${transitions.easing.easeOut}`,
+
+                        '&:hover': {
+                            borderBottomColor: 'currentColor'
+                        }
+                    },
                     ul: {
                         '&:not([class])': {
                             paddingLeft: 0,
@@ -234,66 +271,66 @@ const customTheme = (mode: 'light' | 'dark') =>
             mode,
             ...(mode === 'light'
                 ? {
-                      // Palette values for light mode
-                      primary: {
-                          main: colors.light.primary.main
-                      },
-                      secondary: {
-                          main: colors.light.secondary.main
-                      },
-                      success: {
-                          main: colors.light.success.main
-                      },
-                      error: {
-                          main: colors.light.error.main
-                      },
-                      warning: {
-                          main: colors.light.warning.main
-                          // contrastText: 'pink'
-                      },
-                      info: {
-                          main: colors.light.info.main
-                      },
-                      // divider: amber[200],
-                      background: {
-                          default: colors.light.body.background,
-                          paper: colors.light.paper.background
-                      },
-                      text: {
-                          primary: colors.light.body.color
-                      }
-                  }
+                    // Palette values for light mode
+                    primary: {
+                        main: colors.light.primary.main
+                    },
+                    secondary: {
+                        main: colors.light.secondary.main
+                    },
+                    success: {
+                        main: colors.light.success.main
+                    },
+                    error: {
+                        main: colors.light.error.main
+                    },
+                    warning: {
+                        main: colors.light.warning.main
+                        // contrastText: 'pink'
+                    },
+                    info: {
+                        main: colors.light.info.main
+                    },
+                    // divider: amber[200],
+                    background: {
+                        default: colors.light.body.background,
+                        paper: colors.light.paper.background
+                    },
+                    text: {
+                        primary: colors.light.body.color
+                    }
+                }
                 : {
-                      // Palette values for dark mode
-                      primary: {
-                          main: colors.dark.primary.main
-                      },
-                      secondary: {
-                          main: colors.dark.secondary.main
-                      },
-                      error: {
-                          main: colors.dark.error.main,
-                          contrastText: colors.dark.error.text
-                      },
-                      success: {
-                          main: colors.dark.success.main
-                      },
-                      warning: {
-                          main: colors.dark.warning.main
-                      },
-                      info: {
-                          main: colors.dark.info.main
-                      },
-                      // divider: deepOrange[700],
-                      background: {
-                          default: colors.dark.body.background,
-                          paper: colors.dark.paper.background
-                      },
-                      text: {
-                          primary: colors.dark.body.color,
-                          disabled: colors.dark.disabled.text
-                      }
-                  })
+                    // Palette values for dark mode
+                    primary: {
+                        main: colors.dark.primary.main
+                    },
+                    secondary: {
+                        main: colors.dark.secondary.main
+                    },
+                    error: {
+                        main: colors.dark.error.main,
+                        contrastText: colors.dark.error.text
+                    },
+                    success: {
+                        main: colors.dark.success.main
+                    },
+                    warning: {
+                        main: colors.dark.warning.main
+                    },
+                    info: {
+                        main: colors.dark.info.main
+                    },
+                    // divider: deepOrange[700],
+                    background: {
+                        default: colors.dark.body.background,
+                        paper: colors.dark.paper.background
+                    },
+                    text: {
+                        primary: colors.dark.body.color,
+                        disabled: colors.dark.disabled.text
+                    }
+                })
         },
         typography: {
             fontFamily: [
@@ -361,7 +398,8 @@ const customTheme = (mode: 'light' | 'dark') =>
         spacing: (factor: number) => `${0.25 * factor}rem`, // (Bootstrap strategy)
         shape: {
             borderRadius: 6
-        }
+        },
+        transitions
         // overrides: {
         //     MuiSvgIcon: {
         //         fontSizeLarge: {

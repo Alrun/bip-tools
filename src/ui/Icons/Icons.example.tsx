@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { DragIcon, ModeDarkIcon, ModeLightIcon } from './Icons';
+import ExternalIcon from './ExternalLink';
 
 interface IconListInterface {
     name: string;
@@ -21,6 +22,10 @@ const IconList: IconListInterface[] = [
     {
         name: 'Mode Light',
         component: <ModeLightIcon />
+    },
+    {
+        name: 'External',
+        component: <ExternalIcon />
     }
 ];
 

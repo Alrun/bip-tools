@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Typography from './Typography';
+import Link from '../Link/Link';
 
 export default {
     title: 'UI/Typography',
@@ -11,6 +12,19 @@ export default {
         }
     }
 } as ComponentMeta<typeof Typography>;
+
+const wrapperDecorator = (Story: any) => (
+    <div
+        style={{
+            gap: '2rem',
+            display: 'flex',
+            alignItems: 'baseline',
+            flexWrap: 'wrap'
+        }}
+    >
+        {Story()}
+    </div>
+);
 
 const BaseTemplate: ComponentStory<typeof Typography> = ({ children, ...args }) => (
     <Typography {...args}>{children}</Typography>
@@ -24,6 +38,24 @@ const GroupTemplate: ComponentStory<any> = (args) => {
             {items.map((item: any, idx: number) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <Typography key={idx} {...rest} {...item} />
+            ))}
+        </>
+    );
+};
+
+const LinksTemplate: ComponentStory<any> = (args) => {
+    const { items, ...rest } = args;
+
+    return (
+        <>
+            {items.map((item: any, idx: number) => (
+                <Link
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={idx}
+                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()}
+                    {...rest}
+                    {...item}
+                />
             ))}
         </>
     );
@@ -191,51 +223,34 @@ Colors.args = {
 };
 
 /**
- * List
+ * Links
  */
-export const List = () => (
-    <>
-        <Typography variant="h3" gutterBottom>
-            Unordered list
-        </Typography>
-        <ul>
-            <li>
-                Well, I went to the doctors believing the devil had control over me,
-                <br />
-                and I was finding it hard to breathe, and finding it hard to fight the feeling.
-            </li>
-            <li>When my heart just burst like a glass balloon.</li>
-            <li>
-                I let it fly too high and it shattered too soon:
-                <ul>
-                    <li>I was the wrong damn girl in the wrong damn room;</li>
-                    <li>I broke my glass balloon;</li>
-                    <li>I let go of my glass balloon;</li>
-                </ul>
-            </li>
-            <li>They call him Hermit the Frog He is looking for a dog</li>
-            <li>Did you find your bitch in me?</li>
-        </ul>
-        <Typography variant="h3" gutterBottom>
-            Ordered list
-        </Typography>
-        <ol>
-            <li>
-                Well, I went to the doctors believing the devil had control over me,
-                <br />
-                and I was finding it hard to breathe, and finding it hard to fight the feeling.
-            </li>
-            <li>When my heart just burst like a glass balloon.</li>
-            <li>
-                I let it fly too high and it shattered too soon:
-                <ol>
-                    <li>I was the wrong damn girl in the wrong damn room;</li>
-                    <li>I broke my glass balloon;</li>
-                    <li>I let go of my glass balloon;</li>
-                </ol>
-            </li>
-            <li>They call him Hermit the Frog He is looking for a dog</li>
-            <li>Did you find your bitch in me?</li>
-        </ol>
-    </>
-);
+export const Links = LinksTemplate.bind({});
+
+Links.decorators = [wrapperDecorator];
+
+Links.args = {
+    ...Base.args,
+    items: [
+        {
+            children: 'Link',
+            href: '/'
+        },
+        {
+            children: 'Link'
+        },
+        {
+            children: 'Link',
+            external: true
+        }
+    ]
+};
+
+Links.parameters = {
+    docs: {
+        source: {
+            // eslint-disable-next-line no-useless-concat
+            code: '<Link>Default</Link>\n' + '<Link>Span</Link>\n' + '<Link>External</Link>'
+        }
+    }
+};

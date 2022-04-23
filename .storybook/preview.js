@@ -25,14 +25,14 @@ export const parameters = {
     controls: {
         expanded: true,
         sort: 'requiredFirst'
-    //     matchers: {
-    //         color: /(background|color)$/i,
-    //         date: /Date$/
-    //     }
+        //     matchers: {
+        //         color: /(background|color)$/i,
+        //         date: /Date$/
+        //     }
     },
-    // options: {
-    //     storySort: {
-    //         order: ['UI', ['Button', ['Default', 'Colors']], 'Components'],
-    //     },
-    // },
+    options: {
+        storySort: {
+            order: ['Theme', ['Palette'], 'UI' /*, ['Typography', 'Button']*/ ]
+        }
+    }
 };
