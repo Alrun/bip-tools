@@ -1,6 +1,6 @@
+import React from 'react';
 import { RadioProps as MuiRadioProps } from '@mui/material/Radio/Radio';
 import { FormControlLabelProps } from '@mui/material/FormControlLabel/FormControlLabel';
-import * as React from 'react';
 
 export interface RadioProps
     extends Omit<

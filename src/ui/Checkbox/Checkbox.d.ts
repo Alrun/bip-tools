@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { CheckboxProps as MuiCheckboxProps } from '@mui/material/Checkbox/Checkbox';
 import { FormControlLabelProps } from '@mui/material/FormControlLabel/FormControlLabel';
 

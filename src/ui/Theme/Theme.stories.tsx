@@ -15,7 +15,7 @@ const PaletteComponent = ({ color, label, caption }: any) => (
 );
 
 export default {
-    title: 'Theme',
+    title: 'Theme/Palette',
     component: PaletteComponent,
     parameters: {
         controls: {
