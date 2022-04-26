@@ -4,7 +4,13 @@ import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '../Typography/Typography';
 
-const PaletteComponent = ({ color, label, caption }: any) => (
+interface PaletteComponentProps {
+    color: string;
+    label: string;
+    caption: string;
+}
+
+const PaletteComponent = ({ color, label, caption }: PaletteComponentProps) => (
     <Box sx={{ display: 'flex', mb: 2 }}>
         <Box sx={{ background: color, width: 50, height: 50, mr: 3 }} />
         <Box sx={{ color }}>
@@ -38,7 +44,7 @@ const GroupTemplate: ComponentStory<any> = (args) => {
                 gridTemplateRows: 'repeat(6,minmax(60px,60px))'
             }}
         >
-            {items.map((item: any, idx: number) => (
+            {items.map((item: PaletteComponentProps, idx: number) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <PaletteComponent key={idx} {...rest} {...item} />
             ))}
