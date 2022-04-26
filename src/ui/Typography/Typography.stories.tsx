@@ -230,17 +230,17 @@ export const Links = LinksTemplate.bind({});
 Links.decorators = [wrapperDecorator];
 
 Links.args = {
-    ...Base.args,
     items: [
         {
-            children: 'Link',
+            children: 'Default',
             href: '/'
         },
         {
-            children: 'Link'
+            children: 'Span'
         },
         {
-            children: 'Link',
+            children: 'External',
+            href: '/',
             external: true
         }
     ]
@@ -250,7 +250,7 @@ Links.parameters = {
     docs: {
         source: {
             // eslint-disable-next-line no-useless-concat
-            code: '<Link>Default</Link>\n' + '<Link>Span</Link>\n' + '<Link>External</Link>'
+            code: '<Link href="/">Default</Link>\n' + '<Link>Span</Link>\n' + '<Link href="/" external>External</Link>'
         }
     }
 };

@@ -23,5 +23,5 @@ export const PCIcon = (props: SvgIconProps) => <LaptopMacIcon fontSize="small" {
 export const ArrowUpIcon = (props: SvgIconProps) => <ArrowDropUpIcon fontSize="small" {...props} />;
 export const ArrowDownIcon = (props: SvgIconProps) => <ArrowDropDownIcon fontSize="small" {...props} />;
 export const PlusIcon = (props: SvgIconProps) => <AddIcon {...props} />;
-export const ExternalIcon = (props: SvgIconProps) => <ExternalIcon {...props} />;
+
 

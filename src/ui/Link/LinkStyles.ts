@@ -1,18 +1,14 @@
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Link from '@mui/material/Link';
-// import { LinkProps } from './Link.d';
+import { LinkProps } from './Link.d';
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(Link, {
+    shouldForwardProp: (prop) => prop !== 'external'
+})<LinkProps['external']>(({ external }) => ({
     textDecoration: 'none',
-    // padding: size === 'medium' ? '.525rem' : '.335rem',
-    // margin: `0 ${size === 'medium' ? '-.7rem' : '-.5rem'}`,
+    marginRight: external ? '1ch' : 0,
     '& .MuiSvgIcon-root': {
-        // fontSize: '1.524rem',
-    },
-    '&:hover': {
-        '&.MuiCheckbox-colorPrimary': {
-            // color: theme.palette.primary.main
-        },
+        position: 'absolute'
     }
 }));
 

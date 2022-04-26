@@ -67,22 +67,22 @@ export const typoStyles = {
     },
     h3: {
         fontSize: '1.715rem',
-        lineHeight: 1.25,
+        lineHeight: 1.3,
         '@media (max-width:600px)': {
             fontSize: '1.5rem'
         }
     },
     h4: {
         fontSize: '1.285rem',
-        lineHeight: 1.3
+        lineHeight: 1.35
     },
     h5: {
         fontSize: '1.145rem',
-        lineHeight: 1.25
+        lineHeight: 1.4
     },
     h6: {
         fontSize: '1rem',
-        lineHeight: 1.25
+        lineHeight: 1.5
     },
     sm: {
         fontSize: '.85714rem'
@@ -107,7 +107,13 @@ export const typoStyles = {
 type TypographyProps = Pick<
     TypographyTypeMap['props'],
     'align' | 'children' | 'classes' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant' | 'variantMapping'
->;
+> & {
+    /**
+     * The color of the component. It supports those theme colors that make sense for this component.
+     * @default 'default'
+     */
+    color?: 'primary' | 'secondary' | 'success.main' | 'error.main' | 'info.main' | 'warning.main' | 'text.disabled';
+};
 
 const Typography = ({ children, ...rest }: TypographyProps) => <MuiTypography {...rest}>{children}</MuiTypography>;
 export default Typography;
