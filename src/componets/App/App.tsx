@@ -39,14 +39,6 @@ const App = () => {
     // TODO: Remove after render check
     const rendersCount = React.useRef<number>(0);
 
-    // React.useEffect(() => {
-    //     (async () => {
-    //         const response = await fetch("/api/get-some-cars");
-    //         const json = await response.json();
-    //         console.log(json);
-    //     })();
-    // }, []);
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline enableColorScheme />

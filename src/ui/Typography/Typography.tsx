@@ -48,6 +48,25 @@ declare module '@mui/material/Typography' {
     }
 }
 
+type TypographyProps = Pick<
+    TypographyTypeMap['props'],
+    'align' | 'children' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant'
+> & {
+    /**
+     * The color of the component. It supports those theme colors that make sense for this component.
+     * @default default
+     */
+    color?:
+        | 'default'
+        | 'primary'
+        | 'secondary'
+        | 'success.main'
+        | 'error.main'
+        | 'info.main'
+        | 'warning.main'
+        | 'text.disabled';
+};
+
 export const typoStyles = {
     h1: {
         fontSize: '2.6rem',
@@ -104,16 +123,5 @@ export const typoStyles = {
     }
 };
 
-type TypographyProps = Pick<
-    TypographyTypeMap['props'],
-    'align' | 'children' | 'classes' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant' | 'variantMapping'
-> & {
-    /**
-     * The color of the component. It supports those theme colors that make sense for this component.
-     * @default 'default'
-     */
-    color?: 'primary' | 'secondary' | 'success.main' | 'error.main' | 'info.main' | 'warning.main' | 'text.disabled';
-};
-
-const Typography = ({ children, ...rest }: TypographyProps) => <MuiTypography {...rest}>{children}</MuiTypography>;
+const Typography = ({ children, ...props }: TypographyProps) => <MuiTypography {...props}>{children}</MuiTypography>;
 export default Typography;

@@ -8,7 +8,6 @@ export const StyledRadio = styled(Radio)<{ size: RadioProps['size'] }>(({ theme,
     margin: `0 ${size === 'medium' ? '-.7rem' : '-.5rem'}`,
     '& .MuiSvgIcon-root': {
         fontSize: '1.372rem',
-
         '&.MuiSvgIcon-fontSizeSmall': {
             fontSize: '1.2rem'
         }

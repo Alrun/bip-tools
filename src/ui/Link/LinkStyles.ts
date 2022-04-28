@@ -6,7 +6,7 @@ const StyledLink = styled(Link, {
     shouldForwardProp: (prop) => prop !== 'external'
 })<LinkProps['external']>(({ external }) => ({
     textDecoration: 'none',
-    marginRight: external ? '1ch' : 0,
+    marginRight: external && '1ch',
     '& .MuiSvgIcon-root': {
         position: 'absolute'
     }

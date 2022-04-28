@@ -11,6 +11,10 @@ import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import AddIcon from '@mui/icons-material/Add';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Star from '@mui/icons-material/Star';
+import StarBorder from '@mui/icons-material/StarBorder';
 
 export const DragIcon = (props: SvgIconProps) => <DragIndicatorIcon fontSize="small" {...props} />;
 export const ModeLightIcon = (props: SvgIconProps) => <LightModeIcon fontSize="small" {...props} />;
@@ -23,5 +27,9 @@ export const PCIcon = (props: SvgIconProps) => <LaptopMacIcon fontSize="small" {
 export const ArrowUpIcon = (props: SvgIconProps) => <ArrowDropUpIcon fontSize="small" {...props} />;
 export const ArrowDownIcon = (props: SvgIconProps) => <ArrowDropDownIcon fontSize="small" {...props} />;
 export const PlusIcon = (props: SvgIconProps) => <AddIcon {...props} />;
+export const FavoriteIcon = (props: SvgIconProps) => <Favorite {...props} />;
+export const FavoriteBorderIcon = (props: SvgIconProps) => <FavoriteBorder {...props} />;
+export const StarIcon = (props: SvgIconProps) => <Star {...props} />;
+export const StarBorderIcon = (props: SvgIconProps) => <StarBorder {...props} />;
 
 

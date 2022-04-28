@@ -94,7 +94,7 @@ Icons.args = {
             component: <ModeDarkIcon />
         },
         {
-            label: 'Mode Dark',
+            label: 'Mode Light',
             component: <ModeLightIcon />
         },
         {

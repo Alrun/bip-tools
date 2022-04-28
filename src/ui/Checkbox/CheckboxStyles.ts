@@ -8,7 +8,6 @@ export const StyledCheckbox = styled(Checkbox)<{ size: CheckboxProps['size'] }>(
     margin: `0 ${size === 'medium' ? '-.7rem' : '-.5rem'}`,
     '& .MuiSvgIcon-root': {
         fontSize: '1.524rem',
-
         '&.MuiSvgIcon-fontSizeSmall': {
             fontSize: '1.334rem'
         }

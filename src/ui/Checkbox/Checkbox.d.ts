@@ -1,14 +1,17 @@
 import React from 'react';
 import { CheckboxProps as MuiCheckboxProps } from '@mui/material/Checkbox/Checkbox';
 import { FormControlLabelProps } from '@mui/material/FormControlLabel/FormControlLabel';
+import { FormGroupProps } from '@mui/material';
+import { SwitchBaseProps } from '@mui/material/internal/SwitchBase';
 
 export interface CheckboxProps
     extends Omit<
         MuiCheckboxProps,
-        'action' | 'centerRipple' | 'LinkComponent' | 'onFocusVisible' | 'TouchRippleProps' | 'touchRippleRef'
+        'action' | 'centerRipple' | 'focusVisibleClassName' | 'LinkComponent' | 'TouchRippleProps' | 'touchRippleRef'
     > {
     /**
      * If `true`, the component is checked.
+     * @default false
      */
     checked?: boolean;
     /**
@@ -18,16 +21,29 @@ export interface CheckboxProps
     checkedIcon?: React.ReactNode;
     /**
      * Override or extend the styles applied to the component.
+     * @default primary
      */
     color?: MuiCheckboxProps['color'];
     /**
-     * If `true`, the component is disabled.
+     * The default checked state. Use when the component is not controlled.
+     * @default false
      */
-    disabled?: MuiCheckboxProps['disabled'];
+    defaultChecked?: boolean;
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    disabled?: boolean;
     /**
      * If `true`, the ripple effect is disabled.
+     * @default false
      */
     disableRipple?: boolean;
+    /**
+     * Attributes applied to the root div element.
+     * Applies if there is a label.
+     */
+    formGroupProps?: Partial<FormGroupProps>;
     /**
      * The icon to display when the component is unchecked.
      * @default <CheckBoxOutlineBlankIcon />
@@ -46,24 +62,16 @@ export interface CheckboxProps
      */
     indeterminate?: boolean;
     /**
-     * The icon to display when the component is indeterminate.
-     * @default <IndeterminateCheckBoxIcon />
-     */
-    indeterminateIcon?: React.ReactNode;
-    /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      */
-    inputProps?: MuiCheckboxProps['inputProps'];
-    /**
-     * Pass a ref to the `input` element.
-     */
-    inputRef?: React.Ref<HTMLInputElement>;
+    inputProps?: SwitchBaseProps['inputProps'];
     /**
      * The label element.
      */
     label?: FormControlLabelProps['label'];
     /**
      * The position of the label.
+     * @default end
      */
     labelPlacement?: FormControlLabelProps['labelPlacement'];
     /**
@@ -75,8 +83,9 @@ export interface CheckboxProps
     onChange?: MuiCheckboxProps['onChange'];
     /**
      * If `true`, the `input` element is required.
+     * @default false
      */
-    required?: MuiCheckboxProps['required'];
+    required?: boolean;
     /**
      * The size of the component.
      * `small` is equivalent to the dense checkbox styling.
@@ -91,5 +100,5 @@ export interface CheckboxProps
      * The value of the component. The DOM API casts this to a string.
      * The browser uses "on" as the default value.
      */
-    value?: MuiCheckboxProps['value'];
+    value?: unknown;
 }

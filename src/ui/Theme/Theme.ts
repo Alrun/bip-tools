@@ -84,7 +84,7 @@ const transitions = {
         // recommended when something is entering screen
         enteringScreen: 225,
         // recommended when something is leaving screen
-        leavingScreen: 195,
+        leavingScreen: 195
     },
     easing: {
         // This is the most common easing curve.
@@ -95,9 +95,9 @@ const transitions = {
         // Objects leave the screen at full velocity. They do not decelerate when off-screen.
         easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
         // The sharp curve is used by objects that may return to the screen at any time.
-        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
+        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
     }
-}
+};
 
 const customTheme = (mode: 'light' | 'dark') =>
     createTheme({
@@ -271,66 +271,66 @@ const customTheme = (mode: 'light' | 'dark') =>
             mode,
             ...(mode === 'light'
                 ? {
-                    // Palette values for light mode
-                    primary: {
-                        main: colors.light.primary.main
-                    },
-                    secondary: {
-                        main: colors.light.secondary.main
-                    },
-                    success: {
-                        main: colors.light.success.main
-                    },
-                    error: {
-                        main: colors.light.error.main
-                    },
-                    warning: {
-                        main: colors.light.warning.main
-                        // contrastText: 'pink'
-                    },
-                    info: {
-                        main: colors.light.info.main
-                    },
-                    // divider: amber[200],
-                    background: {
-                        default: colors.light.body.background,
-                        paper: colors.light.paper.background
-                    },
-                    text: {
-                        primary: colors.light.body.color
-                    }
-                }
+                      // Palette values for light mode
+                      primary: {
+                          main: colors.light.primary.main
+                      },
+                      secondary: {
+                          main: colors.light.secondary.main
+                      },
+                      success: {
+                          main: colors.light.success.main
+                      },
+                      error: {
+                          main: colors.light.error.main
+                      },
+                      warning: {
+                          main: colors.light.warning.main
+                          // contrastText: 'pink'
+                      },
+                      info: {
+                          main: colors.light.info.main
+                      },
+                      // divider: amber[200],
+                      background: {
+                          default: colors.light.body.background,
+                          paper: colors.light.paper.background
+                      },
+                      text: {
+                          primary: colors.light.body.color
+                      }
+                  }
                 : {
-                    // Palette values for dark mode
-                    primary: {
-                        main: colors.dark.primary.main
-                    },
-                    secondary: {
-                        main: colors.dark.secondary.main
-                    },
-                    error: {
-                        main: colors.dark.error.main,
-                        contrastText: colors.dark.error.text
-                    },
-                    success: {
-                        main: colors.dark.success.main
-                    },
-                    warning: {
-                        main: colors.dark.warning.main
-                    },
-                    info: {
-                        main: colors.dark.info.main
-                    },
-                    // divider: deepOrange[700],
-                    background: {
-                        default: colors.dark.body.background,
-                        paper: colors.dark.paper.background
-                    },
-                    text: {
-                        primary: colors.dark.body.color,
-                        disabled: colors.dark.disabled.text
-                    }
-                })
+                      // Palette values for dark mode
+                      primary: {
+                          main: colors.dark.primary.main
+                      },
+                      secondary: {
+                          main: colors.dark.secondary.main
+                      },
+                      error: {
+                          main: colors.dark.error.main,
+                          contrastText: colors.dark.error.text
+                      },
+                      success: {
+                          main: colors.dark.success.main
+                      },
+                      warning: {
+                          main: colors.dark.warning.main
+                      },
+                      info: {
+                          main: colors.dark.info.main
+                      },
+                      // divider: deepOrange[700],
+                      background: {
+                          default: colors.dark.body.background,
+                          paper: colors.dark.paper.background
+                      },
+                      text: {
+                          primary: colors.dark.body.color,
+                          disabled: colors.dark.disabled.text
+                      }
+                  })
         },
         typography: {
             fontFamily: [

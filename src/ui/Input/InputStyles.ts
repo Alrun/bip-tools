@@ -1,8 +1,7 @@
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
 
-export const StyledInput = styled(TextField)(({ theme }) => ({
+const StyledInput = styled(TextField)(({ theme }) => ({
     '& .MuiInputLabel-root': {
         '&.MuiInputLabel-sizeSmall': {
             fontSize: theme.typography.smRegular.fontSize
@@ -49,12 +48,10 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
             fontSize: '.85714rem'
         }
     },
-
     '& .MuiInputBase-input': {
         boxSizing: 'border-box',
         height: 36,
         padding: 10,
-
         '&.MuiInputBase-inputSizeSmall': {
             fontSize: theme.typography.smRegular.fontSize,
             height: 28,
@@ -67,10 +64,8 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
     },
     '& .MuiOutlinedInput-root': {
         marginTop: 6,
-
         '&.MuiInputBase-adornedStart': {
             paddingLeft: 10,
-
             '& .MuiInputAdornment-positionStart': {
                 marginRight: 0
             }
@@ -80,12 +75,27 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
         },
         '& fieldset': {
             padding: '0 6px',
-
             '& legend': {
                 '& span': {
                     paddingLeft: 3,
                     paddingRight: 3
                 }
+            }
+        },
+        '&.MuiInputBase-multiline': {
+            padding: '8px 10px',
+            '&.MuiInputBase-sizeSmall': {
+                paddingTop: 5,
+                paddingBottom: 6
+            },
+            '& .MuiInputBase-input': {
+                padding: 0
+            },
+            '.MuiInputAdornment-positionStart': {
+                marginRight: 10
+            },
+            '.MuiInputAdornment-positionEnd': {
+                marginLeft: 10
             }
         },
         '&.MuiInputBase-adornedEnd': {
@@ -102,7 +112,6 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
     '& .MuiInput-underline': {
         marginTop: 0,
         paddingTop: 6,
-
         '& .MuiInputBase-input': {
             paddingLeft: 0,
             paddingRight: 0
@@ -112,7 +121,6 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
         },
         '& .MuiInputAdornment-positionEnd': {
             marginLeft: 10,
-
             '& .MuiInputAdornment-positionStart': {
                 marginRight: 0
             }
@@ -125,15 +133,23 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
         },
         '&.Mui-error.Mui-focused::after': {
             borderWidth: 2
+        },
+        '&.MuiInputBase-multiline': {
+            padding: '15px 0px 7px',
+            '&.MuiInputBase-sizeSmall': {
+                paddingTop: 12,
+                paddingBottom: 5
+            },
+            '& .MuiInputBase-input': {
+                padding: 0
+            }
         }
     },
     '& .MuiFilledInput-underline': {
         marginTop: 0,
         paddingTop: 6,
-
         '&.MuiInputBase-adornedStart': {
             paddingLeft: 10,
-
             '& .MuiInputAdornment-positionStart': {
                 marginRight: 0
             }
@@ -147,10 +163,25 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
                 marginRight: 0
             }
         },
-
         '& .MuiInputAdornment-root': {
             '&.MuiInputAdornment-positionStart:not(.MuiInputAdornment-hiddenLabel)': {
                 marginTop: 0
+            }
+        },
+        '&.MuiInputBase-multiline': {
+            padding: '15px 8px 7px',
+            '&.MuiInputBase-sizeSmall': {
+                paddingTop: 12,
+                paddingBottom: 5
+            },
+            '& .MuiInputBase-input': {
+                padding: 0
+            },
+            '.MuiInputAdornment-positionStart': {
+                marginRight: 10
+            },
+            '.MuiInputAdornment-positionEnd': {
+                marginLeft: 10
             }
         },
         '& + .MuiFormHelperText-root': {
@@ -169,34 +200,14 @@ export const StyledInput = styled(TextField)(({ theme }) => ({
     },
     '& .MuiFormHelperText-root': {
         marginTop: 2,
-        lineHeight: theme.typography.h6.lineHeight
+        lineHeight: 1.25
     },
-    '& .MuiFormHelperText-sizeMedium': {},
     '& .MuiFormHelperText-sizeSmall': {
         fontSize: theme.typography.smRegular.fontSize
+    },
+    '& .MuiInputAdornment-root': {
+        color: theme.palette.mode === 'dark' && theme.palette.text.secondary
     }
 }));
 
-export const StyledIconButton = styled(IconButton)({
-    // boxShadow: 'none',
-    // textTransform: 'none',
-    // fontSize: 16,
-    // padding: '6px 12px',
-    // border: '1px solid',
-    // lineHeight: 1.5,
-    // backgroundColor: '#0063cc',
-    // borderColor: '#0063cc',
-    // '&:hover': {
-    //     backgroundColor: '#0069d9',
-    //     borderColor: '#0062cc',
-    //     boxShadow: 'none',
-    // },
-    // '&:active': {
-    //     boxShadow: 'none',
-    //     backgroundColor: '#0062cc',
-    //     borderColor: '#005cbf',
-    // },
-    // '&:focus': {
-    //     boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    // },
-});
+export default StyledInput;

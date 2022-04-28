@@ -32,7 +32,7 @@ export const parameters = {
     },
     options: {
         storySort: {
-            order: ['Theme', ['Palette'], 'UI' /*, ['Typography', 'Button']*/ ]
+            order: ['Theme', ['Font', 'Palette', 'Icons'], 'UI']
         }
     }
 };
