@@ -5,11 +5,12 @@ import Radio, { RadioGroup } from './Radio';
 export default {
     title: 'UI/Radio',
     component: Radio,
-    parameters: {
-        controls: {
-            exclude: ['items', 'onChange']
-        }
-    }
+    argTypes: {
+        checked: { control: { type: null } },
+        onChange: { control: { type: null }, table: { category: 'Events' } },
+        onFocusVisible: { control: { type: null }, table: { category: 'Events' } }
+    },
+    parameters: { controls: { exclude: ['items'] } }
 } as ComponentMeta<typeof Radio>;
 
 const wrapperDecorator = (Story: any) => (
@@ -48,6 +49,14 @@ export const Base = BaseTemplate.bind({});
 Base.args = {
     label: 'Radio',
     checked: true
+};
+
+Base.parameters = {
+    docs: {
+        source: {
+            code: '<Radio label="Radio" checked />'
+        }
+    }
 };
 
 /**
@@ -131,8 +140,9 @@ Disabled.args = {
 Disabled.parameters = {
     docs: {
         source: {
-            // eslint-disable-next-line no-useless-concat
-            code: '<Radio label="Checked disabled" checked />\n' + '<Radio label="Unchecked disabled" />'
+            code:
+                '<Radio label="Checked disabled" checked disabled />\n' +
+                '<Radio label="Unchecked disabled" disabled />'
         }
     }
 };
@@ -225,6 +235,27 @@ Group.args = {
     ]
 };
 
+Group.parameters = {
+    docs: {
+        source: {
+            code: `
+<RadioGroup
+    defaultValue={1}
+    options={[
+        {
+            label: 'Radio 1',
+            value: 1
+        },
+        {
+            label: 'Radio 2',
+            value: 2
+        }
+    ]}
+/>`
+        }
+    }
+};
+
 /**
  * Radio Group Row
  */
@@ -243,4 +274,26 @@ GroupRow.args = {
             value: 2
         }
     ]
+};
+
+GroupRow.parameters = {
+    docs: {
+        source: {
+            code: `
+<RadioGroup
+    row
+    defaultValue={1}
+    options={[
+        {
+            label: 'Radio 1',
+            value: 1
+        },
+        {
+            label: 'Radio 2',
+            value: 2
+        }
+    ]}
+/>`
+        }
+    }
 };

@@ -9,7 +9,6 @@ export const StyledSwitch = styled(Switch)(({ theme }) => ({
     padding: 10,
     marginLeft: -10,
     marginRight: -10,
-
     '&:hover': {
         '& .MuiSwitch-colorPrimary + .MuiSwitch-track': {
             borderColor: theme.palette.primary.main
@@ -33,7 +32,6 @@ export const StyledSwitch = styled(Switch)(({ theme }) => ({
             borderColor: theme.palette.text.primary
         }
     },
-
     '&:active': {
         '& .MuiSwitch-switchBase:not(.Mui-disabled)': {
             '&.Mui-checked': {
@@ -44,27 +42,22 @@ export const StyledSwitch = styled(Switch)(({ theme }) => ({
             }
         }
     },
-
     '&.MuiSwitch-sizeSmall': {
         width: 40,
         height: 28,
         padding: 7,
         marginLeft: -7,
         marginRight: -7,
-
         '& .MuiSwitch-switchBase': {
             padding: 8
         },
-
         '& .MuiSwitch-switchBase.Mui-checked': {
             transform: 'translateX(12px)'
         },
-
         '& .MuiSwitch-thumb': {
             width: 10,
             height: 10
         },
-
         '&:active': {
             '& .MuiSwitch-switchBase:not(.Mui-disabled)': {
                 '&.Mui-checked': {
@@ -76,16 +69,13 @@ export const StyledSwitch = styled(Switch)(({ theme }) => ({
             }
         }
     },
-
     '& .MuiSwitch-switchBase': {
         padding: 11,
         color: theme.palette.text.primary,
-
         '&.Mui-checked': {
             transform: 'translateX(14px)'
         }
     },
-
     '& .MuiSwitch-thumb': {
         boxShadow: 'none',
         opacity: 1,
@@ -96,23 +86,19 @@ export const StyledSwitch = styled(Switch)(({ theme }) => ({
             duration: 200
         })
     },
-
     '& .MuiSwitch-track': {
         border: `1px solid ${theme.palette.text.primary}`,
         background: 'transparent',
         opacity: 1,
         borderRadius: 22 / 2
     },
-
     '& .Mui-checked': {
         '&.MuiSwitch-colorDefault + .MuiSwitch-track': {
             background: theme.palette.text.primary
         },
-
         '& + .MuiSwitch-track': {
             border: '1px solid transparent'
         },
-
         '&:not(.Mui-disabled)': {
             '& + .MuiSwitch-track': {
                 opacity: 1

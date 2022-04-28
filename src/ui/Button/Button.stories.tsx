@@ -6,11 +6,26 @@ import { ModeLightIcon } from '../Icons/Icons';
 export default {
     title: 'UI/Button',
     component: Button,
-    parameters: {
-        controls: {
-            exclude: ['items']
-        }
-    }
+    argTypes: {
+        endIcon: {
+            options: ['None', '$', 'Light'],
+            mapping: {
+                None: undefined,
+                Light: <ModeLightIcon />
+            }
+        },
+        startIcon: {
+            options: ['None', '$', 'Light'],
+            mapping: {
+                None: undefined,
+                Light: <ModeLightIcon />
+            }
+        },
+        LinkComponent: { options: ['a', 'span'] },
+        onClick: { control: { type: null }, table: { category: 'Events' } },
+        onFocusVisible: { control: { type: null }, table: { category: 'Events' } }
+    },
+    parameters: { controls: { exclude: ['items'] } }
 } as ComponentMeta<typeof Button>;
 
 const wrapperDecorator = (Story: any) => (
@@ -50,6 +65,14 @@ Base.args = {
     children: 'Button'
 };
 
+Base.parameters = {
+    docs: {
+        source: {
+            code: '<Button>Button</Button>'
+        }
+    }
+};
+
 /**
  * Variants
  */
@@ -79,7 +102,7 @@ Variants.parameters = {
     docs: {
         source: {
             code:
-                '<Button variant="contained">Contained</Button>\n' +
+                '<Button>Contained</Button>\n' +
                 '<Button variant="outlined">Outlined</Button>\n' +
                 '<Button variant="text">Text</Button>'
         }
@@ -127,9 +150,12 @@ Colors.parameters = {
     docs: {
         source: {
             code:
-                '<Button variant="contained">Contained</Button>\n' +
-                '<Button variant="outlined">Outlined</Button>\n' +
-                '<Button variant="text">Text</Button>'
+                '<Button color="primary">Primary</Button>\n' +
+                '<Button color="secondary">Secondary</Button>\n' +
+                '<Button color="success">Success</Button>\n' +
+                '<Button color="error">Error</Button>\n' +
+                '<Button color="warning">Warning</Button>\n' +
+                '<Button color="info">Info</Button>'
         }
     }
 };
@@ -166,9 +192,9 @@ Disabled.parameters = {
     docs: {
         source: {
             code:
-                '<Button variant="contained" disabled={true}>Disabled</Button>\n' +
-                '<Button variant="outlined" disabled={true}>Disabled</Button>\n' +
-                '<Button variant="text" disabled={true}>Disabled</Button>'
+                '<Button disabled>Disabled</Button>\n' +
+                '<Button variant="outlined" disabled>Disabled</Button>\n' +
+                '<Button variant="text" disabled>Disabled</Button>'
         }
     }
 };
@@ -203,7 +229,7 @@ Sizes.parameters = {
         source: {
             code:
                 '<Button size="large">Large</Button>\n' +
-                '<Button size="medium">Medium</Button>\n' +
+                '<Button>Medium</Button>\n' +
                 '<Button size="small">Small</Button>'
         }
     }
@@ -275,10 +301,10 @@ Icon.parameters = {
     docs: {
         source: {
             code:
-                '<Button isRound={true} size="small"><ModeLightIcon fontSize="inherit" /></Button>\n' +
-                '<Button isRound={true}><ModeLightIcon /></Button>\n' +
-                '<Button isRound={true}>B</Button>\n' +
-                '<Button isRound={true} size="large"><ModeLightIcon fontSize="inherit" /></Button>'
+                '<Button isRound size="small"><ModeLightIcon fontSize="inherit" /></Button>\n' +
+                '<Button isRound><ModeLightIcon /></Button>\n' +
+                '<Button isRound>B</Button>\n' +
+                '<Button isRound size="large"><ModeLightIcon fontSize="inherit" /></Button>'
         }
     }
 };

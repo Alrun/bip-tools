@@ -1,49 +1,59 @@
 import React from 'react';
 import { SwitchProps as MuiSwitchProps } from '@mui/material/Switch/Switch';
 import { FormControlLabelProps } from '@mui/material/FormControlLabel/FormControlLabel';
+import { SwitchBaseProps } from '@mui/material/internal/SwitchBase';
 
 export interface SwitchProps
     extends Omit<
         MuiSwitchProps,
-        'action' | 'centerRipple' | 'LinkComponent' | 'onFocusVisible' | 'TouchRippleProps' | 'touchRippleRef'
+        'action' | 'centerRipple' | 'focusVisibleClassName' | 'LinkComponent' | 'TouchRippleProps' | 'touchRippleRef'
     > {
     /**
      * If `true`, the component is checked.
+     * @default false
      */
     checked?: boolean;
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/customization/palette/#adding-new-colors).
-     * @default 'primary'
+     * @default primary
      */
     color?: MuiSwitchProps['color'];
     /**
      * The default checked state. Use when the component is not controlled.
+     * @default false
      */
     defaultChecked?: boolean;
     /**
      * If `true`, the component is disabled.
+     * @default false
      */
     disabled?: boolean;
     /**
      * If `true`, the ripple effect is disabled.
+     * @default false
      */
     disableRipple?: boolean;
     /**
-     * The icon to display when the component is unchecked.
+     * Attributes applied to the root label element.
      */
-    icon?: React.ReactNode;
+    formControlLabelProps?: Partial<FormControlLabelProps>;
     /**
      * The id of the `input` element.
      */
     id?: string;
+    /**
+     * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+     */
+    inputProps?: SwitchBaseProps['inputProps'];
     /**
      * The label element.
      */
     label: FormControlLabelProps['label'];
     /**
      * The position of the label.
+     * @default end
      */
     labelPlacement?: FormControlLabelProps['labelPlacement'];
     /**
@@ -53,9 +63,10 @@ export interface SwitchProps
      * You can pull out the new value by accessing `event.target.value` (string).
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+    onChange?: SwitchBaseProps['onChange'];
     /**
      * If `true`, the `input` element is required.
+     * @default false
      */
     required?: boolean;
     /**
@@ -72,5 +83,5 @@ export interface SwitchProps
      * The value of the component. The DOM API casts this to a string.
      * The browser uses "on" as the default value.
      */
-    value?: any;
+    value?: unknown;
 }

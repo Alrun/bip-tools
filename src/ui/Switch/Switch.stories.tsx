@@ -5,17 +5,18 @@ import Switch from './Switch';
 export default {
     title: 'UI/Switch',
     component: Switch,
-    parameters: {
-        controls: {
-            exclude: ['items', 'onChange']
-        }
-    }
+    argTypes: {
+        checked: { control: { type: null } },
+        defaultChecked: { control: { type: null } },
+        onChange: { control: { type: null }, table: { category: 'Events' } },
+        onFocusVisible: { control: { type: null }, table: { category: 'Events' } }
+    },
+    parameters: { controls: { exclude: ['items'] } }
 } as ComponentMeta<typeof Switch>;
 
 const wrapperDecorator = (Story: any) => (
     <div
         style={{
-            gap: '2rem',
             display: 'flex',
             alignItems: 'baseline',
             flexWrap: 'wrap'
@@ -47,15 +48,26 @@ export const Base = BaseTemplate.bind({});
 
 Base.args = {
     label: 'Switch',
-    defaultChecked: true
+    defaultChecked: true,
+    formControlLabelProps: {
+        sx: {
+            mr: 6
+        }
+    }
+};
+
+Base.parameters = {
+    docs: {
+        source: {
+            code: '<Switch label="Switch" defaultChecked />'
+        }
+    }
 };
 
 /**
  * Colors
  */
 export const Colors = GroupTemplate.bind({});
-
-Colors.decorators = [wrapperDecorator];
 
 Colors.args = {
     ...Base.args,
@@ -106,8 +118,6 @@ Colors.parameters = {
  */
 export const Disabled = GroupTemplate.bind({});
 
-Disabled.decorators = [wrapperDecorator];
-
 Disabled.args = {
     ...Base.args,
     items: [
@@ -126,8 +136,9 @@ Disabled.args = {
 Disabled.parameters = {
     docs: {
         source: {
-            // eslint-disable-next-line no-useless-concat
-            code: '<Switch label="Checked disabled" defaultChecked />\n' + '<Switch label="Unchecked disabled" />'
+            code:
+                '<Switch label="Checked disabled" defaultChecked disabled />\n' +
+                '<Switch label="Unchecked disabled" disabled />'
         }
     }
 };
@@ -176,8 +187,6 @@ Placement.parameters = {
  * Size
  */
 export const Size = GroupTemplate.bind({});
-
-Size.decorators = [wrapperDecorator];
 
 Size.args = {
     ...Base.args,

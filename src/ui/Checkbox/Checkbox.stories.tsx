@@ -1,30 +1,35 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { FavoriteIcon, FavoriteBorderIcon, StarIcon, StarBorderIcon } from '../Icons/Icons';
 import Checkbox from './Checkbox';
 
 export default {
     title: 'UI/Checkbox',
     component: Checkbox,
-    parameters: {
-        controls: {
-            exclude: ['items', 'onChange']
-        }
-    }
+    argTypes: {
+        icon: {
+            options: ['Default', 'Favorite', 'Star'],
+            mapping: {
+                Default: undefined,
+                Favorite: <FavoriteBorderIcon />,
+                Star: <StarBorderIcon />
+            }
+        },
+        checkedIcon: {
+            options: ['Default', 'Favorite', 'Star'],
+            mapping: {
+                Default: undefined,
+                Favorite: <FavoriteIcon />,
+                Star: <StarIcon />
+            }
+        },
+        checked: { control: { type: null } },
+        defaultChecked: { control: { type: null } },
+        onChange: { control: { type: null }, table: { category: 'Events' } },
+        onFocusVisible: { control: { type: null }, table: { category: 'Events' } }
+    },
+    parameters: { controls: { exclude: ['items'] } }
 } as ComponentMeta<typeof Checkbox>;
-
-const wrapperDecorator = (Story: any) => (
-    <div
-        style={{
-            gap: '2rem',
-            display: 'flex',
-            alignItems: 'baseline',
-            flexWrap: 'wrap'
-        }}
-    >
-        {Story()}
-    </div>
-);
 
 const BaseTemplate: ComponentStory<typeof Checkbox> = (args) => <Checkbox {...args} />;
 
@@ -48,7 +53,21 @@ export const Base = BaseTemplate.bind({});
 
 Base.args = {
     label: 'Checkbox',
-    defaultChecked: true
+    defaultChecked: true,
+    formGroupProps: {
+        sx: {
+            display: 'inline-flex',
+            mr: 6
+        }
+    }
+};
+
+Base.parameters = {
+    docs: {
+        source: {
+            code: '<Checkbox label="Checkbox" defaultChecked />'
+        }
+    }
 };
 
 /**
@@ -68,9 +87,8 @@ Variants.args = {
         },
         {
             label: 'Icon',
-            // TODO: Add to icon component
-            icon: <FavoriteBorder />,
-            checkedIcon: <Favorite />
+            icon: <FavoriteBorderIcon />,
+            checkedIcon: <FavoriteIcon />
         }
     ]
 };
@@ -81,7 +99,7 @@ Variants.parameters = {
             code:
                 '<Checkbox label="Default" />\n' +
                 '<Checkbox label="indeterminate" indeterminate />\n' +
-                '<Checkbox label="Icon" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />'
+                '<Checkbox label="Icon" icon={<FavoriteBorderIcon />} checkedIcon={<FavoriteIcon />} />'
         }
     }
 };
@@ -90,8 +108,6 @@ Variants.parameters = {
  * Colors
  */
 export const Colors = GroupTemplate.bind({});
-
-Colors.decorators = [wrapperDecorator];
 
 Colors.args = {
     ...Base.args,
@@ -160,8 +176,9 @@ Disabled.args = {
 Disabled.parameters = {
     docs: {
         source: {
-            // eslint-disable-next-line no-useless-concat
-            code: '<Checkbox label="Checked disabled" defaultChecked />\n' + '<Checkbox label="Unchecked disabled" />'
+            code:
+                '<Checkbox label="Checked disabled" defaultChecked disabled />\n' +
+                '<Checkbox label="Unchecked disabled" disabled />'
         }
     }
 };
@@ -170,8 +187,6 @@ Disabled.parameters = {
  * Placement
  */
 export const Placement = GroupTemplate.bind({});
-
-Placement.decorators = [wrapperDecorator];
 
 Placement.args = {
     ...Base.args,
@@ -210,8 +225,6 @@ Placement.parameters = {
  * Size
  */
 export const Size = GroupTemplate.bind({});
-
-Size.decorators = [wrapperDecorator];
 
 Size.args = {
     ...Base.args,

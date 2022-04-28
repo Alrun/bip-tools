@@ -2,6 +2,9 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Input from '../ui/Input/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import { ModeLightIcon } from '../ui/Icons/Icons';
 
 const Item = styled(Paper)(({ theme }) => ({
     // ...theme.typography.body2,
@@ -51,6 +54,90 @@ const Dashboard = () => {
                     Dashboard RENDER COUNT: {++rendersCount.current}
                 </b>
             </div>
+
+            <Grid container spacing={8} sx={{px: 24}}>
+                <Grid item xs={12} sm={5}>
+                    <Input label="Default" icon={<ModeLightIcon />} iconPosition="start" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input label="Default" icon={<ModeLightIcon />} iconPosition="end" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input label="Multiline" icon={<ModeLightIcon />} iconPosition="start" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input label="Multiline" icon={<ModeLightIcon />} iconPosition="end" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+
+                <Grid item xs={12} sm={5}>
+                    <Input variant="standard" label="Default" icon={<ModeLightIcon />} iconPosition="start" fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input variant="standard" label="Default" icon={<ModeLightIcon />} iconPosition="end" fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input variant="standard" label="Multiline" icon={<ModeLightIcon />} iconPosition="start" multiline fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input variant="standard" label="Multiline" icon={<ModeLightIcon />} iconPosition="end" multiline fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+
+                <Grid item xs={12} sm={5}>
+                    <Input variant="filled" label="Default" icon={<ModeLightIcon />} iconPosition="start" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input variant="filled" label="Default" icon={<ModeLightIcon />} iconPosition="end" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input variant="filled" label="Multiline" icon={<ModeLightIcon />} iconPosition="start" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input variant="filled" label="Multiline" icon={<ModeLightIcon />} iconPosition="end" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" label="Default" icon={<ModeLightIcon />} iconPosition="start" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" label="Default" icon={<ModeLightIcon />} iconPosition="end" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" label="Multiline" icon={<ModeLightIcon />} iconPosition="start" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" label="Multiline" icon={<ModeLightIcon />} iconPosition="end" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="standard" label="Default" icon={<ModeLightIcon />} iconPosition="start" fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="standard" label="Default" icon={<ModeLightIcon />} iconPosition="end" fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="standard" label="Multiline" icon={<ModeLightIcon />} iconPosition="start" multiline fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="standard" label="Multiline" icon={<ModeLightIcon />} iconPosition="end" multiline fullWidth defaultValue="88888888888888888888" />
+                </Grid>
+
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="filled" label="Default" icon={<ModeLightIcon />} iconPosition="start" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="filled" label="Default" icon={<ModeLightIcon />} iconPosition="end" fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="filled" label="Multiline" icon={<ModeLightIcon />} iconPosition="start" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Input size="small" variant="filled" label="Multiline" icon={<ModeLightIcon />} iconPosition="end" multiline fullWidth defaultValue="888888888888888888" />
+                </Grid>
+
+
+
+
+            </Grid>
         </>
     );
 };
