@@ -169,21 +169,19 @@ Disabled.decorators = [wrapperDecorator];
 
 Disabled.args = {
     ...Base.args,
+    disabled: true,
     items: [
         {
             children: 'Disabled',
-            variant: 'contained',
-            disabled: true
+            variant: 'contained'
         },
         {
             children: 'Disabled',
-            variant: 'outlined',
-            disabled: true
+            variant: 'outlined'
         },
         {
             children: 'Disabled',
-            variant: 'text',
-            disabled: true
+            variant: 'text'
         }
     ]
 };
@@ -275,23 +273,20 @@ Icon.decorators = [wrapperDecorator];
 
 Icon.args = {
     ...Base.args,
+    isRound: true,
     items: [
         {
             children: <ModeLightIcon fontSize="inherit" />,
-            isRound: true,
             size: 'small'
         },
         {
-            children: <ModeLightIcon />,
-            isRound: true
+            children: <ModeLightIcon />
         },
         {
-            children: 'B',
-            isRound: true
+            children: 'B'
         },
         {
             children: <ModeLightIcon fontSize="inherit" />,
-            isRound: true,
             size: 'large'
         }
     ]

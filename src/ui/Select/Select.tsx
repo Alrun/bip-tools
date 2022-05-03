@@ -5,28 +5,37 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import Input from '../Input/Input';
 import { ArrowDownIcon, ArrowUpIcon } from '../Icons/Icons';
 import { isTouch } from '../../utils/featuresDetect';
+import StyledSelect from './SelectStyles';
+import { SelectProps, SelectOptionsInterface } from './Select.d';
+import Typography from '../Typography/Typography';
 
-interface SelectProps {
-    id: string;
-    label: string;
-    options: {
-        value: string;
-        label: string;
-    }[];
-    defaultValue: string;
-    helperText?: string;
-    variant?: 'standard' | 'outlined' | 'filled';
-}
+const Select = ({
+    id,
+    defaultValue = '',
+    defaultOpen = false,
+    disabled,
+    maxItem = 8,
+    native,
+    nativeEmptyOptionLabel = 'Not selected',
+    options = [],
+    size,
+    ...props
+}: SelectProps) => {
+    const defineOption = (value: string): SelectOptionsInterface => {
+        const currentOption = options.filter((item) => item.value === value);
+        return !currentOption.length ? { value: '', label: undefined } : currentOption[0];
+    };
 
-const Select = ({ id, label, options, defaultValue, variant = 'outlined', helperText }: SelectProps) => {
-    const defineOption = (value: string) => options.filter((item) => item.value === value)[0].label;
+    console.log(defaultValue);
 
-    const [selected, setSelected] = React.useState(() => defineOption(defaultValue));
-    const [open, setOpen] = React.useState(false);
+    const [selected, setSelected] = React.useState<string>(() =>
+        defaultValue ? defineOption(defaultValue).value : ''
+    );
 
+    const [open, setOpen] = React.useState<boolean>(false);
+    const isNative = native || isTouch();
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +44,10 @@ const Select = ({ id, label, options, defaultValue, variant = 'outlined', helper
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
+    };
+
+    const handleOpen = (bool: boolean) => () => {
+        if (!disabled) setOpen(bool);
     };
 
     const handleClose = (event: Event | React.SyntheticEvent) => {
@@ -54,64 +67,62 @@ const Select = ({ id, label, options, defaultValue, variant = 'outlined', helper
         }
     };
 
-    const handleSelect = (option: string) => {
-        setSelected(defineOption(option));
+    const handleSelect = (option: string) => () => {
+        setSelected(defineOption(option).value);
         setOpen(false);
     };
 
     React.useEffect(() => {
-        const timer = setTimeout(() => {
-            if (open) {
-                anchorRef.current?.focus();
-            }
-        });
-        return () => clearTimeout(timer);
-    }, [open]);
+        if (defaultOpen) setOpen(true);
+    }, []);
 
-    return isTouch() ? (
+    return isNative ? (
         <div>
-            <Input
+            <StyledSelect
                 select
                 id={id}
-                label={label}
                 value={selected}
-                variant={variant}
                 SelectProps={{
                     native: true
                 }}
                 onChange={handleChange}
-                helperText={helperText}
                 inputRef={anchorRef}
-                aria-controls={open ? `${id}-composition-menu"}` : undefined}
+                aria-controls={open && id ? `${id}-composition-menu` : undefined}
                 aria-expanded={open ? 'true' : undefined}
                 aria-haspopup="true"
                 onClick={handleToggle}
+                disabled={disabled}
+                size={size}
+                {...props}
             >
+                {!defaultValue && <option>{nativeEmptyOptionLabel}</option>}
                 {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={option.value} value={option.value} disabled={option.disabled}>
                         {option.label}
                     </option>
                 ))}
-            </Input>
+            </StyledSelect>
         </div>
     ) : (
         <>
-            <Input
+            <StyledSelect
                 id={id}
-                label={label}
-                value={selected}
-                variant={variant}
-                onClick={handleToggle}
-                helperText={helperText}
+                value={selected ? defineOption(selected).label : ''}
+                onClick={handleOpen(!open)}
+                focused={open ? true : undefined}
                 inputRef={anchorRef}
                 icon={open ? <ArrowUpIcon fontSize="medium" /> : <ArrowDownIcon fontSize="medium" />}
                 iconPosition="end"
                 inputProps={{
                     readOnly: true,
-                    role: 'button',
+                    type: 'button',
                     tabIndex: 0,
+                    'aria-label': 'Select',
                     'aria-haspopup': true
                 }}
+                disabled={disabled}
+                size={size}
+                {...props}
             />
             <Popper
                 open={open}
@@ -127,17 +138,16 @@ const Select = ({ id, label, options, defaultValue, variant = 'outlined', helper
             >
                 {({ TransitionProps, placement }) => (
                     <Grow
-                        // eslint-disable-next-line react/jsx-props-no-spreading
                         {...TransitionProps}
                         style={{
-                            transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom'
+                            transformOrigin: placement === 'bottom-start' ? 'top' : 'bottom'
                         }}
                     >
-                        <Paper>
+                        <Paper elevation={6} sx={{ maxHeight: maxItem * 34.5, overflowX: 'hidden' }}>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList
                                     autoFocusItem={open}
-                                    id={`${id}-composition-menu"}`}
+                                    id={id && `${id}-composition-menu`}
                                     aria-labelledby="composition-button"
                                     onKeyDown={handleListKeyDown}
                                 >
@@ -145,9 +155,17 @@ const Select = ({ id, label, options, defaultValue, variant = 'outlined', helper
                                         <MenuItem
                                             key={option.value}
                                             selected={option.value === selected}
-                                            onClick={() => handleSelect(option.value)}
+                                            onClick={handleSelect(option.value)}
+                                            dense={size === 'small'}
+                                            disabled={option.disabled}
+                                            sx={{
+                                                paddingLeft: '10px',
+                                                paddingRight: '10px'
+                                            }}
                                         >
-                                            {option.label}
+                                            <Typography variant="inherit" noWrap>
+                                                {option.label}
+                                            </Typography>
                                         </MenuItem>
                                     ))}
                                 </MenuList>

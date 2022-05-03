@@ -160,15 +160,14 @@ export const Disabled = GroupTemplate.bind({});
 
 Disabled.args = {
     ...Base.args,
+    disabled: true,
     items: [
         {
-            label: 'Checked disabled',
-            disabled: true
+            label: 'Checked disabled'
         },
         {
             label: 'Unchecked disabled',
-            defaultChecked: false,
-            disabled: true
+            defaultChecked: false
         }
     ]
 };
