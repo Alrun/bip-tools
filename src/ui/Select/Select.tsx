@@ -5,45 +5,83 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import { ArrowDownIcon, ArrowUpIcon } from '../Icons/Icons';
 import { isTouch } from '../../utils/featuresDetect';
+import { ArrowDownIcon, ArrowUpIcon } from '../Icons/Icons';
+import Typography from '../Typography/Typography';
+import Checkbox from '../Checkbox/Checkbox';
 import StyledSelect from './SelectStyles';
 import { SelectProps, SelectOptionsInterface } from './Select.d';
-import Typography from '../Typography/Typography';
+
+/**
+ * TODO: Add display of multiple selected options on overflow
+ * (el.offsetWidth < el.scrollWidth);
+ */
 
 const Select = ({
     id,
-    defaultValue = '',
-    defaultOpen = false,
+    defaultValue,
+    defaultOpen,
     disabled,
     maxItem = 8,
+    multiple,
     native,
+    nativeOnTouch = true,
     nativeEmptyOptionLabel = 'Not selected',
     options = [],
     size,
     ...props
 }: SelectProps) => {
-    const defineOption = (value: string): SelectOptionsInterface => {
-        const currentOption = options.filter((item) => item.value === value);
-        return !currentOption.length ? { value: '', label: undefined } : currentOption[0];
+    // Converts value options to lowercase
+    const lowercaseValuesOptions = options.map((option) => ({ ...option, value: option.value.toLowerCase() }));
+    // Converts defaultValue to lowercase
+    const lowercaseDefaultValue = React.useMemo((): string | string[] => {
+        if (!defaultValue) return '';
+        if (typeof defaultValue === 'string') return defaultValue.toLowerCase();
+
+        return defaultValue.map((val) => val.toLowerCase());
+    }, [defaultValue]);
+    /**
+     * Filters options by value
+     * @param {string | string[]} value Input value to be filtered.
+     * @returns {SelectOptionsInterface[]}
+     */
+    const filterOptions = (value: string | string[]): SelectOptionsInterface[] =>
+        typeof value === 'string'
+            ? lowercaseValuesOptions.filter((option) => option.value === value)
+            : lowercaseValuesOptions.filter((option) => value.includes(option.value));
+    /**
+     * Gets the initial selected options
+     * @returns {string[]}
+     */
+    const getInitialSelect = (): string[] => {
+        if (lowercaseDefaultValue) {
+            return multiple
+                ? filterOptions(lowercaseDefaultValue).map((item) => item.value)
+                : [filterOptions(lowercaseDefaultValue)[0].value];
+        }
+
+        return [];
     };
 
-    console.log(defaultValue);
+    const [selected, setSelected] = React.useState(() => getInitialSelect());
+    const [open, setOpen] = React.useState(false);
 
-    const [selected, setSelected] = React.useState<string>(() =>
-        defaultValue ? defineOption(defaultValue).value : ''
-    );
-
-    const [open, setOpen] = React.useState<boolean>(false);
-    const isNative = native || isTouch();
+    const isNative = native || (nativeOnTouch && isTouch());
     const anchorRef = React.useRef<HTMLButtonElement>(null);
+    /**
+     * Native select handler.
+     * @param {React.ChangeEvent<HTMLSelectElement>} event The event source of the callback.
+     */
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        if (multiple) {
+            const values = Array.from(event.target.options)
+                .filter((option) => option.selected)
+                .map((option) => option.value);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelected(event.target.value);
-    };
-
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
+            setSelected(values);
+        } else {
+            setSelected([event.target.value]);
+        }
     };
 
     const handleOpen = (bool: boolean) => () => {
@@ -51,9 +89,7 @@ const Select = ({
     };
 
     const handleClose = (event: Event | React.SyntheticEvent) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-            return;
-        }
+        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) return;
 
         setOpen(false);
     };
@@ -67,9 +103,15 @@ const Select = ({
         }
     };
 
-    const handleSelect = (option: string) => () => {
-        setSelected(defineOption(option).value);
-        setOpen(false);
+    const handleSelect = (val: string) => () => {
+        if (multiple) {
+            setSelected((prevState) =>
+                prevState.includes(val) ? prevState.filter((item) => item !== val) : [...prevState, val]
+            );
+        } else {
+            setSelected([filterOptions(val)[0].value]);
+            setOpen(false);
+        }
     };
 
     React.useEffect(() => {
@@ -81,22 +123,23 @@ const Select = ({
             <StyledSelect
                 select
                 id={id}
-                value={selected}
+                value={multiple ? selected : selected.join()}
                 SelectProps={{
-                    native: true
+                    native: true,
+                    multiple
+                }}
+                InputLabelProps={{
+                    shrink: true
                 }}
                 onChange={handleChange}
                 inputRef={anchorRef}
-                aria-controls={open && id ? `${id}-composition-menu` : undefined}
-                aria-expanded={open ? 'true' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
+                onClick={handleOpen(!open)}
                 disabled={disabled}
                 size={size}
                 {...props}
             >
-                {!defaultValue && <option>{nativeEmptyOptionLabel}</option>}
-                {options.map((option) => (
+                {!lowercaseDefaultValue && !multiple && <option>{nativeEmptyOptionLabel}</option>}
+                {lowercaseValuesOptions.map((option) => (
                     <option key={option.value} value={option.value} disabled={option.disabled}>
                         {option.label}
                     </option>
@@ -107,7 +150,9 @@ const Select = ({
         <>
             <StyledSelect
                 id={id}
-                value={selected ? defineOption(selected).label : ''}
+                value={filterOptions(selected)
+                    .map((item) => item.label)
+                    .join(', ')}
                 onClick={handleOpen(!open)}
                 focused={open ? true : undefined}
                 inputRef={anchorRef}
@@ -118,7 +163,9 @@ const Select = ({
                     type: 'button',
                     tabIndex: 0,
                     'aria-label': 'Select',
-                    'aria-haspopup': true
+                    'aria-haspopup': true,
+                    'aria-expanded': open,
+                    'aria-controls': open && id ? `${id}-composition-menu` : undefined
                 }}
                 disabled={disabled}
                 size={size}
@@ -138,10 +185,15 @@ const Select = ({
             >
                 {({ TransitionProps, placement }) => (
                     <Grow
-                        {...TransitionProps}
+                        timeout={{
+                            appear: 0,
+                            enter: 100,
+                            exit: 100
+                        }}
                         style={{
                             transformOrigin: placement === 'bottom-start' ? 'top' : 'bottom'
                         }}
+                        {...TransitionProps}
                     >
                         <Paper elevation={6} sx={{ maxHeight: maxItem * 34.5, overflowX: 'hidden' }}>
                             <ClickAwayListener onClickAway={handleClose}>
@@ -151,10 +203,10 @@ const Select = ({
                                     aria-labelledby="composition-button"
                                     onKeyDown={handleListKeyDown}
                                 >
-                                    {options.map((option) => (
+                                    {lowercaseValuesOptions.map((option) => (
                                         <MenuItem
                                             key={option.value}
-                                            selected={option.value === selected}
+                                            selected={selected.includes(option.value)}
                                             onClick={handleSelect(option.value)}
                                             dense={size === 'small'}
                                             disabled={option.disabled}
@@ -163,6 +215,13 @@ const Select = ({
                                                 paddingRight: '10px'
                                             }}
                                         >
+                                            {multiple && (
+                                                <Checkbox
+                                                    checked={selected.includes(option.value)}
+                                                    sx={{ mr: 0 }}
+                                                    disableRipple
+                                                />
+                                            )}
                                             <Typography variant="inherit" noWrap>
                                                 {option.label}
                                             </Typography>

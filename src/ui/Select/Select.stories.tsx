@@ -1,24 +1,48 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-// import SelectAdornment from '@mui/material/SelectAdornment';
 import Select from './Select';
-import { ModeLightIcon } from '../Icons/Icons';
+import { SelectOptionsInterface } from './Select.d';
+
+const options: SelectOptionsInterface[] = [
+    {
+        label: 'Option 1',
+        value: '1'
+    },
+    {
+        label: 'Option 2',
+        value: '2'
+    },
+    {
+        label: 'Option 3',
+        value: '3'
+    }
+];
+
+const manyOptions = (amount: number): SelectOptionsInterface[] =>
+    Array(amount)
+        .fill('')
+        .map((item, idx) => ({
+            value: `${idx}`,
+            label: `Option ${idx + 1}`
+        }));
 
 export default {
     title: 'UI/Select',
     component: Select,
     argTypes: {
-        // helperText: { control: { type: 'text' } },
-        // icon: { control: { type: 'text' } },
-        // type: { control: { type: 'text' } },
-        // value: { control: { type: 'text' } },
-        // rows: { control: { type: 'number' } },
-        // minRows: { control: { type: 'number' } },
-        // maxRows: { control: { type: 'number' } },
+        helperText: { control: { type: 'text' } },
+        value: { control: { type: 'text' } },
+        defaultValue: { control: { type: 'text' } },
+        options: {
+            options: ['Default', 'Overscroll'],
+            mapping: {
+                Default: options,
+                Overscroll: manyOptions(100)
+            }
+        },
         onChange: { control: { type: null }, table: { category: 'Events' } },
         onBlur: { control: { type: null }, table: { category: 'Events' } },
         onFocus: { control: { type: null }, table: { category: 'Events' } }
-        // onChange: { action: 'onchange' } ,
     },
     parameters: {
         actions: {
@@ -33,7 +57,7 @@ const wrapperDecorator = (Story: any) => (
         style={{
             gap: '1rem',
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             flexWrap: 'wrap'
         }}
     >
@@ -42,20 +66,6 @@ const wrapperDecorator = (Story: any) => (
 );
 
 const BaseTemplate: ComponentStory<typeof Select> = (args) => <Select {...args} />;
-
-// const BaseTemplate: ComponentStory<any> = (args) => {
-//     const { native, ...rest } = args;
-//     const [val, setVal] = React.useState('');
-//
-//     const handleChange = (e: any) => {
-//         console.log(e.target.value);
-//         // setVal(e.target.value)
-//     };
-//
-//     console.log(val);
-//
-//     return <Select onChange={() => handleChange} native={native} {...rest} />;
-// };
 
 const GroupTemplate: ComponentStory<any> = (args) => {
     const { items, ...rest } = args;
@@ -69,21 +79,6 @@ const GroupTemplate: ComponentStory<any> = (args) => {
         </>
     );
 };
-
-const options = [
-    {
-        label: 'Option 1',
-        value: '1'
-    },
-    {
-        label: 'Option 2',
-        value: '2'
-    },
-    {
-        label: 'Option 3',
-        value: '3'
-    }
-];
 
 /**
  * Base
@@ -101,7 +96,24 @@ Base.args = {
 Base.parameters = {
     docs: {
         source: {
-            code: '<Select label="Select" />'
+            code: `
+<Select
+    label="Select"
+    options={[
+        {
+            label: 'Option 1',
+            value: '1'
+        },
+        {
+            label: 'Option 2',
+            value: '2'
+        },
+        {
+            label: 'Option 3',
+            value: '3'
+        }
+    ]}
+/>`
         }
     }
 };
@@ -123,7 +135,25 @@ Native.args = {
 Native.parameters = {
     docs: {
         source: {
-            code: '<Select label="Select" />'
+            code: `
+<Select
+    label="Select"
+    native
+    options={[
+        {
+            label: 'Option 1',
+            value: '1'
+        },
+        {
+            label: 'Option 2',
+            value: '2'
+        },
+        {
+            label: 'Option 3',
+            value: '3'
+        }
+    ]}
+/>`
         }
     }
 };
@@ -156,9 +186,45 @@ Variants.parameters = {
     docs: {
         source: {
             code:
-                '<Select label="Outlined" />\n' +
-                '<Select label="Standard" variant="standard" />\n' +
-                '<Select label="Filled" variant="filled" />'
+                '<Select options={options} label="Outlined" />\n' +
+                '<Select options={options} label="Standard" variant="standard" />\n' +
+                '<Select options={options} label="Filled" variant="filled" />'
+        }
+    }
+};
+
+/**
+ * Multiple
+ */
+export const Multiple = GroupTemplate.bind({});
+
+Multiple.decorators = [wrapperDecorator];
+
+Multiple.args = {
+    ...Base.args,
+    items: [
+        {
+            label: 'Multiple',
+            multiple: true,
+            sx: {
+                minWidth: 180,
+                maxWidth: 180
+            }
+        },
+        {
+            label: 'Multiple Native',
+            multiple: true,
+            native: true
+        }
+    ]
+};
+
+Multiple.parameters = {
+    docs: {
+        source: {
+            code:
+                '<Select options={options} label="Multiple" multiple />\n' +
+                '<Select options={options} label="Multiple Native" multiple native />'
         }
     }
 };
@@ -177,8 +243,7 @@ Colors.args = {
     items: [
         {
             label: 'Primary',
-            color: 'primary',
-
+            color: 'primary'
         },
         {
             label: 'Secondary',
@@ -207,12 +272,12 @@ Colors.parameters = {
     docs: {
         source: {
             code:
-                '<Select label="Primary" />\n' +
-                '<Select label="Secondary" color="secondary" />\n' +
-                '<Select label="Success" color="success" />\n' +
-                '<Select label="Error" color="error" />\n' +
-                '<Select label="Warning" color="warning" />\n' +
-                '<Select label="Info" color="info" />'
+                '<Select options={options} label="Primary" />\n' +
+                '<Select options={options} label="Secondary" color="secondary" />\n' +
+                '<Select options={options} label="Success" color="success" />\n' +
+                '<Select options={options} label="Error" color="error" />\n' +
+                '<Select options={options} label="Warning" color="warning" />\n' +
+                '<Select options={options} label="Info" color="info" />'
         }
     }
 };
@@ -248,9 +313,9 @@ Disabled.parameters = {
     docs: {
         source: {
             code:
-                '<Select label="Outlined" defaultValue="Disabled" disabled />\n' +
-                '<Select label="Standard" variant="standard" defaultValue="Disabled" disabled />\n' +
-                '<Select label="Filled" variant="filled" defaultValue="Disabled" disabled />'
+                '<Select options={options} label="Outlined" disabled />\n' +
+                '<Select options={options} label="Standard" variant="standard" disabled />\n' +
+                '<Select options={options} label="Filled" variant="filled" disabled />'
         }
     }
 };
@@ -280,92 +345,46 @@ Sizes.parameters = {
     docs: {
         source: {
             code:
-                '<Select label="Medium" />\n' +
-                '<Select label="Small" size="small" />'
+                '<Select options={options} label="Medium" />\n' +
+                '<Select options={options} label="Small" size="small" />'
         }
     }
 };
 
-// /**
-//  * WithIcon
-//  */
-// export const WithIcon = GroupTemplate.bind({});
-//
-// WithIcon.decorators = [wrapperDecorator];
-//
-// WithIcon.args = {
-//     ...Base.args,
-//     items: [
-//         {
-//             label: 'Icon Start',
-//             icon: <ModeLightIcon />,
-//             iconPosition: 'start'
-//         },
-//         {
-//             label: 'Icon End',
-//             icon: <ModeLightIcon />,
-//             iconPosition: 'end'
-//         },
-//         {
-//             label: 'Icon Text Start',
-//             icon: <SelectAdornment position="start">$</SelectAdornment>,
-//             iconPosition: 'start'
-//         },
-//         {
-//             label: 'Icon Text End',
-//             icon: <SelectAdornment position="end">$</SelectAdornment>,
-//             iconPosition: 'end'
-//         }
-//     ]
-// };
-//
-// WithIcon.parameters = {
-//     docs: {
-//         source: {
-//             code:
-//                 '<Select label="Icon Start" iconPosition="start" icon={<ModeLightIcon />} />\n' +
-//                 '<Select label="Icon End" iconPosition="end" icon={<ModeLightIcon />} />\n' +
-//                 '<Select label="Icon Text Start" iconPosition="start" icon={<SelectAdornment position="start">$</SelectAdornment>} />\n' +
-//                 '<Select label="Icon Text End" iconPosition="end" icon={<SelectAdornment position="end">$</SelectAdornment>} />'
-//         }
-//     }
-// };
+/**
+ * HelperText
+ */
+export const HelperText = GroupTemplate.bind({});
 
-// /**
-//  * HelperText
-//  */
-// export const HelperText = GroupTemplate.bind({});
-//
-// HelperText.decorators = [wrapperDecorator];
-//
-// HelperText.args = {
-//     ...Base.args,
-//     items: [
-//         {
-//             label: 'Select',
-//             helperText: 'Helper Text'
-//         },
-//         {
-//             label: 'Select',
-//             helperText: 'Error text',
-//             defaultValue: 'Error',
-//             error: true
-//         },
-//         {
-//             label: 'Select',
-//             helperText: 'Long long long long long long long long long text',
-//             sx: { maxWidth: 180 }
-//         }
-//     ]
-// };
-//
-// HelperText.parameters = {
-//     docs: {
-//         source: {
-//             code:
-//                 '<Select label="Select" helperText="Helper Text" />\n' +
-//                 '<Select label="Select" helperText="Error text" error defaultValue="Error" />\n' +
-//                 '<Select label="Select" helperText="Long long long long long long long long long text" />'
-//         }
-//     }
-// };
+HelperText.decorators = [wrapperDecorator];
+
+HelperText.args = {
+    ...Base.args,
+    items: [
+        {
+            label: 'Select',
+            helperText: 'Helper Text'
+        },
+        {
+            label: 'Select',
+            helperText: 'Error text',
+            error: true
+        },
+        {
+            label: 'Select',
+            helperText: 'Long long long long long long long long long text',
+            sx: { maxWidth: 180 }
+        }
+    ]
+};
+
+HelperText.parameters = {
+    docs: {
+        source: {
+            code:
+                '<Select options={options} label="Select" helperText="Helper Text" />\n' +
+                '<Select options={options} label="Select" helperText="Error text" error />\n' +
+                '<Select options={options} label="Select" helperText="Long long long long long long long long long text" />'
+        }
+    }
+};

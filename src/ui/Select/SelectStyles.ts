@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import Input from '../Input/Input';
 
-const StyledSelect = styled(Input)(({ theme }) => ({
+const StyledSelect = styled(Input)({
     maxWidth: '100%',
     '& .MuiInputLabel-root': {
         cursor: 'pointer',
@@ -58,7 +58,15 @@ const StyledSelect = styled(Input)(({ theme }) => ({
         '&.MuiInputAdornment-sizeSmall': {
             right: 5
         }
+    },
+    '& .MuiNativeSelect-select[multiple]': {
+        margin: '5px 5px 5px 0px',
+        overflowY: 'scroll',
+        '& option': {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+        }
     }
-}));
+});
 
 export default StyledSelect;

@@ -66,7 +66,7 @@ export interface CheckboxProps
      */
     inputProps?: SwitchBaseProps['inputProps'];
     /**
-     * The label element.
+     * A text representation of the checkbox content.
      */
     label?: FormControlLabelProps['label'];
     /**
