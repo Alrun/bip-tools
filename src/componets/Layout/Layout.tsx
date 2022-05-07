@@ -40,11 +40,11 @@ const Layout = ({ mode, handleChangeMode }: LayoutProps) => {
     // TODO: Remove after render check
     const rendersCount = React.useRef<number>(0);
 
-    // TODO: Check perfomance
+    // TODO: Check performance
     React.useEffect(() => {
         const start = performance.now();
 
-        return console.log(`Perfomance Layout: ${performance.now() - start} ms`);
+        return console.log(`Performance Layout: ${performance.now() - start} ms`);
     });
 
     return (

@@ -164,36 +164,31 @@ Colors.decorators = [wrapperDecorator];
 
 Colors.args = {
     ...Base.args,
+    focused: true,
     items: [
         {
             label: 'Primary',
-            color: 'primary',
-            focused: true
+            color: 'primary'
         },
         {
             label: 'Secondary',
-            color: 'secondary',
-            focused: true
+            color: 'secondary'
         },
         {
             label: 'Success',
-            color: 'success',
-            focused: true
+            color: 'success'
         },
         {
             label: 'Error',
-            color: 'error',
-            focused: true
+            color: 'error'
         },
         {
             label: 'Warning',
-            color: 'warning',
-            focused: true
+            color: 'warning'
         },
         {
             label: 'Info',
-            color: 'info',
-            focused: true
+            color: 'info'
         }
     ]
 };
@@ -221,23 +216,19 @@ Disabled.decorators = [wrapperDecorator];
 
 Disabled.args = {
     ...Base.args,
+    disabled: true,
+    defaultValue: 'Disabled',
     items: [
         {
-            label: 'Outlined',
-            defaultValue: 'Disabled',
-            disabled: true
+            label: 'Outlined'
         },
         {
             label: 'Standard',
-            variant: 'standard',
-            defaultValue: 'Disabled',
-            disabled: true
+            variant: 'standard'
         },
         {
             label: 'Filled',
-            variant: 'filled',
-            defaultValue: 'Disabled',
-            disabled: true
+            variant: 'filled'
         }
     ]
 };

@@ -46,16 +46,24 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     '& .MuiInputBase-root': {
         '&.MuiInputBase-sizeSmall': {
             fontSize: '.85714rem'
+        },
+        '&.Mui-disabled': {
+            '& .MuiInputAdornment-root': {
+                color: theme.palette.text.disabled,
+                '& .MuiTypography-root': {
+                    color: theme.palette.text.disabled
+                }
+            }
         }
     },
     '& .MuiInputBase-input': {
         boxSizing: 'border-box',
         height: 36,
-        padding: 10,
+        padding: '8px 10px',
         '&.MuiInputBase-inputSizeSmall': {
             fontSize: theme.typography.smRegular.fontSize,
             height: 28,
-            padding: '8px 10px'
+            padding: '6px 10px'
         },
         '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active': {
             boxShadow: 'none',

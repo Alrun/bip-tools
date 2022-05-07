@@ -17,7 +17,7 @@ export interface SwitchProps
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/customization/palette/#adding-new-colors).
-     * @default primary
+     * @default 'primary'
      */
     color?: MuiSwitchProps['color'];
     /**
@@ -48,12 +48,12 @@ export interface SwitchProps
      */
     inputProps?: SwitchBaseProps['inputProps'];
     /**
-     * The label element.
+     * A text representation of the checkbox content.
      */
     label: FormControlLabelProps['label'];
     /**
      * The position of the label.
-     * @default end
+     * @default 'end'
      */
     labelPlacement?: FormControlLabelProps['labelPlacement'];
     /**

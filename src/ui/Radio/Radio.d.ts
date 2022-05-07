@@ -14,7 +14,7 @@ export interface RadioProps
     checked?: boolean;
     /**
      * Override or extend the styles applied to the component.
-     * @default primary
+     * @default 'primary'
      */
     color?: MuiRadioProps['color'];
     /**
@@ -48,12 +48,12 @@ export interface RadioProps
      */
     onChange?: SwitchBaseProps['onChange'];
     /**
-     * The label element.
+     * A text representation of the checkbox content.
      */
     label: FormControlLabelProps['label'];
     /**
      * The position of the label.
-     * @default end
+     * @default 'end'
      */
     labelPlacement?: FormControlLabelProps['labelPlacement'];
     /**
