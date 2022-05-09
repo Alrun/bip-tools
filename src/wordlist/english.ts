@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/prefer-default-export
-export const words = [
+const words = [
     'abandon',
     'ability',
     'able',
@@ -2049,3 +2048,5 @@ export const words = [
     'zone',
     'zoo'
 ];
+
+export default words;

@@ -3,14 +3,14 @@ import debounce from 'lodash/debounce';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { words } from '../../wordlist/english';
+import enList from '../../wordlist/english';
 import { filterStr } from '../../utils/crypto/crypto';
 import Virtualize from '../../ui/Autocomplete/Autocomplete';
 
 const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
     const [binary, setBinary] = React.useState<string>(value);
     const [index, setIndex] = React.useState<number>(parseInt(value, 2) + 1);
-    const [word, setWord] = React.useState<string>(words[index - 1]);
+    const [word, setWord] = React.useState<string>(enList[index - 1]);
 
     const delayedHandleChange = React.useCallback(
         debounce(([idx, val]) => onChange(idx, val), 500),
@@ -44,8 +44,8 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
     };
 
     const handleChangeWord = (newWord: string) => {
-        if (newWord && words.includes(newWord)) {
-            const getWordIdx = words.indexOf(newWord);
+        if (newWord && enList.includes(newWord)) {
+            const getWordIdx = enList.indexOf(newWord);
             const binStr = getWordIdx.toString(2).padStart(11, '0');
 
             setWord(newWord);
@@ -100,11 +100,12 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
                 <Box sx={{ py: 1 }}>
                     <Virtualize
                         id={`word-${id}`}
-                        options={words}
+                        options={enList}
+                        label="Word"
                         value={word}
                         onChange={handleChangeWord}
-                        color={color}
-                        listHeight={5}
+                        // color={color}
+                        maxItems={5}
                         disabled={disabled}
                     />
                 </Box>

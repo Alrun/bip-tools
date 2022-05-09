@@ -15,6 +15,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Star from '@mui/icons-material/Star';
 import StarBorder from '@mui/icons-material/StarBorder';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const DragIcon = (props: SvgIconProps) => <DragIndicatorIcon fontSize="small" {...props} />;
 export const ModeLightIcon = (props: SvgIconProps) => <LightModeIcon fontSize="small" {...props} />;
@@ -31,5 +32,6 @@ export const FavoriteIcon = (props: SvgIconProps) => <Favorite {...props} />;
 export const FavoriteBorderIcon = (props: SvgIconProps) => <FavoriteBorder {...props} />;
 export const StarIcon = (props: SvgIconProps) => <Star {...props} />;
 export const StarBorderIcon = (props: SvgIconProps) => <StarBorder {...props} />;
+export const CrossIcon = (props: SvgIconProps) => <CloseIcon {...props} />;
 
 
