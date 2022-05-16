@@ -3,6 +3,22 @@ import Popper from '@mui/material/Popper';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 
 export const StyledAutocomplete = styled(Autocomplete)({
+    '&.MuiAutocomplete-hasPopupIcon': {
+        '& .MuiOutlinedInput-root.MuiInputBase-adornedEnd': {
+            paddingRight: 32
+        },
+        '& .MuiFilledInput-underline.MuiInputBase-adornedEnd': {
+            paddingRight: 32
+        },
+        '&.MuiAutocomplete-hasClearIcon': {
+            '& .MuiOutlinedInput-root.MuiInputBase-adornedEnd': {
+                paddingRight: 56
+            },
+            '& .MuiFilledInput-underline.MuiInputBase-adornedEnd': {
+                paddingRight: 56
+            }
+        }
+    },
     '& .MuiOutlinedInput-root': {
         padding: 0,
         '&.MuiInputBase-sizeSmall': {
@@ -16,6 +32,23 @@ export const StyledAutocomplete = styled(Autocomplete)({
         },
         '& .MuiAutocomplete-endAdornment': {
             top: 'calc(50% - 12.5px)'
+        }
+    },
+    '& .MuiInputLabel-root': {
+        '&.MuiInputLabel-outlined': {
+            '&:not(.MuiInputLabel-shrink)': {
+                maxWidth: 'calc(100% - 36px)'
+            }
+        },
+        '&.MuiInputLabel-standard': {
+            '&:not(.MuiInputLabel-shrink)': {
+                maxWidth: 'calc(100% - 20px)'
+            }
+        },
+        '&.MuiInputLabel-filled': {
+            '&:not(.MuiInputLabel-shrink)': {
+                maxWidth: 'calc(100% - 40px)'
+            }
         }
     },
     '& .MuiInput-underline': {
@@ -40,9 +73,6 @@ export const StyledAutocomplete = styled(Autocomplete)({
 });
 
 export const StyledPopper = styled(Popper)(({ theme }) => ({
-    '& .MuiPaper-root': {
-        boxShadow: theme.shadows[6]
-    },
     [`& .${autocompleteClasses.listbox}`]: {
         boxSizing: 'border-box',
         '& ul': {
@@ -63,6 +93,10 @@ export const StyledPopper = styled(Popper)(({ theme }) => ({
         }
     },
     '& .MuiAutocomplete-noOptions': {
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    '& .MuiAutocomplete-loading': {
         paddingLeft: 10,
         paddingRight: 10
     }

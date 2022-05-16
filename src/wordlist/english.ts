@@ -1,4 +1,4 @@
-const words = [
+const words: readonly string[] = [
     'abandon',
     'ability',
     'able',

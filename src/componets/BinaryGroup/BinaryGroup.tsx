@@ -99,8 +99,8 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
                 </Box>
                 <Box sx={{ py: 1 }}>
                     <Virtualize
-                        id={`word-${id}`}
-                        options={enList}
+                        // id={`word-${id}`}
+                        options={enList as any}
                         label="Word"
                         value={word}
                         onChange={handleChangeWord}

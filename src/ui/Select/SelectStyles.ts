@@ -6,6 +6,21 @@ const StyledSelect = styled(Input)({
     '& .MuiInputLabel-root': {
         cursor: 'pointer',
         pointerEvents: 'none',
+        '&.MuiInputLabel-outlined': {
+            '&:not(.MuiInputLabel-shrink)': {
+                maxWidth: 'calc(100% - 36px)'
+            }
+        },
+        '&.MuiInputLabel-standard': {
+            '&:not(.MuiInputLabel-shrink)': {
+                maxWidth: 'calc(100% - 20px)'
+            }
+        },
+        '&.MuiInputLabel-filled': {
+            '&:not(.MuiInputLabel-shrink)': {
+                maxWidth: 'calc(100% - 40px)'
+            }
+        },
         '&.Mui-disabled': {
             cursor: 'default'
         }

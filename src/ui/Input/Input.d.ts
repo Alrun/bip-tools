@@ -1,5 +1,7 @@
 import React from 'react';
 import { BaseTextFieldProps } from '@mui/material/TextField/TextField';
+import { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import PropTypes from 'prop-types';
 
 export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
     /**
@@ -57,6 +59,13 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      * Use this prop to make `label` and `helperText` accessible for screen readers.
      */
     id?: string;
+    /**
+     * Props applied to the Input element.
+     * It will be a [`FilledInput`](/material-ui/api/filled-input/),
+     * [`OutlinedInput`](/material-ui/api/outlined-input/) or [`Input`](/material-ui/api/input/)
+     * component depending on the `variant` prop value.
+     */
+    InputProps?: PropTypes.object;
     /**
      * Callback fired when the value is changed.
      * @param {object} event The event source of the callback.
