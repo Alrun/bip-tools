@@ -11,7 +11,7 @@ import debounce from 'lodash/debounce';
 import BinaryGroup from '../BinaryGroup/BinaryGroup';
 import { binToHex, filterStr, getRandomHex, strToChunks } from '../../utils/crypto/crypto';
 import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
-import { words } from '../../wordlist/english';
+import enList from '../../wordlist/english';
 
 const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
     const [entropy, setEntropy] = React.useState('');
@@ -201,7 +201,7 @@ const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
                                         >
                                             {idx + 1}
                                         </Box>{' '}
-                                        {words[parseInt(item, 2)]}
+                                        {enList[parseInt(item, 2)]}
                                     </Typography>
                                 }
                                 key={`word-${item}`}
