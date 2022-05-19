@@ -28,6 +28,18 @@ const options = [
     }
 ];
 
+const mnemonicLanguages = [
+    { label: 'English', value: 'en-us' },
+    { label: 'Français', value: 'fr-fr' },
+    { label: 'Português', value: 'pt-pt' },
+    { label: 'Čeština', value: 'cs-cz' },
+    { label: 'Italiano', value: 'it-it' },
+    { label: '日本語', value: 'ja-jp' },
+    { label: '中文(简体)', value: 'zh-cn' },
+    { label: '中文(繁體)', value: 'zh-tw' },
+    { label: '한국어', value: 'ko-kr' }
+];
+
 const manyOptions = (amount: number) =>
     Array(amount)
         .fill('')
@@ -53,6 +65,13 @@ const Dashboard = () => {
             setCount(count + 1);
             setValue(value + 1);
         });
+    };
+
+    const [select, setSelect] = React.useState('');
+
+    const handleSelect = (val: any) => {
+        console.log('dash hand ', val);
+        setSelect(val);
     };
 
     return (
@@ -85,24 +104,231 @@ const Dashboard = () => {
                 </b>
             </div>
             <Grid container spacing={8} sx={{ px: 24 }}>
+
+                <Grid item xs={12} sm={5}>
+                    <Select
+                        fullWidth
+                        options={[]}
+                        label="Controlled"
+                        onChange={handleSelect}
+                        value={select}
+                    />
+                </Grid>
+
                 {/*<Grid item xs={12} sm={5}>*/}
                 {/*    <Select*/}
                 {/*        fullWidth*/}
-                {/*        // TT*/}
-                {/*        options={manyOptions(30)}*/}
-                {/*        label="Long Long Long Long Long Long Long Long Label"*/}
+                {/*        options={options}*/}
+                {/*        label="Options"*/}
                 {/*    />*/}
                 {/*</Grid>*/}
-                <Grid item xs={12} sm={5}>
-                    <Autocomplete
-                        // TT
-                        options={options}
-                        // options={[]}
-                        label="Long Long Long Long Long Long Long Long Label"
-                        onChange={() => {}}
-                        // loading
-                    />
-                </Grid>
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue='2'*/}
+                {/*        options={options}*/}
+                {/*        label="Options with default"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={options}*/}
+                {/*        label="Multiple Options"*/}
+                {/*        multiple*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue={['2', '3']}*/}
+                {/*        options={options}*/}
+                {/*        label="Multiple Options with default"*/}
+                {/*        multiple*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        label="String array"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue="2"*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        label="String array with default"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        label="Multiple String array"*/}
+                {/*        multiple*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        defaultValue={['1', '2']}*/}
+                {/*        label="Multiple String array with default"*/}
+                {/*        multiple*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        label="Number array"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue={2}*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        label="Number array with default"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        label="Multiple Number array"*/}
+                {/*        multiple*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        defaultValue={[1, 2]}*/}
+                {/*        label="Multiple Number array with default"*/}
+                {/*        multiple*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+
+
+
+
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        options={options}*/}
+                {/*        label="Options native"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        label="Number native"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        label="String native"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        options={[]}*/}
+                {/*        label="Empty native"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue="2"*/}
+                {/*        options={options}*/}
+                {/*        label="Options default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue={2}*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        label="Number default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue="2"*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        label="String default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        defaultValue={[2, 3]}*/}
+                {/*        options={[1, 2, 3, 4]}*/}
+                {/*        multiple*/}
+                {/*        label="Empty default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        defaultValue="2"*/}
+                {/*        options={options}*/}
+                {/*        label="Options native default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        defaultValue={2}*/}
+                {/*        options={[1, 2, 3]}*/}
+                {/*        label="Number native default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        defaultValue='2'*/}
+                {/*        options={['1', '2', '3']}*/}
+                {/*        label="String native default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Select*/}
+                {/*        fullWidth*/}
+                {/*        native*/}
+                {/*        // defaultValue='2'*/}
+                {/*        options={[]}*/}
+                {/*        label="Empty native default value"*/}
+                {/*    />*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={5}>*/}
+                {/*    <Autocomplete*/}
+                {/*        // TT*/}
+                {/*        options={options}*/}
+                {/*        // options={[]}*/}
+                {/*        label="Long Long Long Long Long Long Long Long Label"*/}
+                {/*        onChange={() => {}}*/}
+                {/*        // loading*/}
+                {/*    />*/}
+                {/*</Grid>*/}
                 {/*<Grid item xs={12} sm={5}>*/}
                 {/*    <Autocomplete*/}
                 {/*        size="small"*/}
@@ -259,10 +485,6 @@ const Dashboard = () => {
                 {/*        // maxItems={5}*/}
                 {/*    />*/}
                 {/*</Grid>*/}
-
-
-
-
 
                 {/*<Grid item xs={12} sm={5}>*/}
                 {/*    <Autocomplete*/}

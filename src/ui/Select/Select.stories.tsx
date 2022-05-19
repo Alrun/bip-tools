@@ -18,38 +18,20 @@ const options: SelectOptionsInterface[] = [
     }
 ];
 
-const manyOptions = (amount: number): SelectOptionsInterface[] =>
-    Array(amount)
-        .fill('')
-        .map((item, idx) => ({
-            value: `${idx}`,
-            label: `Option ${idx + 1}`
-        }));
-
 export default {
     title: 'UI/Select',
     component: Select,
     argTypes: {
+        defaultValue: {
+            options: ['1', '2', '3']
+        },
         helperText: { control: { type: 'text' } },
         value: { control: { type: 'text' } },
-        defaultValue: { control: { type: 'text' } },
-        options: {
-            options: ['Default', 'Overscroll'],
-            mapping: {
-                Default: options,
-                Overscroll: manyOptions(100)
-            }
-        },
         onChange: { control: { type: null }, table: { category: 'Events' } },
         onBlur: { control: { type: null }, table: { category: 'Events' } },
         onFocus: { control: { type: null }, table: { category: 'Events' } }
     },
-    parameters: {
-        actions: {
-            argTypesRegex: '' // Disable actions addon to enable native onChange
-        },
-        controls: { exclude: ['items'] }
-    }
+    parameters: { controls: { exclude: ['items'] } }
 } as ComponentMeta<typeof Select>;
 
 const wrapperDecorator = (Story: any) => (
@@ -65,16 +47,31 @@ const wrapperDecorator = (Story: any) => (
     </div>
 );
 
-const BaseTemplate: ComponentStory<typeof Select> = (args) => <Select {...args} />;
+const BaseTemplate: ComponentStory<typeof Select> = (args) => {
+    const { multiple, value, ...rest } = args;
+    const [selected, setSelected] = React.useState(() => (multiple ? [value] : value));
+
+    const handleChange = (val: any) => {
+        setSelected(val);
+    };
+
+    return <Select {...rest} onChange={handleChange} multiple={multiple} value={selected} />;
+};
 
 const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
+    const { items, value, ...rest } = args;
+    const { multiple } = items[0];
+    const [selected, setSelected] = React.useState(() => (multiple ? [value] : value));
+
+    const handleChange = (val: any) => {
+        setSelected(val);
+    };
 
     return (
         <>
             {items.map((item: any, idx: number) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <Select key={idx} {...rest} {...item} />
+                <Select key={idx} {...rest} {...item} value={selected} onChange={handleChange} />
             ))}
         </>
     );
@@ -87,6 +84,7 @@ export const Base = BaseTemplate.bind({});
 
 Base.args = {
     label: 'Select',
+    value: '',
     options,
     sx: {
         minWidth: 180
@@ -238,7 +236,7 @@ Colors.decorators = [wrapperDecorator];
 
 Colors.args = {
     ...Base.args,
-    defaultValue: '1',
+    value: '1',
     focused: true,
     items: [
         {

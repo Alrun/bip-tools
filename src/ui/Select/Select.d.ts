@@ -5,7 +5,7 @@ export interface SelectOptionsInterface {
     /**
      * The value of the option.
      */
-    value: string;
+    value: string | number;
     /**
      * A text representation of the option's content.
      */
@@ -26,16 +26,17 @@ export interface SelectProps
         | 'minRows'
         | 'multiline'
         | 'placeholder'
+        | 'rows'
         | 'type'
         | 'value'> {
     /**
      * Array of options to be rendered in the list.
      */
-    options: SelectOptionsInterface[];
+    options: Array<string | number | SelectOptionsInterface>;
     /**
      * The default value.
      */
-    defaultValue?: string | string[];
+    defaultValue?: any;
     /**
      * If true, the component uses a native select element.
      */
@@ -49,7 +50,12 @@ export interface SelectProps
      * Adds an empty option on the native selection if no default value is passed.
      * @default 'Not selected'
      */
-    nativeEmptyOptionLabel?: string;
+    nativeEmptyOptionText?: string;
+    /**
+     * Text to display when there are no options.
+     * @default 'No options'
+     */
+    noOptionsText?: React.ReactNode;
     /**
      * If true, the component is initially open.
      */
@@ -63,4 +69,8 @@ export interface SelectProps
      * If true, the menu will support multiple selections.
      */
     multiple?: boolean;
+    /**
+     * The input value.
+     */
+    value?: any;
 }
