@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Chip from '@mui/material/Chip';
-import { FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -12,6 +11,19 @@ import BinaryGroup from '../BinaryGroup/BinaryGroup';
 import { binToHex, filterStr, getRandomHex, strToChunks } from '../../utils/crypto/crypto';
 import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
 import enList from '../../wordlist/english';
+import Select from '../../ui/Select/Select';
+
+const mnemonicLanguages = [
+    { label: 'English', value: 'en-us' },
+    { label: 'Français', value: 'fr-fr' },
+    { label: 'Português', value: 'pt-pt' },
+    { label: 'Čeština', value: 'cs-cz' },
+    { label: 'Italiano', value: 'it-it' },
+    { label: '日本語', value: 'ja-jp' },
+    { label: '中文(简体)', value: 'zh-cn' },
+    { label: '中文(繁體)', value: 'zh-tw' },
+    { label: '한국어', value: 'ko-kr' }
+];
 
 const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
     const [entropy, setEntropy] = React.useState('');
@@ -20,7 +32,7 @@ const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
     const [sum, setSum] = React.useState('');
     const [binList, setBinList] = React.useState<string[]>([]);
     const [list, bin, checksum] = useMnemonic(entropy);
-    const [wordCount, setWordCount] = React.useState(initWordCount);
+    const [wordCount, setWordCount] = React.useState<number>(initWordCount);
     const [lang, setLang] = React.useState(language);
     // TODO: Remove useCallback
     const checkLength = React.useCallback((val) => ![12, 15, 18, 21, 24].includes((val.length / 8) * 3), []);
@@ -43,12 +55,12 @@ const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
         setEntropy(hex);
     };
 
-    const handleChangeWords = (e: SelectChangeEvent) => {
-        setWordCount(+e.target.value);
+    const handleChangeWords = (wordValue: string | number | Array<string | number>) => {
+        setWordCount(+wordValue);
     };
 
-    const handleChangeLang = (e: SelectChangeEvent) => {
-        setLang(e.target.value);
+    const handleChangeLang = (langValue: string | number | Array<string | number>) => {
+        setLang(langValue);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -80,52 +92,25 @@ const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
     }, [checksum]);
 
     return (
-        <Box>
+        <>
             <Grid container spacing={2} alignItems="center">
                 <Grid item>
-                    <FormControl sx={{ width: 120, mr: 2 }}>
-                        <InputLabel id="demo-simple-select-label">Wordlist</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={lang}
-                            label="Wordlist"
-                            onChange={handleChangeLang}
-                            native
-                            size="small"
-                        >
-                            <option value="en-us">English</option>
-                            <option value="es-us">Español</option>
-                            <option value="fr-us">Français</option>
-                            <option value="pr-us">Português</option>
-                            <option value="ce-us">Čeština</option>
-                            <option value="it-us">Italiano</option>
-                            <option value="jp-us">日本語</option>
-                            <option value="ch-us">中文(简体)</option>
-                            <option value="ch-us">中文(繁體)</option>
-                            <option value="kr-us">한국어</option>
-                        </Select>
-                    </FormControl>
+                    <Select
+                        options={mnemonicLanguages}
+                        label="Wordlist"
+                        value={lang}
+                        onChange={handleChangeLang}
+                        sx={{ width: 120, mr: 2 }}
+                    />
                 </Grid>
                 <Grid item marginLeft="auto">
-                    <FormControl sx={{ width: 80, mr: 2 }}>
-                        <InputLabel id="demo-simple-select-label">Words</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={wordCount}
-                            label="Words"
-                            onChange={handleChangeWords}
-                            native
-                            size="small"
-                        >
-                            <option value={12}>12</option>
-                            <option value={15}>15</option>
-                            <option value={18}>18</option>
-                            <option value={21}>21</option>
-                            <option value={24}>24</option>
-                        </Select>
-                    </FormControl>
+                    <Select
+                        options={[12, 15, 18, 21, 24]}
+                        label="Words"
+                        value={wordCount}
+                        onChange={handleChangeWords}
+                        sx={{ width: 80, mr: 2 }}
+                    />
                     <Button variant="contained" onClick={handleClick}>
                         Generate
                     </Button>
@@ -231,7 +216,7 @@ const Binary = ({ initWordCount = 12, language = 'en-us' }: any) => {
                     ))}
                 </Grid>
             )}
-        </Box>
+        </>
     );
 };
 

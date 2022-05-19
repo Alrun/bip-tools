@@ -53,6 +53,10 @@ type TypographyProps = Pick<
     'align' | 'children' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant'
 > & {
     /**
+     * The component used for the Root slot. Either a string to use an HTML element or a component.
+     */
+    component?: React.ElementType;
+    /**
      * The color of the component. It supports those theme colors that make sense for this component.
      * @default default
      */
