@@ -1,6 +1,6 @@
 import React from 'react';
 import MuiTypography from '@mui/material/Typography';
-import { TypographyTypeMap } from '@mui/material/Typography/Typography';
+import { TypographyTypeMap, TypographyProps as MuiTypographyProps } from '@mui/material/Typography/Typography';
 
 declare module '@mui/material/styles' {
     interface TypographyVariants {
@@ -48,28 +48,29 @@ declare module '@mui/material/Typography' {
     }
 }
 
-type TypographyProps = Pick<
-    TypographyTypeMap['props'],
-    'align' | 'children' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant'
-> & {
-    /**
-     * The component used for the Root slot. Either a string to use an HTML element or a component.
-     */
-    component?: React.ElementType;
-    /**
-     * The color of the component. It supports those theme colors that make sense for this component.
-     * @default default
-     */
-    color?:
-        | 'default'
-        | 'primary'
-        | 'secondary'
-        | 'success.main'
-        | 'error.main'
-        | 'info.main'
-        | 'warning.main'
-        | 'text.disabled';
-};
+type TypographyProps = MuiTypographyProps &
+    Pick<
+        TypographyTypeMap['props'],
+        'align' | 'children' | 'gutterBottom' | 'noWrap' | 'paragraph' | 'sx' | 'variant'
+    > & {
+        /**
+         * The component used for the Root slot. Either a string to use an HTML element or a component.
+         */
+        component?: React.ElementType;
+        /**
+         * The color of the component. It supports those theme colors that make sense for this component.
+         * @default default
+         */
+        color?:
+            | 'default'
+            | 'primary'
+            | 'secondary'
+            | 'success.main'
+            | 'error.main'
+            | 'info.main'
+            | 'warning.main'
+            | 'text.disabled';
+    };
 
 export const typoStyles = {
     h1: {

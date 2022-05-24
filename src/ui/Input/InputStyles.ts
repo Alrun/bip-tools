@@ -214,7 +214,10 @@ const StyledInput = styled(TextField)(({ theme }) => ({
         fontSize: theme.typography.smRegular.fontSize
     },
     '& .MuiInputAdornment-root': {
-        color: theme.palette.mode === 'dark' && theme.palette.text.secondary
+        color: theme.palette.mode === 'dark' && theme.palette.text.secondary,
+        '& .MuiTypography-root': {
+            color: 'inherit'
+        }
     }
 }));
 

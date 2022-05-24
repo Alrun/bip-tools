@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentIcon } from '../../ui/Icons/Icons';
+import { ComponentIcon, DashboardIcon } from '../../ui/Icons/Icons';
 import { RouteLinkInterface, RoutesListInterface } from './Navigation.d';
 
 const linkApp: RoutesListInterface[] = [
@@ -10,7 +10,7 @@ const linkApp: RoutesListInterface[] = [
             {
                 label: 'Home',
                 to: '/',
-                icon: <ComponentIcon />
+                icon: <DashboardIcon />
             },
             {
                 label: 'Mnemonic',
