@@ -18,6 +18,10 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiSearchIcon from '@mui/icons-material/Search';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import MuiDashboardIcon from '@mui/icons-material/Dashboard';
+import MuiInfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 export const DragIcon = (props: SvgIconProps) => <DragIndicatorIcon fontSize="small" {...props} />;
 export const ModeLightIcon = (props: SvgIconProps) => <LightModeIcon fontSize="small" {...props} />;
@@ -37,3 +41,7 @@ export const StarIcon = (props: SvgIconProps) => <Star {...props} />;
 export const StarBorderIcon = (props: SvgIconProps) => <StarBorder {...props} />;
 export const CrossIcon = (props: SvgIconProps) => <CloseIcon {...props} />;
 export const SearchIcon = (props: SvgIconProps) => <MuiSearchIcon {...props} />;
+export const ShowIcon = (props: SvgIconProps) => <VisibilityIcon {...props} />;
+export const HideIcon = (props: SvgIconProps) => <VisibilityOffIcon {...props} />;
+export const DashboardIcon = (props: SvgIconProps) => <MuiDashboardIcon {...props} />;
+export const InfoOutlinedIcon = (props: SvgIconProps) => <MuiInfoOutlinedIcon {...props} />;

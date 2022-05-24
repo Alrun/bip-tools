@@ -14,7 +14,7 @@ const Link = ({ href, external, children, ...props }: LinkProps) =>
             {...props}
         >
             {children}
-            {external && <ExternalIcon sx={{ fontSize: '1em' }} />}
+            {external && <ExternalIcon sx={{ fontSize: '1.2em' }} />}
         </StyledLink>
     ) : (
         <StyledLink component={href ? 'a' : 'span'} href={href} {...props}>

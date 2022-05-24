@@ -3,7 +3,9 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '../ui/Typography/Typography';
-import Binary from '../componets/Binary/Binary';
+import TabGenerator from '../componets/TabGenerator/TabGenerator';
+import TabAddress from '../componets/TabAddress/TabAddress';
+import TabInfo from '../componets/TabInfo/TabInfo';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -18,8 +20,8 @@ function TabPanel(props: TabPanelProps) {
         <div
             role="tabpanel"
             hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
+            id={`mnemonic-tabpanel-${index}`}
+            aria-labelledby={`mnemonic-tab-${index}`}
             {...other}
         >
             {value === index && <Box sx={{ py: 5 }}>{children}</Box>}
@@ -29,14 +31,14 @@ function TabPanel(props: TabPanelProps) {
 
 function a11yProps(index: number) {
     return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`
+        id: `mnemonic-tab-${index}`,
+        'aria-controls': `mnemonic-tabpanel-${index}`
     };
 }
 
 const Mnemonic = () => {
     const rendersCount = React.useRef<number>(0);
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -46,20 +48,20 @@ const Mnemonic = () => {
         <>
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Item One" {...a11yProps(0)} />
-                        <Tab label="Item Two" {...a11yProps(1)} />
-                        <Tab label="Item Three" {...a11yProps(2)} />
+                    <Tabs value={value} onChange={handleChange} aria-label="mnemonic tabs">
+                        <Tab label="Generator" {...a11yProps(0)} />
+                        <Tab label="Addresses" {...a11yProps(1)} />
+                        <Tab label="Info" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    <Binary />
+                    <TabGenerator />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    Item Two
+                    <TabAddress />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Item Three
+                    <TabInfo />
                 </TabPanel>
             </Box>
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import Input from '../../ui/Input/Input';
+import Typography from '../../ui/Typography/Typography';
 import enList from '../../wordlist/english';
 import { filterStr } from '../../utils/crypto/crypto';
-import Virtualize from '../../ui/Autocomplete/Autocomplete';
+import Autocomplete from '../../ui/Autocomplete/Autocomplete';
 
-const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
+const GeneratorGroup = ({ id, value, color, disabled, onChange }: any) => {
     const [binary, setBinary] = React.useState<string>(value);
     const [index, setIndex] = React.useState<number>(parseInt(value, 2) + 1);
     const [word, setWord] = React.useState<string>(enList[index - 1]);
@@ -56,9 +56,9 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
     return (
         <Box>
             <Box sx={{ py: 1 }}>
-                <Typography align="center">{id + 1}</Typography>
-                <Box sx={{ py: 1 }}>
-                    <TextField
+                <Typography variant="xsBold" component="div" align="center">{id + 1}</Typography>
+                <Box sx={{ pb: 1 }}>
+                    <Input
                         id={`raw-${id}`}
                         label="Binary"
                         size="small"
@@ -77,7 +77,7 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
                     />
                 </Box>
                 <Box sx={{ py: 1 }}>
-                    <TextField
+                    <Input
                         id={`index-${id}`}
                         label="Index"
                         size="small"
@@ -98,11 +98,12 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
                     />
                 </Box>
                 <Box sx={{ py: 1 }}>
-                    <Virtualize
+                    <Autocomplete
                         // id={`word-${id}`}
                         options={enList as any}
                         label="Word"
                         value={word}
+                        size="small"
                         onChange={handleChangeWord}
                         // color={color}
                         maxItems={5}
@@ -114,4 +115,4 @@ const BinaryGroup = ({ id, value, color, disabled, onChange }: any) => {
     );
 };
 
-export default BinaryGroup;
+export default GeneratorGroup;

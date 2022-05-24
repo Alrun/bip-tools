@@ -54,6 +54,8 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      * @default 'start'
      */
     iconPosition?: 'start' | 'end';
+
+    iconProps?: any;
     /**
      * The id of the `input` element.
      * Use this prop to make `label` and `helperText` accessible for screen readers.
