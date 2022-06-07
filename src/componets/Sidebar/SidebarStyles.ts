@@ -39,7 +39,7 @@ export const StyledDrawer = styled(MuiDrawer, {
     ...(!open && {
         ...closedMixin(theme, widthClose),
         '& .MuiDrawer-paper': closedMixin(theme, widthClose)
-    }),
+    })
     // '&:hover': {
     //     '.MuiDrawer-paper': {
     //         width: widthOpen
@@ -51,5 +51,6 @@ export const StyledLink = styled(Link)(({ theme }) => ({
     display: 'flex',
     textDecoration: 'none',
     alignItems: 'center',
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    border: 0
 }));

@@ -40,7 +40,7 @@ const GroupTemplate: ComponentStory<any> = (args) => {
                 gridAutoFlow: 'column',
                 gridAutoColumns: '1fr',
                 gridAutoRows: '1fr',
-                gridTemplateColumns: 'repeat(3,minmax(160px,160px))',
+                gridTemplateColumns: 'repeat(6,minmax(160px,160px))',
                 gridTemplateRows: 'repeat(6,minmax(60px,60px))'
             }}
         >
@@ -148,6 +148,56 @@ Palette.args = {
             label: 'Info',
             caption: 'dark',
             color: (theme: Theme) => theme.palette.info.dark
+        },
+        {
+            label: 'Grey',
+            caption: '50',
+            color: (theme: Theme) => theme.palette.grey[50]
+        },
+        {
+            label: 'Grey',
+            caption: '100',
+            color: (theme: Theme) => theme.palette.grey[100]
+        },
+        {
+            label: 'Grey',
+            caption: '200',
+            color: (theme: Theme) => theme.palette.grey[200]
+        },
+        {
+            label: 'Grey',
+            caption: '300',
+            color: (theme: Theme) => theme.palette.grey[300]
+        },
+        {
+            label: 'Grey',
+            caption: '400',
+            color: (theme: Theme) => theme.palette.grey[400]
+        },
+        {
+            label: 'Grey',
+            caption: '500',
+            color: (theme: Theme) => theme.palette.grey[500]
+        },
+        {
+            label: 'Grey',
+            caption: '600',
+            color: (theme: Theme) => theme.palette.grey[600]
+        },
+        {
+            label: 'Grey',
+            caption: '700',
+            color: (theme: Theme) => theme.palette.grey[700]
+        },
+        {
+            label: 'Grey',
+            caption: '800',
+            color: (theme: Theme) => theme.palette.grey[800]
+        },
+        {
+            label: 'Grey',
+            caption: '900',
+            color: (theme: Theme) => theme.palette.grey[900]
         }
     ]
 };

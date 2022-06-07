@@ -2,7 +2,6 @@ import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { isTouch } from '../../utils/featuresDetect';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { DrawerWidthInterface, LayoutHeightInterface, LayoutProps } from './Layout.d';
 import { drawerDenseToggle } from '../../redux/slices/app/app';
@@ -11,6 +10,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import StyledWrapper from './LayoutStyles';
+import { isTouch } from '../../utils/featuresDetection/featuresDetection';
 
 const drawerWidth: DrawerWidthInterface = {
     open: '15rem',
@@ -22,7 +22,7 @@ const layoutHeight: LayoutHeightInterface = {
     footer: '3.5rem'
 };
 
-const Layout = ({ mode, handleChangeMode }: LayoutProps) => {
+const Layout = ({ mode, changeMode }: LayoutProps) => {
     const { drawerDense } = useAppSelector((state) => state.app);
     const dispatch = useAppDispatch();
 
@@ -33,19 +33,12 @@ const Layout = ({ mode, handleChangeMode }: LayoutProps) => {
         setOpen(open);
     };
 
-    const handleDense = (dense: boolean) => {
+    const handleDense = React.useCallback((dense: boolean) => {
         dispatch(drawerDenseToggle(dense));
-    };
+    }, []);
 
     // TODO: Remove after render check
     const rendersCount = React.useRef<number>(0);
-
-    // TODO: Check performance
-    React.useEffect(() => {
-        const start = performance.now();
-
-        return console.log(`Performance Layout: ${performance.now() - start} ms`);
-    });
 
     return (
         <Box sx={{ display: 'flex', height: '100%' }}>
@@ -55,18 +48,20 @@ const Layout = ({ mode, handleChangeMode }: LayoutProps) => {
                 widthOpen={drawerWidth.open}
                 widthClose={drawerWidth.close}
                 isMobile={isMobile}
-                isOpen={isOpen}
-                isDense={drawerDense}
-                handleOpen={handleOpen}
-                handleDense={handleDense}
+                open={isOpen}
+                dense={drawerDense}
+                setOpen={handleOpen}
+                setDense={handleDense}
+                mode={mode}
+                changeMode={changeMode}
             />
             <StyledWrapper open={drawerDense} widthOpen={drawerWidth.open} widthClose={drawerWidth.close}>
                 <Header
                     height={layoutHeight.header}
                     mode={mode}
                     isMobile={isMobile}
-                    handleDrawerOpen={handleOpen}
-                    handleChangeMode={handleChangeMode}
+                    drawerOpen={handleOpen}
+                    changeMode={changeMode}
                 />
                 <Main />
                 {/* TODO: Remove after render check */}

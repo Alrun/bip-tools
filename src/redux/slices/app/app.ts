@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export type ThemeModeType = 'light' | 'dark';
+import {ThemeModeType} from '../../../componets/ThemeModeSwitch/ThemeModeSwitch.d'
 
 export interface AppState {
     locale: string;
-    mode: ThemeModeType | 'auto';
+    mode: ThemeModeType;
     drawerDense: boolean;
     sidebarExpanded: false | string;
 }
@@ -20,7 +19,7 @@ export const appLocal = createSlice({
     name: 'appLocal',
     initialState,
     reducers: {
-        setMode: (state, { payload }: PayloadAction<'light' | 'dark'>) => {
+        setMode: (state, { payload }: PayloadAction<ThemeModeType>) => {
             state.mode = payload;
         },
         drawerDenseToggle: (state, { payload }: PayloadAction<boolean>) => {

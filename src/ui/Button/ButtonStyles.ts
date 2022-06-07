@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 
 export const StyledButton = styled(Button)(({ theme }) => ({
     textTransform: 'none',
@@ -44,10 +43,18 @@ export const StyledButton = styled(Button)(({ theme }) => ({
     }
 }));
 
-export const StyledIconButton = styled(IconButton)({
+export const StyledIconButton = styled(Button)({
     width: '1.715em',
     height: '1.715em',
-    '&.MuiIconButton-sizeSmall': {
+    fontSize: '1.5rem',
+    padding: '8px',
+    borderRadius: '50%',
+    minWidth: 'auto',
+    lineHeight: 1,
+    '&.MuiButton-sizeSmall': {
         fontSize: '1.167rem'
+    },
+    '&.MuiButton-sizeLarge': {
+        fontSize: '1.75rem'
     }
 });

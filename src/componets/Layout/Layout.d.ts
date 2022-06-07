@@ -1,11 +1,6 @@
-import { ThemeModeType } from '../../redux/slices/app/app';
-import { Action, AnyAction } from 'redux';
-import { Component, Context } from 'react';
-import { ProviderProps, ReactReduxContextValue } from 'react-redux';
-
 export interface LayoutProps {
-    mode: ThemeModeType;
-    handleChangeMode: () => void;
+    mode: ThemeModeType | 'auto';
+    changeMode: (nextMode) => void;
 }
 
 /**

@@ -27,7 +27,6 @@ const colors = {
             main: '#e52828'
         },
         info: {
-            // main: '#0288d1'
             main: '#007EB5'
         },
         warning: {
@@ -69,6 +68,13 @@ const colors = {
             main: '#d1d1d1',
             text: 'rgba(255,255,255,0.3)'
         }
+    },
+    grey: {
+        500: '#616161',
+        600: '#535353',
+        700: '#424242',
+        800: '#323232',
+        900: '#282828'
     }
 };
 
@@ -89,8 +95,10 @@ const transitions = {
     easing: {
         // This is the most common easing curve.
         easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        // Objects enter the screen at full velocity from off-screen and
-        // slowly decelerate to a resting point.
+        /**
+         * Objects enter the screen at full velocity from off-screen and
+         * slowly decelerate to a resting point.
+         */
         easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
         // Objects leave the screen at full velocity. They do not decelerate when off-screen.
         easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
@@ -113,16 +121,20 @@ const customTheme = (mode: 'light' | 'dark') =>
         components: {
             MuiCssBaseline: {
                 styleOverrides: {
-                    /* Mozilla */
+                    /**
+                     * Mozilla
+                     */
                     '@supports (-moz-appearance:none)': {
-                        /* Scroll styling */
+                        // Scroll styling
                         '*': {
                             scrollbarColor: '#eee #ccc',
                             scrollbarWidth: 'thin'
                         }
                     },
-                    /* Chrome */
-                    /* Scroll styling */
+                    /**
+                     * Chrome
+                     */
+                    // Scroll styling
                     '::-webkit-scrollbar': {
                         width: '6px',
                         height: '6px',
@@ -269,6 +281,7 @@ const customTheme = (mode: 'light' | 'dark') =>
         },
         palette: {
             mode,
+            grey: colors.grey,
             ...(mode === 'light'
                 ? {
                       // Palette values for light mode

@@ -1,6 +1,9 @@
 export const isBrowser = typeof window !== 'undefined';
 export const isIOS = isBrowser && typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
-
+/**
+ * Defines touchscreen support.
+ * @returns {boolean}
+ */
 export const isTouch = () => {
     if (isBrowser) {
         const mediaQuery = window.matchMedia('(pointer: coarse)');
@@ -12,4 +15,17 @@ export const isTouch = () => {
     }
 
     return false;
+};
+/**
+ * Detect browser color scheme.
+ * @returns {'dark'|'light}
+ */
+export const detectColorScheme = (): 'dark' | 'light' => {
+    if (!window.matchMedia) return 'light';
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+    }
+
+    return 'light';
 };
