@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,10 +7,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
-import { ModeDarkIcon, ModeLightIcon } from '../../ui/Icons/Icons';
 import { flatLinkList } from '../Navigation/Navigation';
+import Button from '../../ui/Button/Button';
+import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
 
-const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawerOpen }: any) => {
+const Header = ({ height = '50px', mode, isMobile, changeMode, drawerOpen }: any) => {
     const [title, setTitle] = React.useState<string>('');
     const location = useLocation();
 
@@ -19,7 +19,7 @@ const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawe
         const currentLabel = () => {
             const currentLink = flatLinkList.find((item) => item.to === location.pathname);
 
-            return currentLink ? currentLink.label : '';
+            return currentLink ? currentLink.label : 'Not Found';
         };
 
         setTitle(currentLabel);
@@ -49,16 +49,16 @@ const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawe
             >
                 <Grid container justifyContent="space-between" alignItems="center" spacing={4}>
                     <Grid item sx={{ display: isMobile ? 'block' : 'none' }}>
-                        <IconButton
-                            // edge="start"
+                        <Button
+                            isRound
                             size="small"
+                            onClick={() => drawerOpen(true)}
                             color="inherit"
                             aria-label="menu"
                             sx={{ zIndex: 'drawer' }}
-                            onClick={() => handleDrawerOpen(true)}
                         >
                             <MenuIcon fontSize="large" />
-                        </IconButton>
+                        </Button>
                     </Grid>
                     <Grid item xs justifyContent={{ xs: 'center', md: 'flex-start' }} sx={{ display: 'flex' }}>
                         <Typography variant="h3">{title}</Typography>
@@ -71,16 +71,18 @@ const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawe
                         </div>
                     </Grid>
                     <Grid item>
-                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton
-                                // sx={{ ml: 1, position: 'absolute', right: 0 }}
-                                onClick={handleChangeMode}
-                                color="inherit"
-                                aria-label={mode === 'light' ? 'Light' : 'Dark'}
-                            >
-                                {mode === 'light' ? <ModeLightIcon /> : <ModeDarkIcon />}
-                            </IconButton>
-                        </Box>
+                        <Box>Theme</Box>
+                    </Grid>
+                    <Grid
+                        item
+                        sx={{
+                            display: {
+                                xs: 'none',
+                                md: 'flex'
+                            }
+                        }}
+                    >
+                        <ThemeModeSwitch mode={mode} changeMode={changeMode} size="small" />
                     </Grid>
                 </Grid>
             </Toolbar>
@@ -89,4 +91,4 @@ const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawe
     );
 };
 
-export default React.memo(Header);
+export default Header;

@@ -1,7 +1,19 @@
-import { detectColorScheme } from './App';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import '../../mocks/jest/matchMedia.mock';
+import { store } from '../../redux/store';
+import App from './App';
 
-describe('app', () => {
-    it('should return theme scheme', () => {
-        expect(detectColorScheme()).toBe('light');
-    });
+it('renders mnemonic link', () => {
+    render(
+        <BrowserRouter>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </BrowserRouter>
+    );
+
+    expect(screen.getByText(/bip tools/i)).toBeInTheDocument();
 });

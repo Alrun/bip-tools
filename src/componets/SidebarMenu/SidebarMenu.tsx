@@ -14,7 +14,7 @@ import { SidebarProps } from './SidebarMenu.d';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { sidebarExpand } from '../../redux/slices/app/app';
 
-export default function SidebarMenu({ width = '100%', handleDrawerOpen }: SidebarProps) {
+export default function SidebarMenu({ width = '100%', setDrawerOpen }: SidebarProps) {
     const { sidebarExpanded } = useAppSelector((state) => state.app);
     const dispatch = useAppDispatch();
     const location = useLocation();
@@ -26,13 +26,8 @@ export default function SidebarMenu({ width = '100%', handleDrawerOpen }: Sideba
     // TODO: Render optimisation
     const handleLinkClick = (url: string, label: string): void => {
         navigate(url, { state: { label } });
-
-        /**
-         * Close drawer after click on mobile
-         */
-        if (handleDrawerOpen) {
-            handleDrawerOpen(false);
-        }
+        // Close drawer after click on mobile
+        if (setDrawerOpen) setDrawerOpen(false);
     };
 
     return (

@@ -8,22 +8,14 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { StyledDrawer, StyledLink } from './SidebarStyles';
 import SidebarMenu from '../SidebarMenu/SidebarMenu';
-import { isIOS } from '../../utils/featuresDetect';
 import Button from '../../ui/Button/Button';
+import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
+import { isIOS } from '../../utils/featuresDetection/featuresDetection';
 
 const drawerBleeding = 10;
 
-const SidebarContainer = ({
-    heightHeader,
-    heightFooter,
-    isOpen,
-    isDense,
-    isMobile,
-    handleOpen,
-    handleDense,
-    children
-}: any) => {
-    const rendersCount = React.useRef<number>(0);
+const SidebarContainer = ({ heightHeader, heightFooter, open, dense, isMobile, setOpen, setDense, children }: any) => {
+    const rendersCount = React.useRef(0);
 
     return (
         <Box sx={{ height: '100%' }}>
@@ -38,7 +30,7 @@ const SidebarContainer = ({
                     <StyledLink to="/" reloadDocument>
                         <AppleIcon sx={{ fontSize: 38 }} />
                         <Typography variant="h4" component="span" sx={{ m: 0, pl: 6 }}>
-                            Portfolio
+                            BIP Tools
                         </Typography>
                     </StyledLink>
 
@@ -46,7 +38,7 @@ const SidebarContainer = ({
                         isRound
                         size="large"
                         sx={{ display: isMobile ? 'flex' : 'none', ml: 'auto' }}
-                        onClick={() => handleOpen(false)}
+                        onClick={() => setOpen(false)}
                     >
                         <ChevronLeftIcon fontSize="large" />
                     </Button>
@@ -56,9 +48,13 @@ const SidebarContainer = ({
 
             <Box
                 sx={{
-                    height: isMobile
-                        ? `calc(100% - ${heightHeader})`
-                        : `calc(100% - ${heightHeader} - ${heightFooter})`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    // height: isMobile
+                    //     ? `calc(100% - ${heightHeader})`
+                    //     : `calc(100% - ${heightHeader} - ${heightFooter})`,
+                    height: `calc(100% - ${heightHeader} - ${heightFooter})`,
                     overflowX: 'hidden',
                     overscrollBehavior: 'none',
                     msOverflowStyle: 'none' /* Hide scrollbar for IE and Edge */,
@@ -87,7 +83,7 @@ const SidebarContainer = ({
 
             <Box
                 sx={{
-                    display: isOpen ? 'none' : 'block',
+                    display: open ? 'none' : 'block',
                     position: 'absolute',
                     height: heightFooter,
                     px: 3,
@@ -103,13 +99,13 @@ const SidebarContainer = ({
                     }}
                 />
 
-                {isDense ? (
+                {dense ? (
                     <Button
                         isRound
                         sx={{ ml: -1 }}
                         size="small"
                         aria-label="Expand main navigation"
-                        onClick={() => handleDense(false)}
+                        onClick={() => setDense(false)}
                     >
                         <ChevronRightIcon fontSize="large" />
                     </Button>
@@ -119,7 +115,7 @@ const SidebarContainer = ({
                         sx={{ ml: -1 }}
                         size="small"
                         aria-label="Shrink main navigation"
-                        onClick={() => handleDense(true)}
+                        onClick={() => setDense(true)}
                     >
                         <ChevronLeftIcon fontSize="large" />
                     </Button>
@@ -134,15 +130,17 @@ const SidebarContainer = ({
 };
 
 const Sidebar = ({
+    dense,
     heightHeader = '50px',
     heightFooter = '50px',
     widthOpen = '200px',
     widthClose = '60px',
-    isOpen,
-    isDense,
+    open,
     isMobile,
-    handleOpen,
-    handleDense
+    setOpen,
+    setDense,
+    mode,
+    changeMode
 }: any) => {
     const container = window !== undefined ? () => window.document.body : undefined;
 
@@ -150,9 +148,9 @@ const Sidebar = ({
         <SwipeableDrawer
             container={container}
             anchor="left"
-            open={isOpen}
-            onClose={() => handleOpen(false)}
-            onOpen={() => handleOpen(true)}
+            open={open}
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
             swipeAreaWidth={drawerBleeding}
             disableSwipeToOpen={false}
             disableBackdropTransition={!isIOS}
@@ -169,23 +167,36 @@ const Sidebar = ({
                 heightFooter={heightFooter}
                 widthOpen={widthOpen}
                 widthClose={widthClose}
-                isOpen={isOpen}
+                open={open}
                 isMobile={isMobile}
-                handleOpen={handleOpen}
+                setOpen={setOpen}
             >
-                <SidebarMenu width={widthOpen} handleDrawerOpen={handleOpen} />
+                <SidebarMenu width={widthOpen} setDrawerOpen={setOpen} />
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        bottom: '8px',
+                        left: 0,
+                        right: 0,
+                        margin: 'auto',
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <ThemeModeSwitch mode={mode} changeMode={changeMode} expanded />
+                </Box>
             </SidebarContainer>
         </SwipeableDrawer>
     ) : (
-        <StyledDrawer variant="permanent" open={!isDense} widthOpen={widthOpen} widthClose={widthClose}>
+        <StyledDrawer variant="permanent" open={!dense} widthOpen={widthOpen} widthClose={widthClose}>
             <SidebarContainer
+                isMobile={isMobile}
+                dense={dense}
                 heightHeader={heightHeader}
                 heightFooter={heightFooter}
+                setDense={setDense}
                 widthOpen={widthOpen}
                 widthClose={widthClose}
-                isDense={isDense}
-                isMobile={isMobile}
-                handleDense={handleDense}
             >
                 <SidebarMenu width={widthOpen} />
             </SidebarContainer>
