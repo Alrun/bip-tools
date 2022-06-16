@@ -32,7 +32,7 @@ export interface SelectProps
     /**
      * Array of options to be rendered in the list.
      */
-    options: Array<string | number | SelectOptionsInterface>;
+    options: Readonly<Array<string | number | SelectOptionsInterface>>;
     /**
      * The default value.
      */

@@ -6,6 +6,7 @@ export interface ButtonProps
         MuiButtonProps,
         'action' | 'classes' | 'disableElevation' | 'focusVisibleClassName' | 'touchRippleRef' | 'TouchRippleProps'
     > {
+    async?: boolean;
     /**
      * If `true`, the component is disabled.
      * @default false
@@ -16,6 +17,7 @@ export interface ButtonProps
      * @default false
      */
     isRound?: boolean;
+    loading?: boolean;
     /**
      * Callback fired when the button is clicked.
      *

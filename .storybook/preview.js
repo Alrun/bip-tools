@@ -1,7 +1,7 @@
 import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as Emotion10ThemeProvider } from 'emotion-theming';
+import { ThemeProvider as Emotion10ThemeProvider } from '@emotion/react';
 import { useDarkMode } from 'storybook-dark-mode';
 import customTheme from '../src/ui/Theme/Theme';
 

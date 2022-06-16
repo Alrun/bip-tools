@@ -1,9 +1,8 @@
 import React from 'react';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '../../mocks/jest/matchMedia.mock';
 import ThemeModeSwitch from './ThemeModeSwitch';
-import { renderWithTheme } from '../../utils/testHelpers';
+import { renderWithTheme } from '../../utils/test/helpers';
 
 describe('theme mode switch', () => {
     it('should render a button', () => {

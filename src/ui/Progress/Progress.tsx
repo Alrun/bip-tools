@@ -1,8 +1,9 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import StyledProgress from './ProgressStyles';
 
-const Progress = () => {
+const Progress = ({height = 3}) => {
     const [progress, setProgress] = React.useState(0);
 
     // TODO: Connect progress bar with loading state
@@ -18,7 +19,9 @@ const Progress = () => {
         }, 500);
 
         return () => {
+
             clearInterval(timer);
+            setProgress(90)
         };
     }, []);
 
@@ -32,16 +35,15 @@ const Progress = () => {
                 width: '100%',
                 zIndex: 'snackbar',
                 // color: 'red',
-                bgcolor: 'background.default'
+                // bgcolor: 'background.default'
             }}
         >
-            {progress !== 100 && progress !== 0 && (
-                <LinearProgress
-                    variant="determinate"
+                <StyledProgress
+                    height={height}
+                    // variant="determinate"
                     // color="inherit"
-                    value={progress}
+                    // value={progress}
                 />
-            )}
         </Box>
     );
 };
