@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import '../mocks/jest/matchMedia.mock';
 import App from '../componets/App/App';
 import { store } from '../redux/store';
 // import { Table } from '../componets/Main/Main';

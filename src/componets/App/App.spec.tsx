@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import '../../mocks/jest/matchMedia.mock';
 import { store } from '../../redux/store';
 import App from './App';
 

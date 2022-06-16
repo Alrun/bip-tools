@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { VariableSizeList, ListChildComponentProps } from 'react-window';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';

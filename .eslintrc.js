@@ -18,7 +18,6 @@ module.exports = {
         "react", "@typescript-eslint", "prettier"
     ],
     extends: [
-        // "plugin:react/recommended",
         "airbnb",
         "airbnb-typescript",
         "prettier"
@@ -33,42 +32,11 @@ module.exports = {
         }],
         "prefer-numeric-literals": "off",
         "import/order": "warn",
-        // "prefer-arrow-callback": [ "off", { "allowNamedFunctions": true } ],
-        // "no-param-reassign": "off",
-        // "consistent-return": ["warn", { "treatUndefinedAsUnspecified": true }],
-        // TODO: Add react props
         "react/require-default-props": ["off", {"forbidDefaultForRequired": false, "ignoreFunctionalComponents": true}],
         "react/prop-types": "off",
         "spaced-comment": "warn",
         "react/jsx-props-no-spreading": "off",
-        // "jsx-a11y/label-has-associated-control": [ "error", {
-        //     "required": {
-        //         "some": [ "nesting", "id"  ]
-        //     }
-        // }],
-        // 'max-len': [0, {'code': 120}],
-        // "jsx-a11y/label-has-for": [ "error", {
-        //     "required": {
-        //         "some": [ "nesting", "id"  ]
-        //     }
-        // }]
     },
-    // "eslintConfig": {
-    //     "extends": [
-    //         "react-app",
-    //         "react-app/jest"
-    //     ],
-    //     "overrides": [
-    //         {
-    //             "files": [
-    //                 "**/*.stories.*"
-    //             ],
-    //             "rules": {
-    //                 "import/no-anonymous-default-export": "off"
-    //             }
-    //         }
-    //     ]
-    // },
     "overrides": [
         {
             "files": [
@@ -77,6 +45,12 @@ module.exports = {
             "rules": {
                 "import/no-anonymous-default-export": "off"
             }
-        }
+        },
+        {
+            "files": ["./src/setupTests.ts"],
+            "rules": {
+                "import/no-extraneous-dependencies": "off"
+            },
+        },
     ]
 }

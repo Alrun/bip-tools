@@ -33,6 +33,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Derivation from '../Derivation/Derivation';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard/useCopyToClipboard';
 import Switch from '../../ui/Switch/Switch';
+import useSeed from '../../hooks/useSeed/useSeed';
+import enList from '../../wordlists/english';
+import { filterStr } from '../../utils/crypto/crypto';
+import debounce from 'lodash/debounce';
+import { useAppSelector } from '../../redux/hooks';
 
 function createData(path: string, address: string, publicKey: string, privateKey: string) {
     return { path, address, publicKey, privateKey };
@@ -109,11 +114,17 @@ const ButtonQrCode = ({ tooltipText }: any) => (
     </Tooltip>
 );
 
-const TabAddress = (props: any) => {
+const TabAddress = () => {
+    const { seed, expandedPanel } = useAppSelector((state) => state.mnemonic);
     const [copy, setCopy] = React.useState('');
     const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
     const xlUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('xl'), { noSsr: true });
     const showBalance = true;
+
+
+
+    // const [seedValue, setSeedValue] = React.useState(seed);
+
 
     // const [status, message] = useCopyToClipboard(copy, );
 
@@ -136,35 +147,55 @@ const TabAddress = (props: any) => {
         }
     };
 
-    const [expanded, setExpanded] = React.useState<string | false>('panel1');
+    const handleSeedChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const letters = '0123456789abcdef';
+        const filteredValue = filterStr(e.target.value, letters, 128);
 
-    const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-        setExpanded(isExpanded ? panel : false);
+        // setSeedValue(filteredValue);
+        // debounce((eventData) => console.log('debounce'), 1500);
+        // delayedHandleChange(filteredValue);
     };
+
+    // const handleExpandPanel = (panel: string) => () => changeExpandedPanel(panel);
+
+    // React.useEffect(() => {
+        //     console.log(entropy);
+        // setSeedValue(seed);
+        //     setSum(checksum);
+        //     setBinList(list);
+    // }, [seed]);
 
     return (
         <>
-            <Alert severity="warning" sx={{mb: 6}}>This section is a work in progress!</Alert>
-            <Box sx={{mb: 4}}>
+            <Alert severity="warning" sx={{ mb: 6 }}>
+                This section is a work in progress!
+            </Alert>
+            <Box sx={{ mb: 4 }}>
                 <Input
                     label="Seed"
                     multiline
-                    value="56b73850080d1d7e8a777ef5d6b1a73b6a983fe3e74b80ca9775443165f12b9ff31d543d807b725b459e8e1761093256f0493cc5ba240653db9c425e18afa1a1"
+                    value={seed}
                     fullWidth
+                    onChange={handleSeedChange}
                     // margin="dense"
                     // variant="filled"
                     // disabled
                     helperText="Changing this field will clear the existing mnemonic and passphrase."
+                    InputProps={{
+                        spellCheck: false,
+                        sx: { fontFamily: 'Monospace' },
+                        // shrink: binList.length
+                    }}
                 />
             </Box>
 
             <Box sx={{ mb: 4 }}>
                 <Accordion
-                    expanded={expanded === 'panel1'}
+                    expanded={expandedPanel.includes('address-panel-1')}
                     elevation={0}
                     variant="outlined"
                     // sx={{ border: (theme: Theme) => `1px solid ${theme.palette.divider}` }}
-                    onChange={handleChange('panel1')}
+                    // onChange={handleExpandPanel('address-panel-1')}
                 >
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -208,9 +239,12 @@ const TabAddress = (props: any) => {
                 </Grid>
                 <Grid>
                     <Select
-                        options={[{value: 'bitcoin', label: 'BTC'}, {value: 'ethereum', label: 'ETH'}]}
+                        options={[
+                            { value: 'bitcoin', label: 'BTC' },
+                            { value: 'ethereum', label: 'ETH' }
+                        ]}
                         label="Coin"
-                        value='bitcoin'
+                        value="bitcoin"
                         // onChange={handleChangeLang}
                         sx={{ width: 120, mr: 2 }}
                     />
@@ -219,7 +253,7 @@ const TabAddress = (props: any) => {
                     <Checkbox label="Hardened" />
                 </Grid>
             </Grid>
-            <Box sx={{mb: 6}}>
+            <Box sx={{ mb: 6 }}>
                 <Input
                     label="Derivation Path"
                     multiline

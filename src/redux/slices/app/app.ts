@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {ThemeModeType} from '../../../componets/ThemeModeSwitch/ThemeModeSwitch.d'
+import { ThemeModeType } from '../../../componets/ThemeModeSwitch/ThemeModeSwitch.d';
 
 export interface AppState {
     locale: string;
@@ -12,7 +12,7 @@ const initialState: AppState = {
     locale: 'en',
     mode: 'auto',
     drawerDense: false,
-    sidebarExpanded: false,
+    sidebarExpanded: false
 };
 
 export const appLocal = createSlice({
@@ -27,9 +27,9 @@ export const appLocal = createSlice({
         },
         sidebarExpand: (state, { payload }: PayloadAction<false | string>) => {
             state.sidebarExpanded = payload;
-        },
+        }
     }
 });
 
-export const { setMode, drawerDenseToggle, sidebarExpand } = appLocal.actions;
+export const { drawerDenseToggle, setMode, sidebarExpand } = appLocal.actions;
 export default appLocal.reducer;

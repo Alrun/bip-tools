@@ -1,9 +1,6 @@
-/**
- * Web Crypto Api
- */
+// Web Crypto Api
 export const crypto = window.crypto || (window as any).msCrypto;
-export const cryptoSubtle = crypto.subtle || (crypto as any).webkitSubtle;
-
+export const cryptoSubtle = crypto?.subtle || (crypto as any)?.webkitSubtle;
 export const secureRandom = () => crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32;
 
 // TODO: For to Array.reduce()

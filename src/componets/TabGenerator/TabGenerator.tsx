@@ -1,119 +1,111 @@
 import React from 'react';
-import Typography from '../../ui/Typography/Typography';
+import debounce from 'lodash/debounce';
 import Box from '@mui/material/Box';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Chip from '@mui/material/Chip';
-import Input from '../../ui/Input/Input';
-import Grid from '@mui/material/Grid';
-import Button from '../../ui/Button/Button';
-import debounce from 'lodash/debounce';
-import GeneratorGroup from '../GeneratorGroup/GeneratorGroup';
-import { binToHex, filterStr, getRandomHex, strToChunks } from '../../utils/crypto/crypto';
-import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
-import enList from '../../wordlist/english';
-import Select from '../../ui/Select/Select';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import { Theme } from '@mui/material/styles';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Derivation from '../Derivation/Derivation';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Grid from '@mui/material/Grid';
+import { Backdrop, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Accordion from '@mui/material/Accordion';
+import Paper from '@mui/material/Paper';
+import { binToHex, filterStr, getRandomHex, hexToBin, strToChunks } from '../../utils/crypto/crypto';
+import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
+import enList from '../../wordlists/english';
+import Select from '../../ui/Select/Select';
+import Input from '../../ui/Input/Input';
+import Button from '../../ui/Button/Button';
+import Typography from '../../ui/Typography/Typography';
+import GeneratorGroup from '../GeneratorGroup/GeneratorGroup';
+import {
+    GeneratorState,
+    setEntropy,
+    setExpandedPanel,
+    setWordCount,
+    setWordlistLang,
+    wordCountList,
+    wordlistLangArr
+} from '../../redux/slices/mnemonic/mnemonic';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
-const mnemonicLanguages = [
-    { label: 'English', value: 'en-us' },
-    { label: 'Français', value: 'fr-fr' },
-    { label: 'Português', value: 'pt-pt' },
-    { label: 'Čeština', value: 'cs-cz' },
-    { label: 'Italiano', value: 'it-it' },
-    { label: '日本語', value: 'ja-jp' },
-    { label: '中文(简体)', value: 'zh-cn' },
-    { label: '中文(繁體)', value: 'zh-tw' },
-    { label: '한국어', value: 'ko-kr' }
-];
+const isValidLength = (val: string) => wordCountList.includes(((val.length / 8) * 3) as any);
 
-const TabGenerator = ({ initWordCount = 12, language = 'en-us' }: any) => {
-    const [entropy, setEntropy] = React.useState('');
-    const [value, setValue] = React.useState('');
-    const [binary, setBinary] = React.useState('');
-    const [sum, setSum] = React.useState('');
-    const [binList, setBinList] = React.useState<string[]>([]);
-    const [list, bin, checksum] = useMnemonic(entropy);
-    const [wordCount, setWordCount] = React.useState<number>(initWordCount);
-    const [lang, setLang] = React.useState(language);
-    // TODO: Remove useCallback
-    const checkLength = React.useCallback((val) => ![12, 15, 18, 21, 24].includes((val.length / 8) * 3), []);
-    // TODO: Remove useCallback
-    const delayedHandleChange = React.useCallback(
-        debounce((eventData) => setEntropy(eventData), 500),
+const TabGenerator = () => {
+    const { entropy, expandedPanel, wordlistLang, wordCount } = useAppSelector((state) => state.mnemonic);
+    const dispatch = useAppDispatch();
+    // TODO: Remove after render check
+    const rendersCount = React.useRef(0);
+
+    const [entropyValue, setEntropyValue] = React.useState(entropy);
+    const [binaryValue, setBinaryValue] = React.useState(() => hexToBin(entropy));
+    const [list, bin, checksum, loading] = useMnemonic(entropy);
+    const formattedList = React.useMemo(() => list.map((item, id) => ({ id, item })), [list]);
+
+    const handleChangeWordlistLang = (lang: GeneratorState['wordlistLang']) => dispatch(setWordlistLang(lang));
+    const handleExpandPanel = (panel: string) => () => dispatch(setExpandedPanel(panel));
+    const handleChangeEntropy = (hex: string) => dispatch(setEntropy(hex));
+
+    const delayedEntropyChangeHandle = React.useCallback(
+        debounce((eventData) => handleChangeEntropy(eventData), 300),
         []
     );
-    // TODO: Add useCallback
-    const handleChangeGroup = (idx: number, val: string) => {
-        const binaryArr = strToChunks(binary, 11) || [];
 
-        // console.log(idx, val);
-
-        binaryArr[idx] = val;
-
-        const hex = binToHex(binaryArr.join(''));
-
-        setValue(hex);
-        setEntropy(hex);
-    };
-
-    const handleChangeWords = (e: any) => {
-        setWordCount(+e.target.value);
-    };
-
-    const handleChangeLang = (langValue: string | number | Array<string | number>) => {
-        setLang(langValue);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleChangeEntropyValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const letters = '0123456789abcdef';
         const filteredValue = filterStr(e.target.value, letters, 64);
 
-        setValue(filteredValue);
-        delayedHandleChange(filteredValue);
+        setEntropyValue(filteredValue);
+        setBinaryValue(hexToBin(filteredValue));
+        delayedEntropyChangeHandle(filteredValue);
     };
 
-    const handleClick = () => {
+    const handleChangeBinaryValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const letters = '01';
+        const filteredValue = filterStr(e.target.value, letters, 256);
+        const hexValue = binToHex(filteredValue);
+
+        setBinaryValue(filteredValue);
+        setEntropyValue(hexValue);
+        delayedEntropyChangeHandle(hexValue);
+    };
+
+    const handleChangeWordCount = (event: React.MouseEvent<HTMLElement>, count: GeneratorState['wordCount']) =>
+        dispatch(setWordCount(count));
+
+    const handleGenerateEntropy = () => {
         const randomHex = getRandomHex((wordCount / 3) * 8);
 
-        setEntropy(randomHex);
-        setValue(randomHex);
+        setEntropyValue(randomHex);
+        setBinaryValue(hexToBin(randomHex));
+        delayedEntropyChangeHandle(randomHex);
     };
 
-    const [expanded, setExpanded] = React.useState<string | false>('panel1');
+    const handleChangeGroup = React.useCallback(
+        (idx: number, val: string) => {
+            const binaryArr = strToChunks(binaryValue, 11) || [];
+            const editedBinaryArr = binaryArr.reduce<string[]>(
+                (acc, cur, curIdx) => (curIdx === idx ? acc.concat(val) : acc.concat(cur)),
+                []
+            );
+            const editedEntropy = binToHex(editedBinaryArr.join(''));
 
-    const handleExpand = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
-    React.useEffect(() => {
-        const randomHex = getRandomHex((wordCount / 3) * 8);
-
-        setValue(randomHex);
-        setEntropy(randomHex);
-    }, []);
-
-    React.useEffect(() => {
-        setBinary(bin);
-        setSum(checksum);
-        setBinList(list);
-    }, [checksum]);
+            setEntropyValue(editedEntropy);
+            setBinaryValue(hexToBin(editedEntropy));
+            delayedEntropyChangeHandle(editedEntropy);
+        },
+        [binaryValue]
+    );
 
     return (
         <>
             <Grid container spacing={2}>
                 <Grid item>
                     <Select
-                        options={mnemonicLanguages}
+                        options={wordlistLangArr}
                         label="Wordlist"
-                        value={lang}
-                        onChange={handleChangeLang}
+                        value={wordlistLang}
+                        onChange={handleChangeWordlistLang}
                         sx={{ width: 120, mr: 2 }}
                     />
                 </Grid>
@@ -125,59 +117,53 @@ const TabGenerator = ({ initWordCount = 12, language = 'en-us' }: any) => {
                         exclusive
                         size="small"
                         sx={{ mr: 6 }}
-                        onChange={handleChangeWords}
+                        onChange={handleChangeWordCount}
                     >
-                        <ToggleButton sx={{ px: 3 }} value={12}>
-                            12
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value={15}>
-                            15
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value={18}>
-                            18
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value={21}>
-                            21
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value={24}>
-                            24
-                        </ToggleButton>
+                        {wordCountList.map((num) => (
+                            <ToggleButton key={num} sx={{ px: 3 }} value={num}>
+                                {num}
+                            </ToggleButton>
+                        ))}
                     </ToggleButtonGroup>
-                    <Button onClick={handleClick}>Generate</Button>
+                    <Button async onClick={handleGenerateEntropy} loading={loading}>
+                        Generate
+                    </Button>
                 </Grid>
             </Grid>
 
-            <Box sx={{ pt: 4, pb: 6 }}>
-                <Input
-                    label="Entropy"
-                    multiline
-                    value={value}
-                    error={!!value && checkLength(value)}
-                    helperText={
-                        !!value && checkLength(value) && 'The number of characters must be equal 32, 40, 48, 56, 64'
-                    }
-                    onChange={handleChange}
-                    sx={{ width: '100%' }}
-                    InputProps={{
-                        spellCheck: false,
-                        sx: { fontFamily: 'Monospace' }
-                        // shrink: true
-                    }}
-                />
-            </Box>
-            {!!binList.length && (
-                <Box sx={{ pb: 4 }}>
+            <div>
+                <Box sx={{ pt: 4, pb: 6 }}>
+                    <Input
+                        label="Entropy"
+                        multiline
+                        value={entropyValue}
+                        error={!!entropyValue && !isValidLength(entropyValue)}
+                        helperText={
+                            !!entropyValue &&
+                            !isValidLength(entropyValue) &&
+                            `The number of characters must be equal 32, 40, 48, 56, 64 (current ${entropyValue.length})`
+                        }
+                        onChange={handleChangeEntropyValue}
+                        sx={{ width: '100%' }}
+                        InputProps={{
+                            spellCheck: false,
+                            sx: { fontFamily: 'Monospace' }
+                            // shrink: true
+                        }}
+                    />
+                </Box>
+                <Box sx={{ mb: 6 }}>
                     <Input
                         label="Binary raw"
                         multiline
-                        value={binary}
+                        value={binaryValue}
                         // variant="filled"
                         variant="standard"
-                        // error={!!value && checkLength(value)}
+                        // error={!!value && isValidLength(value)}
                         // helperText={
-                        //     !!value && checkLength(value) && 'The number of characters must be equal 32, 40, 48, 56, 64'
+                        //     !!value && isValidLength(value) && 'The number of characters must be equal 32, 40, 48, 56, 64'
                         // }
-                        // onChange={handleChange}
+                        onChange={handleChangeBinaryValue}
                         iconPosition="end"
                         sx={{ width: '100%' }}
                         InputProps={{
@@ -196,98 +182,145 @@ const TabGenerator = ({ initWordCount = 12, language = 'en-us' }: any) => {
                             // )
                         }}
                     />
-                    <Typography
-                        component="span"
-                        variant="smRegular"
-                        sx={{ color: (theme) => theme.palette.primary.main }}
-                    >
-                        Checksum{' '}
-                    </Typography>
-                    <Typography
-                        component="span"
-                        variant="smRegular"
-                        sx={{
-                            wordBreak: 'break-word',
-                            fontFamily: 'Monospace',
-                            color: (theme) => theme.palette.primary.main
-                        }}
-                    >
-                        {sum}
-                    </Typography>
+                    {!!entropyValue && (
+                        <Box sx={{ pb: 4 }}>
+                            <Typography
+                                component="span"
+                                variant="smRegular"
+                                sx={{ color: (theme) => theme.palette.primary.main }}
+                            >
+                                Checksum{' '}
+                            </Typography>
+                            <Typography
+                                component="span"
+                                variant="smRegular"
+                                sx={{
+                                    wordBreak: 'break-word',
+                                    fontFamily: 'Monospace',
+                                    color: (theme) => theme.palette.primary.main
+                                }}
+                            >
+                                {checksum}
+                            </Typography>
+                        </Box>
+                    )}
                 </Box>
-            )}
-
-            {!!binList.length && (
-                <Paper variant='outlined' sx={{p: 2, mb: 4}}>
-                    {binList.map((item, idx) => (
-                        <Chip
-                            variant="outlined"
-                            label={
-                                <Typography>
-                                    <Box
-                                        component="span"
-                                        sx={{
-                                            color: (theme) => theme.palette.grey[500],
-                                            userSelect: 'none'
-                                        }}
-                                    >
-                                        {idx + 1}
-                                    </Box>{' '}
-                                    {enList[parseInt(item, 2)]}
-                                </Typography>
-                            }
-                            key={`word-${item}`}
-                            sx={{ m: 0.5 }}
-                        />
-                    ))}
-
-                    <Chip
-                        // variant="outlined"
-                        icon={<ContentCopyIcon fontSize="inherit"/>}
-                        label="Copy"
-                        color="primary"
-                        sx={{ m: 0.5, px: 2.5, fontSize: 'inherit' }}
-                        onClick={() => {}}
-                    />
-                </Paper>
-            )}
-
-            <Box sx={{ mb: 4 }}>
-                <Accordion
-                    expanded={expanded === 'panel1'}
-                    elevation={0}
-                    variant="outlined"
-                    // sx={{ border: (theme: Theme) => `1px solid ${theme.palette.divider}` }}
-                    onChange={handleExpand('panel1')}
+                <Box
+                    sx={{
+                        transition: (theme) =>
+                            `${theme.transitions.create('opacity', {
+                                easing: theme.transitions.easing.sharp,
+                                duration: theme.transitions.duration.enteringScreen
+                            })}`,
+                        opacity: loading ? 0.5 : 1,
+                        pointerEvents: loading ? 'none' : 'auto'
+                    }}
                 >
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                    >
-                        <Typography>Extended</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        {!!binList.length && (
-                            <Grid container spacing={4}>
-                                {binList.map((item, idx) => (
-                                    <Grid item key={`block-${item}`} xs={6} sm={4} md={3} lg={2}>
-                                        <GeneratorGroup
-                                            id={idx}
-                                            value={item}
-                                            disabled={binList.length === idx + 1}
-                                            onChange={handleChangeGroup}
-                                        />
-                                    </Grid>
+                    {!!(entropyValue && list.length) && (
+                        <>
+                            <Input
+                                label="Mnemonic phrase"
+                                multiline
+                                fullWidth
+                                value={list.map((item: any) => enList[parseInt(item, 2)]).join(' ')}
+                                sx={{ mb: 4 }}
+                            />
+                            <Paper variant="outlined" sx={{ p: 2, mb: 4 }}>
+                                {formattedList.map(({ id, item }) => (
+                                    <Chip
+                                        variant="outlined"
+                                        label={
+                                            <Typography>
+                                                <Box
+                                                    component="span"
+                                                    sx={{
+                                                        color: (theme) => theme.palette.grey[500],
+                                                        userSelect: 'none'
+                                                    }}
+                                                >
+                                                    {id + 1}
+                                                </Box>{' '}
+                                                {enList[parseInt(item, 2)]}
+                                            </Typography>
+                                        }
+                                        key={id}
+                                        sx={{ m: 0.5 }}
+                                    />
                                 ))}
-                            </Grid>
-                        )}
-                    </AccordionDetails>
-                </Accordion>
-            </Box>
-
+                                <Chip
+                                    // variant="outlined"
+                                    icon={<ContentCopyIcon fontSize="inherit" />}
+                                    label="Copy"
+                                    color="primary"
+                                    sx={{ m: 0.5, px: 2.5, fontSize: 'inherit' }}
+                                    onClick={() => {}}
+                                />
+                            </Paper>
+                        </>
+                    )}
+                    <Box sx={{ mb: 4 }}>
+                        <Accordion
+                            expanded={expandedPanel.includes('generator-panel-1')}
+                            TransitionProps={{ unmountOnExit: true }}
+                            elevation={0}
+                            variant="outlined"
+                            // sx={{ border: (theme: Theme) => `1px solid ${theme.palette.divider}` }}
+                            onChange={handleExpandPanel('generator-panel-1')}
+                        >
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1bh-content"
+                                id="panel1bh-header"
+                            >
+                                <Typography>Extended</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {!(entropyValue && list.length) ? (
+                                    <Box>Press generate button or enter your code.</Box>
+                                ) : (
+                                    <GeneratorGroup list={formattedList} wordList={enList} onChange={handleChangeGroup} />
+                                )}
+                            </AccordionDetails>
+                        </Accordion>
+                    </Box>
+                </Box>
+                <b>
+                    {/* eslint-disable-next-line no-plusplus */}
+                    Tab Generator RENDER COUNT: {++rendersCount.current}
+                </b>
+            </div>
         </>
     );
 };
 
 export default TabGenerator;
+
+// const handleChangeEntropy = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+//     const letters = '0123456789abcdef';
+//     const filteredValue = filterStr(e.target.value, letters, 64);
+//
+//     setEntropyValue(filteredValue);
+//     // debounce((eventData) => console.log('debounce'), 1500);
+//     // debounce(() => (changeEntropy(filteredValue)), 500)
+//     delayedEntropyChangeHandle(filteredValue);
+// };
+
+// const binListToStrList = (bList: any) => {
+//     const res = bList.map((item: any) => {
+//         const index = parseInt(item, 2) + 1;
+//
+//         return enList[index - 1];
+//     });
+//
+//     return res.join(' ');
+// };
+
+// const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+// const strToArr = event.target.value.trim().split('');
+// const filteredValue = strToArr.filter((item) => item === '0' || item === '1')
+// var digit = parseInt(binary, 2);
+// setBinary(filteredValue.join(''));
+// setBinary(e.target.value);
+// setIndex(`${parseInt(event.target.value, 2)}`);
+// setWord(words[parseInt(e.target.value, 2) + 1]);
+// };

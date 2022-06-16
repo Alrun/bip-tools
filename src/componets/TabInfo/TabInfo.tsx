@@ -1,10 +1,9 @@
 import React from 'react';
-import Typography from '../../ui/Typography/Typography';
-// import Typography from '@mui/material/Typography';
-
-import { InfoOutlinedIcon } from '../../ui/Icons/Icons';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '../../ui/Typography/Typography';
+// import Typography from '@mui/material/Typography';
+import { InfoOutlinedIcon } from '../../ui/Icons/Icons';
 import Link from '../../ui/Link/Link';
 
 const TabInfo = (props: any) => {
@@ -19,6 +18,11 @@ const TabInfo = (props: any) => {
     // };
     //
     // const open = Boolean(anchorEl);
+
+    React.useEffect(() => {
+        console.log('mount');
+        return () => console.log('unmount');
+    }, []);
 
     return (
         <div>
@@ -38,7 +42,12 @@ const TabInfo = (props: any) => {
             </Typography>
 
             <Typography>BIP32 Hierarchical Deterministic Wallets</Typography>
-            <Typography>Read more at the <Link href="/" external>official BIP32 spec</Link></Typography>
+            <Typography>
+                Read more at the{' '}
+                <Link href="/" external>
+                    official BIP32 spec
+                </Link>
+            </Typography>
 
             <Typography>See the demo at bip32.org</Typography>
 

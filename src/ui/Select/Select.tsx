@@ -119,7 +119,7 @@ const Select = ({
     value,
     ...props
 }: SelectProps) => {
-    const formattedOptions = getFormattedOptions(options);
+    const formattedOptions = getFormattedOptions(options as any[]);
     const lowercaseDefaultValue = React.useMemo(() => toLowercase(defaultValue), [defaultValue]);
     const [open, setOpen] = React.useState(false);
     const isNative = native || (nativeOnTouch && isTouch());

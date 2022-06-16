@@ -2,9 +2,9 @@ import React from 'react';
 import { byteArrayToHexString, crypto } from '../../utils/crypto/crypto';
 
 /**
- * BIP39 Seed
- * @param wordList
- * @param passphrase
+ * BIP39 Seed.
+ * @param {string} wordList
+ * @param {string} passphrase
  */
 const useSeed = (wordList: string, passphrase = '') => {
     const [seed, setSeed] = React.useState('');
