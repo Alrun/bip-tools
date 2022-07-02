@@ -34,10 +34,12 @@ import Derivation from '../Derivation/Derivation';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard/useCopyToClipboard';
 import Switch from '../../ui/Switch/Switch';
 import useSeed from '../../hooks/useSeed/useSeed';
-import enList from '../../wordlists/english';
 import { filterStr } from '../../utils/crypto/crypto';
 import debounce from 'lodash/debounce';
 import { useAppSelector } from '../../redux/hooks';
+import useExtendedKeys from '../../hooks/useExtendedKeys/useExtendedKeys';
+import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
+import enList from '../../wordlists/english';
 
 function createData(path: string, address: string, publicKey: string, privateKey: string) {
     return { path, address, publicKey, privateKey };
@@ -114,17 +116,35 @@ const ButtonQrCode = ({ tooltipText }: any) => (
     </Tooltip>
 );
 
+const getIndex = (value: string) => parseInt(value, 2);
+const getWord = (wordList: readonly string[], value: string) => wordList[getIndex(value)];
+
 const TabAddress = () => {
-    const { seed, expandedPanel } = useAppSelector((state) => state.mnemonic);
+    const { entropy, expandedPanel } = useAppSelector((state) => state.mnemonic);
     const [copy, setCopy] = React.useState('');
     const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
     const xlUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('xl'), { noSsr: true });
     const showBalance = true;
 
+    const wordList = enList;
 
+    const [list, bin, checksum, loading] = useMnemonic(entropy);
+
+    const words = list.reduce<string[]>((acc, cur) => {
+        const word = getWord(wordList, cur);
+
+        return [...acc, word];
+    }, []);
+
+    const seed = useSeed(words.join(' '));
+    // const extendedKey = useDeriveKeys(seed);
+    const extendedKey = useExtendedKeys('67f93560761e20617de26e0cb84f7234aaf373ed2e66295c3d7397e6d7ebe882ea396d5d293808b0defd7edd2babd4c091ad942e6a9351e6d075a29d4df872af');
+
+    console.log('tab seed ', seed);
+    console.log('tab extendedKey ', extendedKey);
+    // console.log(entropy);
 
     // const [seedValue, setSeedValue] = React.useState(seed);
-
 
     // const [status, message] = useCopyToClipboard(copy, );
 
@@ -159,10 +179,10 @@ const TabAddress = () => {
     // const handleExpandPanel = (panel: string) => () => changeExpandedPanel(panel);
 
     // React.useEffect(() => {
-        //     console.log(entropy);
-        // setSeedValue(seed);
-        //     setSum(checksum);
-        //     setBinList(list);
+    //     console.log(entropy);
+    // setSeedValue(seed);
+    //     setSum(checksum);
+    //     setBinList(list);
     // }, [seed]);
 
     return (
@@ -183,7 +203,7 @@ const TabAddress = () => {
                     helperText="Changing this field will clear the existing mnemonic and passphrase."
                     InputProps={{
                         spellCheck: false,
-                        sx: { fontFamily: 'Monospace' },
+                        sx: { fontFamily: 'Monospace' }
                         // shrink: binList.length
                     }}
                 />

@@ -2,11 +2,11 @@ import toLowercase from './toLowercase';
 
 describe('to lower case', () => {
     it('should return a lowercase string', () => {
-        expect(toLowercase('String')).toEqual('string');
+        expect(toLowercase('String')).toBe('string');
     });
 
     it('should not conversion the numbers', () => {
-        expect(toLowercase(3)).toEqual(3);
+        expect(toLowercase(3)).toBe(3);
     });
 
     it('should return an array with lowercase strings and numbers without conversions', () => {

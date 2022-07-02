@@ -1,3 +1,6 @@
+import { hmac } from '@noble/hashes/hmac';
+import { sha512 } from '@noble/hashes/sha512';
+
 // Web Crypto Api
 export const crypto = window.crypto || (window as any).msCrypto;
 export const cryptoSubtle = crypto?.subtle || (crypto as any)?.webkitSubtle;
@@ -31,12 +34,12 @@ export const strToChunks = (str: string, length: number, padStart: string = '', 
     return str.match(regex)?.map((item) => item.padStart(length, padStart).padEnd(length, padEnd));
 };
 
-/**
- * Convert ByteArray into hex string
- * @param byteArray
- */
-export const byteArrayToHexString = (byteArray: Uint8Array) =>
-    byteArray.reduce((output, elem) => output + `0${elem.toString(16)}`.slice(-2), '');
+// /**
+//  * Convert ByteArray into hex string
+//  * @param byteArray
+//  */
+// export const byteArrayToHexString = (byteArray: Uint8Array) =>
+//     byteArray.reduce((output, elem) => output + `0${elem.toString(16)}`.slice(-2), '');
 
 /**
  * Convert hex string into bin string
@@ -71,3 +74,24 @@ export const filterStr = (value: string, letters: string, limit: number) => {
 
     return filteredValue.join('');
 };
+
+export const byteArrayToHexString = (byteArray: ArrayBuffer) => {
+    const extractedBuffer = [...Array.from(new Uint8Array(byteArray))];
+
+    return extractedBuffer.reduce((output, elem) => output + `0${elem.toString(16)}`.slice(-2), '');
+};
+
+// This function converts a hex string into an ArrayBuffer for hash processing.
+export const hexToBuffer = (hex: string) => {
+    const strChunkList = strToChunks(hex, 2, '0') || [];
+    const hexChunkList = strChunkList.map((item) => parseInt(item, 16));
+
+    return new Uint8Array(hexChunkList);
+};
+
+/**
+ * HMAC with SHA512 function algorithm.
+ * @param {Uint8Array} key Message key.
+ * @param {Uint8Array} data Message data.
+ */
+export const hmac512 = (key: Uint8Array, data: Uint8Array) => hmac.create(sha512, key).update(data).digest();
