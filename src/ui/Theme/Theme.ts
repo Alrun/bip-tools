@@ -121,9 +121,7 @@ const customTheme = (mode: 'light' | 'dark') =>
         components: {
             MuiCssBaseline: {
                 styleOverrides: {
-                    /**
-                     * Mozilla
-                     */
+                    // Mozilla
                     '@supports (-moz-appearance:none)': {
                         // Scroll styling
                         '*': {
@@ -131,18 +129,13 @@ const customTheme = (mode: 'light' | 'dark') =>
                             scrollbarWidth: 'thin'
                         }
                     },
-                    /**
-                     * Chrome
-                     */
+                    // Chrome
                     // Scroll styling
                     '::-webkit-scrollbar': {
                         width: '6px',
                         height: '6px',
                         backgroundColor: 'transparent'
                     },
-                    // '::-webkit-scrollbar-track': {
-                    //     backgroundColor: '#ccc'
-                    // },
                     '::-webkit-scrollbar-thumb': {
                         borderRadius: '3px',
                         background:
@@ -154,13 +147,7 @@ const customTheme = (mode: 'light' | 'dark') =>
                         fontSize: 14
                     },
                     body: {
-                        // ...darkScrollbar(),
                         height: '100%',
-                        // color: 'darkred',
-                        // backgroundColor: 'grey',
-                        // '& h1': {
-                        //     color: 'black'
-                        // }
                         '#root': {
                             height: '100%'
                         }
@@ -176,7 +163,6 @@ const customTheme = (mode: 'light' | 'dark') =>
                         color: mode === 'light' ? colors.light.info.main : colors.dark.info.main,
                         borderBottom: '1px solid transparent',
                         transition: `border ${transitions.duration.shortest}ms ${transitions.easing.easeOut}`,
-
                         '&:hover': {
                             borderBottomColor: 'currentColor'
                         }
@@ -185,11 +171,9 @@ const customTheme = (mode: 'light' | 'dark') =>
                         '&:not([class])': {
                             paddingLeft: 0,
                             listStyleType: 'none',
-
                             '& > li': {
                                 position: 'relative',
                                 padding: '0 0 0 1rem',
-
                                 '&::before': {
                                     content: '""',
                                     position: 'absolute',
@@ -203,22 +187,14 @@ const customTheme = (mode: 'light' | 'dark') =>
                                     top: '1em',
                                     left: 0
                                 },
-
                                 '& > ul:not([class]) > li': {
                                     padding: '0 0 0 1rem',
-
                                     '&::before': {
                                         backgroundColor: 'transparent',
                                         border: '1px solid currentColor'
                                     }
                                 }
                             }
-                            // '& ul:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // },
-                            // '& ol:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // },
                         }
                     },
                     ol: {
@@ -226,11 +202,9 @@ const customTheme = (mode: 'light' | 'dark') =>
                             paddingLeft: 0,
                             listStyleType: 'none',
                             counterReset: 'list 0',
-
                             '& > li': {
                                 position: 'relative',
                                 padding: '0 0 0 1.2rem',
-
                                 '&::before': {
                                     content: 'counter(list, decimal) "."',
                                     counterIncrement: 'list',
@@ -240,13 +214,10 @@ const customTheme = (mode: 'light' | 'dark') =>
                                     fontWeight: 500,
                                     letterSpacing: '-0.05rem'
                                 },
-
                                 '& > ol:not([class])': {
                                     counterReset: 'list2 0',
-
                                     '& > li': {
                                         padding: '0 0 0 2em',
-
                                         '&::before': {
                                             content: 'counter(list, decimal) "." counter(list2, decimal) "."',
                                             counterIncrement: 'list2'
@@ -254,12 +225,6 @@ const customTheme = (mode: 'light' | 'dark') =>
                                     }
                                 }
                             }
-                            // '& ul:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // },
-                            // '& ol:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // }
                         }
                     }
                 }
@@ -299,12 +264,10 @@ const customTheme = (mode: 'light' | 'dark') =>
                       },
                       warning: {
                           main: colors.light.warning.main
-                          // contrastText: 'pink'
                       },
                       info: {
                           main: colors.light.info.main
                       },
-                      // divider: amber[200],
                       background: {
                           default: colors.light.body.background,
                           paper: colors.light.paper.background
@@ -334,7 +297,6 @@ const customTheme = (mode: 'light' | 'dark') =>
                       info: {
                           main: colors.dark.info.main
                       },
-                      // divider: deepOrange[700],
                       background: {
                           default: colors.dark.body.background,
                           paper: colors.dark.paper.background
@@ -370,42 +332,15 @@ const customTheme = (mode: 'light' | 'dark') =>
             button: {},
             caption: undefined,
             overline: undefined,
-            smThin: {
-                ...typoStyles.sm,
-                ...typoStyles.thin
-            },
-            xsThin: {
-                ...typoStyles.xs,
-                ...typoStyles.thin
-            },
-            xxsThin: {
-                ...typoStyles.xxs,
-                ...typoStyles.thin
-            },
-            smRegular: {
-                ...typoStyles.sm,
-                ...typoStyles.regular
-            },
-            xsRegular: {
-                ...typoStyles.xs,
-                ...typoStyles.regular
-            },
-            xxsRegular: {
-                ...typoStyles.xxs,
-                ...typoStyles.regular
-            },
-            smBold: {
-                ...typoStyles.sm,
-                ...typoStyles.bold
-            },
-            xsBold: {
-                ...typoStyles.xs,
-                ...typoStyles.bold
-            },
-            xxsBold: {
-                ...typoStyles.xxs,
-                ...typoStyles.bold
-            }
+            smThin: { ...typoStyles.sm, ...typoStyles.thin },
+            xsThin: { ...typoStyles.xs, ...typoStyles.thin },
+            xxsThin: { ...typoStyles.xxs, ...typoStyles.thin },
+            smRegular: { ...typoStyles.sm, ...typoStyles.regular },
+            xsRegular: { ...typoStyles.xs, ...typoStyles.regular },
+            xxsRegular: { ...typoStyles.xxs, ...typoStyles.regular },
+            smBold: { ...typoStyles.sm, ...typoStyles.bold },
+            xsBold: { ...typoStyles.xs, ...typoStyles.bold },
+            xxsBold: { ...typoStyles.xxs, ...typoStyles.bold }
         },
         shadows: StyledShadows,
         spacing: (factor: number) => `${0.25 * factor}rem`, // (Bootstrap strategy)
@@ -413,13 +348,6 @@ const customTheme = (mode: 'light' | 'dark') =>
             borderRadius: 6
         },
         transitions
-        // overrides: {
-        //     MuiSvgIcon: {
-        //         fontSizeLarge: {
-        //             fontSize: '2rem'
-        //         }
-        //     }
-        // }
     });
 
 export default customTheme;
