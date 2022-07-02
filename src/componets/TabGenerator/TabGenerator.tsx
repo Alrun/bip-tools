@@ -6,18 +6,11 @@ import Chip from '@mui/material/Chip';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from '@mui/material/Grid';
-import { Backdrop, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Accordion from '@mui/material/Accordion';
 import Paper from '@mui/material/Paper';
 import { binToHex, filterStr, getRandomHex, hexToBin, strToChunks } from '../../utils/crypto/crypto';
-import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
-import enList from '../../wordlists/english';
-import Select from '../../ui/Select/Select';
-import Input from '../../ui/Input/Input';
-import Button from '../../ui/Button/Button';
-import Typography from '../../ui/Typography/Typography';
-import GeneratorGroup from '../GeneratorGroup/GeneratorGroup';
 import {
     GeneratorState,
     setEntropy,
@@ -27,9 +20,17 @@ import {
     wordCountList,
     wordlistLangArr
 } from '../../redux/slices/mnemonic/mnemonic';
+import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
+import enList from '../../wordlists/english';
+import Select from '../../ui/Select/Select';
+import Input from '../../ui/Input/Input';
+import Button from '../../ui/Button/Button';
+import Typography from '../../ui/Typography/Typography';
+import GeneratorGroup from '../GeneratorGroup/GeneratorGroup';
+import GeneratorEditableContent from '../GeneratorEditableContent/GeneratorEditableContent';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-
-const isValidLength = (val: string) => wordCountList.includes(((val.length / 8) * 3) as any);
+import { getWord } from '../../utils/mnemonic/mnemonic';
+import { isValidLength } from '../../utils/validate/validate';
 
 const TabGenerator = () => {
     const { entropy, expandedPanel, wordlistLang, wordCount } = useAppSelector((state) => state.mnemonic);
@@ -39,8 +40,9 @@ const TabGenerator = () => {
 
     const [entropyValue, setEntropyValue] = React.useState(entropy);
     const [binaryValue, setBinaryValue] = React.useState(() => hexToBin(entropy));
-    const [list, bin, checksum, loading] = useMnemonic(entropy);
+    const { list, checksum, loading } = useMnemonic(entropy);
     const formattedList = React.useMemo(() => list.map((item, id) => ({ id, item })), [list]);
+    const words = React.useMemo(() => list.map((item) => getWord(enList, item)), [list, enList]);
 
     const handleChangeWordlistLang = (lang: GeneratorState['wordlistLang']) => dispatch(setWordlistLang(lang));
     const handleExpandPanel = (panel: string) => () => dispatch(setExpandedPanel(panel));
@@ -79,6 +81,13 @@ const TabGenerator = () => {
         setEntropyValue(randomHex);
         setBinaryValue(hexToBin(randomHex));
         delayedEntropyChangeHandle(randomHex);
+    };
+
+    const handleChangePhrase = (binStr: string) => {
+        setEntropyValue(binStr);
+        setBinaryValue(hexToBin(binStr));
+        delayedEntropyChangeHandle(binStr);
+        console.log('Tab generator change phrase ', binStr);
     };
 
     const handleChangeGroup = React.useCallback(
@@ -152,7 +161,7 @@ const TabGenerator = () => {
                         }}
                     />
                 </Box>
-                <Box sx={{ mb: 6 }}>
+                <Box sx={{ mb: 4 }}>
                     <Input
                         label="Binary raw"
                         multiline
@@ -183,7 +192,7 @@ const TabGenerator = () => {
                         }}
                     />
                     {!!entropyValue && (
-                        <Box sx={{ pb: 4 }}>
+                        <Box>
                             <Typography
                                 component="span"
                                 variant="smRegular"
@@ -212,52 +221,15 @@ const TabGenerator = () => {
                                 easing: theme.transitions.easing.sharp,
                                 duration: theme.transitions.duration.enteringScreen
                             })}`,
-                        opacity: loading ? 0.5 : 1,
-                        pointerEvents: loading ? 'none' : 'auto'
+                        opacity: loading ? 0.5 : 1
+                        // pointerEvents: loading ? 'none' : 'auto'
                     }}
                 >
-                    {!!(entropyValue && list.length) && (
-                        <>
-                            <Input
-                                label="Mnemonic phrase"
-                                multiline
-                                fullWidth
-                                value={list.map((item: any) => enList[parseInt(item, 2)]).join(' ')}
-                                sx={{ mb: 4 }}
-                            />
-                            <Paper variant="outlined" sx={{ p: 2, mb: 4 }}>
-                                {formattedList.map(({ id, item }) => (
-                                    <Chip
-                                        variant="outlined"
-                                        label={
-                                            <Typography>
-                                                <Box
-                                                    component="span"
-                                                    sx={{
-                                                        color: (theme) => theme.palette.grey[500],
-                                                        userSelect: 'none'
-                                                    }}
-                                                >
-                                                    {id + 1}
-                                                </Box>{' '}
-                                                {enList[parseInt(item, 2)]}
-                                            </Typography>
-                                        }
-                                        key={id}
-                                        sx={{ m: 0.5 }}
-                                    />
-                                ))}
-                                <Chip
-                                    // variant="outlined"
-                                    icon={<ContentCopyIcon fontSize="inherit" />}
-                                    label="Copy"
-                                    color="primary"
-                                    sx={{ m: 0.5, px: 2.5, fontSize: 'inherit' }}
-                                    onClick={() => {}}
-                                />
-                            </Paper>
-                        </>
-                    )}
+                    <Box sx={{ mb: 4 }}>
+                        {/* {!!(entropyValue && list.length) && <GeneratorTextarea />} */}
+                        <GeneratorEditableContent words={words} wordList={enList} onChange={handleChangePhrase} />
+                    </Box>
+
                     <Box sx={{ mb: 4 }}>
                         <Accordion
                             expanded={expandedPanel.includes('generator-panel-1')}
@@ -278,7 +250,11 @@ const TabGenerator = () => {
                                 {!(entropyValue && list.length) ? (
                                     <Box>Press generate button or enter your code.</Box>
                                 ) : (
-                                    <GeneratorGroup list={formattedList} wordList={enList} onChange={handleChangeGroup} />
+                                    <GeneratorGroup
+                                        list={formattedList}
+                                        wordList={enList}
+                                        onChange={handleChangeGroup}
+                                    />
                                 )}
                             </AccordionDetails>
                         </Accordion>

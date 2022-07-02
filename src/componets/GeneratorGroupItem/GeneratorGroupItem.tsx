@@ -6,9 +6,7 @@ import Autocomplete from '../../ui/Autocomplete/Autocomplete';
 import Typography from '../../ui/Typography/Typography';
 import Input from '../../ui/Input/Input';
 import { GeneratorGroupItemProps } from './GeneratorGroupItem.d';
-
-const getIndex = (value: string) => parseInt(value, 2);
-const getWord = (wordList: readonly string[], value: string) => wordList[getIndex(value)];
+import { getIndex, getWord } from '../../utils/mnemonic/mnemonic';
 
 const GeneratorGroupItem = ({ id, value, wordList, onChange, color, disabled }: GeneratorGroupItemProps) => {
     const [binary, setBinary] = React.useState(value);

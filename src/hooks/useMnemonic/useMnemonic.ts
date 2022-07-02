@@ -14,15 +14,18 @@ type MType = {
      * Checksum of binary data.
      */
     checksum: string;
+    /**
+     * If true, the hook is in a loading state.
+     */
     loading: boolean;
 };
 
 /**
  * BIP39 Mnemonic.
  * @param {string} hex String in hex.
- * @returns {[MType['list'], MType['raw'], MType['checksum']]}
+ * @returns {MType}
  */
-const useMnemonic = (hex: string): [MType['list'], MType['raw'], MType['checksum'], MType['loading']] => {
+const useMnemonic = (hex: string): MType => {
     const [state, setState] = React.useState<MType>({
         list: [],
         raw: '',
@@ -54,7 +57,7 @@ const useMnemonic = (hex: string): [MType['list'], MType['raw'], MType['checksum
         }
     }, [hex]);
 
-    return [state.list, state.raw, state.checksum, state.loading];
+    return state;
 };
 
 export default useMnemonic;
