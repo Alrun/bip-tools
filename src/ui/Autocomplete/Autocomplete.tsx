@@ -117,7 +117,7 @@ const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
 // Adapter for react-window
 const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
     ({ children, maxItems, ...props }: ListboxComponentProps, ref) => {
-        const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
+        const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
         const itemData: React.ReactChild[] = [];
 
         (children as React.ReactChild[]).forEach((item: React.ReactChild & { children?: React.ReactChild[] }) => {

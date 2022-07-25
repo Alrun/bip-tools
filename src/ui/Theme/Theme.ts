@@ -242,6 +242,11 @@ const customTheme = (mode: 'light' | 'dark') =>
                         backgroundImage: 'none'
                     }
                 }
+            },
+            MuiUseMediaQuery: {
+                defaultProps: {
+                    noSsr: true // disable double hook rendering for client application only
+                }
             }
         },
         palette: {

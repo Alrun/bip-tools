@@ -4,8 +4,8 @@ interface ToLowercaseInterface {
 
 /**
  * Convert value to lower case.
- * @param {string | T | Array<string | T>} value Value to convert.
- * @returns {string | T | Array<string | T>}
+ * @param {string|T|Array<string|T>} value Value to convert.
+ * @returns {string|T|Array<string|T>}
  */
 const toLowercase: ToLowercaseInterface = (value) => {
     if (typeof value === 'string') return value.toLowerCase();
