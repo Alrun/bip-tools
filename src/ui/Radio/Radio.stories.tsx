@@ -42,7 +42,7 @@ const GroupTemplate: ComponentStory<any> = (args) => {
 };
 
 /**
- * Radio Button
+ * Radio Modal
  */
 export const Base = BaseTemplate.bind({});
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import MnemonicTabs from '../componets/TabsMnemonic/TabsMnemonic';
+import MnemonicTabs from '../componets/TabsTools/TabsTools';
 
 const Mnemonic = () => <MnemonicTabs />;
 

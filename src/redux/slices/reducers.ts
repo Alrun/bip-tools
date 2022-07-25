@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
         {
             ...config,
             key: 'mnemonic',
-            blacklist: ['entropy', 'seed']
+            whitelist: ['expandedPanel', 'wordCount']
         },
         mnemonicReducer
     )
