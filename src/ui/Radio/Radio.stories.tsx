@@ -42,7 +42,7 @@ const GroupTemplate: ComponentStory<any> = (args) => {
 };
 
 /**
- * Radio Modal
+ * Base
  */
 export const Base = BaseTemplate.bind({});
 
@@ -217,7 +217,7 @@ Size.parameters = {
 };
 
 /**
- * Radio Group
+ * Group
  */
 export const Group = RadioGroupTemplate.bind({});
 
@@ -257,7 +257,7 @@ Group.parameters = {
 };
 
 /**
- * Radio Group Row
+ * Group Row
  */
 export const GroupRow = RadioGroupTemplate.bind({});
 
