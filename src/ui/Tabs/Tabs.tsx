@@ -1,124 +1,89 @@
 import React from 'react';
-import { StyledTabs, StyledTab } from './TabsStyles';
 import SwipeableViews from 'react-swipeable-views';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
+import { StyledTabs, StyledTab } from './TabsStyles';
 import { TabPanelProps, TabsProps } from './Tabs.d';
 
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+const a11yProps = (idPrefix: string, index: number) => ({
+    id: `${idPrefix}-tab-${index}`,
+    'aria-controls': `${idPrefix}-tabpanel-${index}`
+});
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`default-tabpanel-${index}`}
-            aria-labelledby={`default-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ py: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+const TabPanel = ({ idPrefix, index, value, children, ...other }: TabPanelProps) => (
+    <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`${idPrefix}-tabpanel-${index}`}
+        aria-labelledby={`${idPrefix}-tab-${index}`}
+        {...other}
+    >
+        {value === index && (
+            <Fade in>
+                <Box sx={{ py: 3 }}>{children}</Box>
+            </Fade>
+        )}
+    </div>
+);
 
-function a11yProps(index: number) {
-    return {
-        id: `default-tab-${index}`,
-        'aria-controls': `default-tabpanel-${index}`
-    };
-}
-
-// const Tabs = ({ label, size = 'medium', labelPlacement, ...props }: RadioPropsInterface) =>
-const Tabs = ({ tabsList, swipeablePanel }: TabsProps) => {
+const Tabs = ({ idPrefix, tabList, activeTab = 0, isSwipeable, isVertical, onChange, ...other }: TabsProps) => {
     const theme = useTheme();
-    const [value, setValue] = React.useState(0);
 
-    const handleChangeIndex = (index: number) => {
-        setValue(index);
-    };
+    const [value, setValue] = React.useState(activeTab);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
+    const handleChange = (event: React.SyntheticEvent, index: number) => (onChange ? onChange(index) : setValue(index));
+    const handleChangeIndex = (index: number) => (onChange ? onChange(index) : setValue(index));
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <StyledTabs value={value} onChange={handleChange} aria-label="default tabs">
-                    {tabsList.map(({ label, icon, ...rest }, idx) => (
+        <Box sx={{ width: '100%', flexGrow: isVertical ? 1 : 0, display: isVertical ? 'flex' : 'block' }}>
+            <Box sx={{ borderBottom: isVertical ? 0 : 1, borderRight: isVertical ? 1 : 0, borderColor: 'divider' }}>
+                <StyledTabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label={`${idPrefix}-tabs`}
+                    orientation={isVertical ? 'vertical' : 'horizontal'}
+                    {...other}
+                >
+                    {tabList.map(({ label, icon, content, ...rest }, idx) => (
                         <StyledTab
-                            key={label}
+                            key={label || idx}
                             label={label}
                             icon={icon}
-                            // iconPosition="start"
-                            // eslint-disable-next-line react/jsx-props-no-spreading
-                            {...a11yProps(idx)}
-                            // eslint-disable-next-line react/jsx-props-no-spreading
+                            isVertical={isVertical}
+                            {...a11yProps(idPrefix, idx)}
                             {...rest}
                         />
                     ))}
                 </StyledTabs>
             </Box>
-            {swipeablePanel ? (
+            {isSwipeable ? (
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={value}
                     onChangeIndex={handleChangeIndex}
                 >
-                    <TabPanel value={value} index={0}>
-                        Item One
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        Item Two
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        Item Three
-                    </TabPanel>
+                    {tabList.map(({ label, content }, idx) => (
+                        <TabPanel
+                            key={label || idx}
+                            idPrefix={idPrefix}
+                            value={value}
+                            index={idx}
+                            dir={theme.direction}
+                        >
+                            {content}
+                        </TabPanel>
+                    ))}
                 </SwipeableViews>
             ) : (
-                <>
-                    <TabPanel value={value} index={0}>
-                        Item One
+                tabList.map(({ label, content }, idx) => (
+                    <TabPanel key={label || idx} idPrefix={idPrefix} value={value} index={idx}>
+                        {content}
                     </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        Item Two
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        Item Three
-                    </TabPanel>
-                </>
+                ))
             )}
         </Box>
     );
 };
 
-// const Tabs = ({ label, size = 'medium', labelPlacement, ...props }: RadioPropsInterface) =>
-//     label ? (
-//         <FormGroup>
-//             <StyledRadioFormControlLabel
-//                 size={size}
-//                 label={label}
-//                 labelPlacement={labelPlacement}
-//                 control={
-//                     <StyledRadio
-//                         size={size}
-//                         /* eslint-disable-next-line react/jsx-props-no-spreading */
-//                         {...props}
-//                     />
-//                 }
-//             />
-//         </FormGroup>
-//     ) : (
-//         <StyledRadio
-//             size={size}
-//             /* eslint-disable-next-line react/jsx-props-no-spreading */
-//             {...props}
-//         />
-//     );
-//
 export default Tabs;
