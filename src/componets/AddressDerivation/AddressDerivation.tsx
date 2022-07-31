@@ -1,19 +1,37 @@
 import React from 'react';
 import { Theme } from '@mui/material/styles';
-import Accordion from '../../ui/Accordiron/Accordion';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { filterStr } from '../../utils/crypto/crypto';
+import coinTypeList from '../../libs/bip44/coinTypeList';
+import { BipType, Script } from '../../libs/bips/bips.d';
+import { getPath } from '../../libs/bips/bips';
 import Typography from '../../ui/Typography/Typography';
 import Input from '../../ui/Input/Input';
 import Select from '../../ui/Select/Select';
 import Switch from '../../ui/Switch/Switch';
-import coinTypeList from '../../libs/bip44/coinTypeList';
-import { BipType, Script } from '../../libs/bips/bips.d';
-import { filterStr } from '../../utils/crypto/crypto';
-import { getPath } from '../../libs/bips/bips';
+import Accordion from '../../ui/Accordiron/Accordion';
+import ToggleButtons from '../../ui/ToggleButtons/ToggleButtons';
 
 const coinOptions = coinTypeList.map(({ coin, type }) => ({ label: coin, value: type }));
+
+const bipOptions = [
+    { value: 'bip32', children: 'BIP32' },
+    { value: 'bip44', children: 'BIP44' },
+    { value: 'bip49', children: 'BIP49' },
+    { value: 'bip84', children: 'BIP84' }
+];
+
+const hardenedOptions = [
+    { value: 'normal', children: 'Normal' },
+    { value: 'hardened', children: 'Hardened' }
+];
+
+const scriptOptions = [
+    { value: Script.P2PKH, children: Script.P2PKH },
+    { value: Script.P2WPKHP2SH, children: Script.P2WPKHP2SH },
+    { value: Script.P2WPKH, children: Script.P2WPKH }
+];
 
 const AddressDerivation = ({
     bip,
@@ -36,7 +54,7 @@ const AddressDerivation = ({
     const [bipValue, setBipValue] = React.useState<BipType>(bip);
     // const [scriptValue, setScriptValue] = React.useState(script);
 
-    const handleChangeBip = (e: React.MouseEvent<HTMLElement, MouseEvent>, val: BipType | null) => {
+    const handleChangeBip = (val: BipType | null) => {
         if (val) {
             setBipValue(val);
             setMaster(getPath(val, coinType));
@@ -49,12 +67,12 @@ const AddressDerivation = ({
         onChangeCoin(val);
     };
 
-    const handleChangeHardened = (e: React.MouseEvent<HTMLElement, MouseEvent>, val: 'normal' | 'hardened' | null) => {
+    const handleChangeHardened = (val: 'normal' | 'hardened' | null) => {
         if (val === 'normal') onChangeHardened(false);
         if (val === 'hardened') onChangeHardened(true);
     };
 
-    const handleChangeScript = (e: React.MouseEvent<HTMLElement, MouseEvent>, val: `${Script}` | null) => {
+    const handleChangeScript = (val: `${Script}` | null) => {
         if (val) {
             // setScriptValue(val);
             onChangeScript(val);
@@ -89,49 +107,31 @@ const AddressDerivation = ({
                 justifyContent={{ xs: 'space-between' }}
             >
                 <Grid item xs={12} sm order={{ xs: 0 }}>
-                    <ToggleButtonGroup
-                        color="primary"
-                        value={bipValue}
-                        exclusive
-                        size="small"
-                        // sx={{ width: {xs: '100%'} }}
+                    <ToggleButtons
+                        options={bipOptions}
+                        selected={bipValue}
                         onChange={handleChangeBip}
-                    >
-                        <ToggleButton sx={{ px: 3 }} value="bip32">
-                            BIP32
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value="bip44">
-                            BIP44
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value="bip49">
-                            BIP49
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value="bip84">
-                            BIP84
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+                        sx={{ pt: 2 }}
+                        ButtonsProps={{
+                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3 }
+                        }}
+                    />
                 </Grid>
                 {bip === 'bip32' && (
                     <Grid item xs={12} sm order={{ xs: 1 }}>
-                        <ToggleButtonGroup
-                            color="primary"
-                            // value={scriptValue}
-                            value={script}
-                            exclusive
-                            size="small"
-                            // sx={{ mr: 6 }}
+                        <ToggleButtons
+                            options={scriptOptions}
+                            selected={script}
                             onChange={handleChangeScript}
-                        >
-                            <ToggleButton sx={{ px: 3 }} value={Script.P2PKH}>
-                                {Script.P2PKH}
-                            </ToggleButton>
-                            <ToggleButton sx={{ px: 3, whiteSpace: 'nowrap' }} value={Script.P2WPKHP2SH}>
-                                {Script.P2WPKHP2SH}
-                            </ToggleButton>
-                            <ToggleButton sx={{ px: 3 }} value={Script.P2WPKH}>
-                                {Script.P2WPKH}
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                            sx={{ pt: 2 }}
+                            ButtonsProps={{
+                                sx: {
+                                    fontSize: (theme) => theme.typography.smRegular.fontSize,
+                                    px: 3,
+                                    whiteSpace: 'nowrap'
+                                }
+                            }}
+                        />
                     </Grid>
                 )}
                 <Grid item xs={12} sm order={{ xs: 2 }}>
@@ -145,21 +145,15 @@ const AddressDerivation = ({
                     />
                 </Grid>
                 <Grid item order={{ xs: 4 }}>
-                    <ToggleButtonGroup
-                        color="primary"
-                        value={isHardened ? 'hardened' : 'normal'}
-                        exclusive
-                        size="small"
-                        // sx={{ mr: 6 }}
+                    <ToggleButtons
+                        options={hardenedOptions}
+                        selected={isHardened ? 'hardened' : 'normal'}
                         onChange={handleChangeHardened}
-                    >
-                        <ToggleButton sx={{ px: 3 }} value="normal">
-                            Normal
-                        </ToggleButton>
-                        <ToggleButton sx={{ px: 3 }} value="hardened">
-                            Hardened
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+                        sx={{ pt: 2 }}
+                        ButtonsProps={{
+                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3 }
+                        }}
+                    />
                 </Grid>
                 <Grid item xs={12} sm order={{ xs: 3 }}>
                     <Input
