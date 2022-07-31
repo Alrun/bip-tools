@@ -2,7 +2,6 @@ import React from 'react';
 import debounce from 'lodash/debounce';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { binToHex, filterStr, getRandomHex, hexToBin } from '../../utils/crypto/crypto';
 import { wordCountList } from '../../libs/bip39/mnemonic/mnemonic';
 import { isValidLength } from '../../libs/bip39/validate/validate';
@@ -10,6 +9,9 @@ import { GeneratorState } from '../../redux/slices/mnemonic/mnemonic.d';
 import Input from '../../ui/Input/Input';
 import Button from '../../ui/Button/Button';
 import Typography from '../../ui/Typography/Typography';
+import ToggleButtons from '../../ui/ToggleButtons/ToggleButtons';
+
+const wordCountOptions = wordCountList.map((num) => ({ value: num, children: num }));
 
 const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, onChangeEntropy }: any) => {
     const [entropyValue, setEntropyValue] = React.useState(() => entropy);
@@ -39,7 +41,7 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
         delayedEntropyChangeHandle(hexValue);
     };
 
-    const handleChangeWordCount = (event: React.MouseEvent<HTMLElement>, count: GeneratorState['wordCount'] | null) => {
+    const handleChangeWordCount = (count: GeneratorState['wordCount'] | null) => {
         if (count) onChangeWordCount(count);
     };
 
@@ -84,19 +86,14 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
                     alignItems="center"
                 >
                     <Typography sx={{ mr: 4 }}>Words</Typography>
-                    <ToggleButtonGroup
-                        color="primary"
-                        value={wordCount}
-                        exclusive
-                        size="small"
+                    <ToggleButtons
+                        options={wordCountOptions}
+                        selected={wordCount}
                         onChange={handleChangeWordCount}
-                    >
-                        {wordCountList.map((num) => (
-                            <ToggleButton key={num} sx={{ px: 3 }} value={num}>
-                                {num}
-                            </ToggleButton>
-                        ))}
-                    </ToggleButtonGroup>
+                        ButtonsProps={{
+                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3 }
+                        }}
+                    />
                 </Grid>
                 <Grid item xs={12} xl sx={{ order: { xl: -1 }, mb: { xs: 6, sm: 2 } }}>
                     <Input
