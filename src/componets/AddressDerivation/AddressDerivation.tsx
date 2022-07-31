@@ -1,9 +1,6 @@
 import React from 'react';
 import { Theme } from '@mui/material/styles';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from '../../ui/Accordiron/Accordion';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -206,20 +203,15 @@ const AddressDerivation = ({
 
             <Box sx={{ mb: 4 }}>
                 <Accordion
+                    headerText="Extended Derived Keys"
                     expanded={expandedPanel.includes('address-panel-2')}
-                    elevation={0}
-                    variant="outlined"
-                    // sx={{ border: (theme: Theme) => `1px solid ${theme.palette.divider}` }}
                     onChange={onExpandPanel('address-panel-2')}
+                    AccordionSummaryProps={{
+                        'aria-controls': 'address-panel-2-content',
+                        id: 'address-panel-2-header'
+                    }}
                 >
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="address-panel-2"
-                        id="address-panel-2"
-                    >
-                        <Typography>Extended Derived Keys</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
+                    <>
                         <Input
                             label="Derived Extended Private Key"
                             multiline
@@ -238,7 +230,7 @@ const AddressDerivation = ({
                             disabled
                             // variant="filled"
                         />
-                    </AccordionDetails>
+                    </>
                 </Accordion>
             </Box>
 

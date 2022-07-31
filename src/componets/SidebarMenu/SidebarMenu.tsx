@@ -13,6 +13,7 @@ import { linkList } from '../Navigation/Navigation';
 import { SidebarProps } from './SidebarMenu.d';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { sidebarExpand } from '../../redux/slices/app/app';
+import SidebarMenuUILink from './SidebarMenuUILink';
 
 export default function SidebarMenu({ width = '100%', setDrawerOpen }: SidebarProps) {
     const { sidebarExpanded } = useAppSelector((state) => state.app);
@@ -132,6 +133,9 @@ export default function SidebarMenu({ width = '100%', setDrawerOpen }: SidebarPr
                                 </ListItem>
                             )
                         )}
+
+                        <SidebarMenuUILink/>
+
                     </ul>
                 </li>
             ))}

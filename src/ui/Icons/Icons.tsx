@@ -1,5 +1,4 @@
 import React from 'react';
-
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import LightModeIcon from '@mui/icons-material/LightMode';

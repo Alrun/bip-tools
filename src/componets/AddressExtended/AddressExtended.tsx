@@ -3,10 +3,7 @@ import debounce from 'lodash/debounce';
 import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from '../../ui/Accordiron/Accordion';
 import { filterStr } from '../../utils/crypto/crypto';
 import Typography from '../../ui/Typography/Typography';
 import Input from '../../ui/Input/Input';
@@ -143,19 +140,15 @@ const AddressExtended = ({
 
             <Box sx={{ mb: 4.5 }}>
                 <Accordion
+                    headerText="Extended"
                     expanded={expandedPanel.includes('address-panel-1')}
-                    elevation={0}
-                    variant="outlined"
                     onChange={onExpandPanel('address-panel-1')}
+                    AccordionSummaryProps={{
+                        'aria-controls': 'address-panel-1-content',
+                        id: 'address-panel-1-header'
+                    }}
                 >
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="address-panel-1"
-                        id="address-panel-1"
-                    >
-                        <Typography>Extended</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
+                    <>
                         <Input
                             label="Passphrase (optional)"
                             value={passphraseValue}
@@ -183,12 +176,12 @@ const AddressExtended = ({
                                 spellCheck: false
                             }}
                         />
-                    </AccordionDetails>
-                    <b>
-                        {/* eslint-disable-next-line no-plusplus */}
-                        Root RENDER COUNT: {++rendersCount.current}
-                    </b>
+                    </>
                 </Accordion>
+                <b>
+                    {/* eslint-disable-next-line no-plusplus */}
+                    Root RENDER COUNT: {++rendersCount.current}
+                </b>
             </Box>
         </>
     );
