@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Select from '../ui/Select/Select';
 import { AutocompleteOptionInterface } from '../ui/Autocomplete/Autocomplete.d';
+import Accordion from '../ui/Accordiron/Accordion';
 
 const options = [
     {
@@ -99,11 +100,21 @@ const Dashboard = () => {
                     Dashboard RENDER COUNT: {++rendersCount.current}
                 </b>
             </div>
-            <Grid container spacing={8} sx={{ px: 24 }}>
+            <Grid container spacing={8} sx={{ px: 24, mb: 4 }}>
                 <Grid item xs={12} sm={5}>
                     <Select fullWidth options={[]} label="Controlled" onChange={handleSelect} value={select} />
                 </Grid>
             </Grid>
+
+            <div>
+                <Accordion headerText="Accordion 1" elevation={20} variant="elevation">
+                    11
+                </Accordion>
+                <Accordion headerText="Accordion 1">
+                    22
+                </Accordion>
+            </div>
+
         </>
     );
 };

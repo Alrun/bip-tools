@@ -1,6 +1,7 @@
 import React from 'react';
-import { ComponentIcon, DashboardIcon } from '../../ui/Icons/Icons';
+import { DashboardIcon } from '../../ui/Icons/Icons';
 import { RouteLinkInterface, RoutesListInterface } from './Navigation.d';
+import BrainIcon from '../../ui/Icons/BrainIcon';
 
 const linkApp: RoutesListInterface[] = [
     {
@@ -15,7 +16,7 @@ const linkApp: RoutesListInterface[] = [
             {
                 label: 'Mnemonic',
                 to: '/mnemonic',
-                icon: <ComponentIcon />
+                icon: <BrainIcon />
             }
         ]
     }
