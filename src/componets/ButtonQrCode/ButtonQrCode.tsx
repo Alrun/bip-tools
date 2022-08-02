@@ -31,7 +31,7 @@ const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
                     </Button>
                 </div>
             </Tooltip>
-            <Modal open={showModal} title={title} onClose={handleCloseModal} scroll="body">
+            <Modal idPrefix="qr-code" open={showModal} title={title} onClose={handleCloseModal} scroll="body">
                 <Box
                     sx={{
                         display: 'flex',
@@ -64,11 +64,9 @@ const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
                             }
                         />
                     </Box>
-
                     <Box
                         sx={{
                             display: 'flex',
-
                             border: `1px solid ${theme.palette.divider}`,
                             borderRadius: `${theme.shape.borderRadius}px`,
                             mt: 2

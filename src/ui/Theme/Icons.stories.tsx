@@ -3,8 +3,39 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '../Typography/Typography';
-import { DragIcon, ModeDarkIcon, ModeLightIcon } from '../Icons/Icons';
+import {
+    ArrowDownIcon,
+    ArrowThinDownIcon, ArrowThinUpIcon, ArrowUpIcon,
+    ChevronDownIcon, ComponentIcon, CrossIcon, DashboardIcon,
+    DotsVerticalIcon,
+    DragIcon, FavoriteBorderIcon, FavoriteIcon, HideIcon, InfoOutlinedIcon, ModeAutoIcon,
+    ModeDarkIcon,
+    ModeLightIcon, PCIcon, PlusIcon, SearchIcon, ShowIcon, StarBorderIcon, StarIcon
+} from '../Icons/Icons';
 import ExternalIcon from '../Icons/ExternalIcon';
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import StraightIcon from '@mui/icons-material/Straight';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import LaptopMacIcon from '@mui/icons-material/LaptopMac';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import AddIcon from '@mui/icons-material/Add';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Star from '@mui/icons-material/Star';
+import StarBorder from '@mui/icons-material/StarBorder';
+import CloseIcon from '@mui/icons-material/Close';
+import MuiSearchIcon from '@mui/icons-material/Search';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import MuiDashboardIcon from '@mui/icons-material/Dashboard';
+import MuiInfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Brightness4OutlinedIcon from '@mui/icons-material/Brightness4Outlined';
 
 interface IconComponentProps {
     label: string;
@@ -101,5 +132,85 @@ Icons.args = {
             label: 'Drag',
             component: <DragIcon />
         },
+        {
+            label: 'DotsVerticalIcon',
+            component: <DotsVerticalIcon />
+        },
+        {
+            label: 'ArrowThinUpIcon',
+            component: <ArrowThinUpIcon />
+        },
+        {
+            label: 'ArrowThinDownIcon',
+            component: <ArrowThinDownIcon />
+        },
+        {
+            label: 'ChevronDownIcon',
+            component: <ChevronDownIcon />
+        },
+        {
+            label: 'ComponentIcon',
+            component: <ComponentIcon />
+        },
+        {
+            label: 'PCIcon',
+            component: <PCIcon />
+        },
+        {
+            label: 'ArrowUpIcon',
+            component: <ArrowUpIcon />
+        },
+        {
+            label: 'ArrowDownIcon',
+            component: <ArrowDownIcon />
+        },
+        {
+            label: 'PlusIcon',
+            component: <PlusIcon />
+        },
+        {
+            label: 'FavoriteIcon',
+            component: <FavoriteIcon />
+        },
+        {
+            label: 'FavoriteBorderIcon',
+            component: <FavoriteBorderIcon />
+        },
+        {
+            label: 'StarIcon',
+            component: <StarIcon />
+        },
+        {
+            label: 'StarBorderIcon',
+            component: <StarBorderIcon />
+        },
+        {
+            label: 'CrossIcon',
+            component: <CrossIcon />
+        },
+        {
+            label: 'SearchIcon',
+            component: <SearchIcon />
+        },
+        {
+            label: 'ShowIcon',
+            component: <ShowIcon />
+        },
+        {
+            label: 'HideIcon',
+            component: <HideIcon />
+        },
+        {
+            label: 'DashboardIcon',
+            component: <DashboardIcon />
+        },
+        {
+            label: 'InfoOutlinedIcon',
+            component: <InfoOutlinedIcon />
+        },
+        {
+            label: 'ModeAutoIcon',
+            component: <ModeAutoIcon />
+        }
     ]
 };
