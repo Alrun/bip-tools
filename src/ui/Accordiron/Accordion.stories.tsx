@@ -30,20 +30,17 @@ const BaseTemplate: ComponentStory<typeof Accordion> = ({ children, ...args }) =
     <Accordion {...args}>{children}</Accordion>
 );
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { accordions, ...rest } = args;
-
-    return accordions.map(({ items }: any, idx: number) => (
+const GroupTemplate: ComponentStory<any> = ({ accordions, ...args }) =>
+    accordions.map(({ items }: any, idx: number) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={idx}>
-            {items.map(({ text, children, ...other }: any) => (
-                <Accordion key={text} headerText={text} {...rest} {...other}>
+            {items.map(({ headerText, children, ...other }: any) => (
+                <Accordion key={headerText} headerText={headerText} {...args} {...other}>
                     {children}
                 </Accordion>
             ))}
         </div>
     ));
-};
 
 /**
  * Base

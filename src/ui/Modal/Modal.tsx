@@ -1,73 +1,78 @@
 import React from 'react';
-import { styled, Theme } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { StyledModal, StyledModalContent, StyledModalFooter, StyledModalHeader } from './ModalStyles';
+import Button from '../Button/Button';
+import { CrossIcon } from '../Icons/Icons';
+import { ModalProps } from './Modal.d';
+import { SlideDown, SlideLeft, SlideRigth, SlideUp } from '../Transitions/Transitions';
 
-const StyledModal = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(4)
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(4)
+const getTransition = (slide: ModalProps['slide']) => {
+    switch (slide) {
+        case 'up':
+            return SlideUp;
+        case 'down':
+            return SlideDown;
+        case 'left':
+            return SlideLeft;
+        case 'right':
+            return SlideRigth;
+        default:
+            return undefined;
     }
-}));
+};
 
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-}
-
-const ModalTitle = ({ children, onClose, ...other }: DialogTitleProps) => (
-    <DialogTitle sx={{ m: 0, p: 4 }} {...other}>
-        {children}
-        {onClose && (
-            <IconButton
-                aria-label="close"
-                onClick={onClose}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: (theme) => theme.palette.grey[500]
-                }}
-            >
-                <CloseIcon />
-            </IconButton>
-        )}
-    </DialogTitle>
-);
-
-const Modal = ({ open, onClose, children, title, dialogActions, scroll = 'paper', headerProps, ...other }: any) => {
+const Modal = ({
+    idPrefix,
+    children,
+    footer,
+    HeaderProps,
+    open,
+    onClose,
+    title,
+    scroll = 'paper',
+    slide,
+    ...other
+}: ModalProps) => {
     const fullScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
     const handleClose = () => {
-        onClose();
+        if (onClose) onClose();
     };
 
     return (
-        <div>
-            <StyledModal
-                open={open}
-                onClose={handleClose}
-                scroll={scroll}
-                fullScreen={fullScreen}
-                aria-labelledby="modal-title"
-                aria-describedby="modal-description"
-                {...other}
-            >
-                <ModalTitle id="modal-title" onClose={handleClose} {...headerProps}>
-                    {title}
-                </ModalTitle>
-                <DialogContent dividers={(title || dialogActions) && scroll === 'paper'}>{children}</DialogContent>
-                {dialogActions && <DialogActions>{dialogActions}</DialogActions>}
-            </StyledModal>
-        </div>
+        <StyledModal
+            open={open}
+            onClose={handleClose}
+            scroll={scroll}
+            fullScreen={fullScreen}
+            aria-labelledby={`${idPrefix}-modal-title`}
+            aria-describedby={`${idPrefix}-modal-description`}
+            TransitionComponent={getTransition(slide)}
+            {...other}
+        >
+            <StyledModalHeader {...HeaderProps}>
+                {title}
+                {onClose && (
+                    <Button
+                        isRound
+                        aria-label="close"
+                        onClick={handleClose}
+                        color="secondary"
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500]
+                        }}
+                    >
+                        <CrossIcon />
+                    </Button>
+                )}
+            </StyledModalHeader>
+            <StyledModalContent dividers={(!!title || !!footer) && scroll === 'paper'}>{children}</StyledModalContent>
+            {footer && <StyledModalFooter disableSpacing>{footer}</StyledModalFooter>}
+        </StyledModal>
     );
 };
 
