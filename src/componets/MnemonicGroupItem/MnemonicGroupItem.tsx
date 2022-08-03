@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from '../../ui/Skeleton/Skeleton';
 import { getIndex, getWord } from '../../libs/bip39/mnemonic/mnemonic';
 import enWordList from '../../libs/bip39/wordlists/english';
 import { filterStr } from '../../utils/crypto/crypto';
@@ -132,12 +132,12 @@ const MnemonicGroupItem = ({
 export default MnemonicGroupItem;
 
 export const GeneratorGroupItemSkeleton = () => (
-    <Box>
+    <Box sx={{ py: 1 }}>
         <Typography variant="xsBold" component="div" align="center">
-            <Skeleton sx={{ width: 10, mb: -2, mx: 'auto' }} animation="wave" />
+            <Skeleton variant="text" sx={{ width: 10, mb: 1.945, mx: 'auto' }} />
         </Typography>
-        <Skeleton sx={{ height: 47, mb: -2 }} animation="wave" />
-        <Skeleton sx={{ height: 47, mb: -2 }} animation="wave" />
-        <Skeleton sx={{ height: 47, mb: -2 }} animation="wave" />
+        <Skeleton height={28} sx={{ mb: 3.6 }} />
+        <Skeleton height={28} sx={{ mb: 3.6 }} />
+        <Skeleton height={28} sx={{ mb: 1 }} />
     </Box>
 );

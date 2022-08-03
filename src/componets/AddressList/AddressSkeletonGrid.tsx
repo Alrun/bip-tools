@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
+import Skeleton from '../../ui/Skeleton/Skeleton';
 import Typography from '../../ui/Typography/Typography';
 
 interface AddressSkeletonGridProps {
@@ -22,19 +22,12 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
             >
                 Path:
             </Typography>
-            <Typography flexGrow={1} variant="smRegular" component="div" sx={{ wordBreak: 'break-word' }}>
-                <Skeleton
-                    sx={{
-                        height: 30,
-                        maxWidth: 85,
-                        mb: -1
-                    }}
-                    animation="wave"
-                />
+            <Typography variant="smRegular">
+                <Skeleton variant="text" width={85} />
             </Typography>
         </Box>
 
-        <Grid container sx={{ mb: 0 }} alignItems="center">
+        <Grid container sx={{ mb: 0, height: 28 }} alignItems="center">
             <Grid item>
                 <Typography
                     sx={{
@@ -48,23 +41,8 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
                 </Typography>
             </Grid>
             <Grid item flexGrow={1}>
-                <Typography
-                    component="div"
-                    sx={{
-                        fontFamily: '"Roboto Mono", monospace',
-                        wordBreak: 'break-word',
-                        mr: 2,
-                        width: '100%'
-                    }}
-                >
-                    <Skeleton
-                        sx={{
-                            height: 34,
-                            maxWidth: 285,
-                            mb: 1.5
-                        }}
-                        animation="wave"
-                    />
+                <Typography>
+                    <Skeleton variant="text" sx={{ maxWidth: 285 }} />
                 </Typography>
             </Grid>
         </Grid>
@@ -89,7 +67,7 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
             </Typography>
         </Box>
 
-        <Grid container sx={{ mb: 0 }} alignItems="center">
+        <Grid container sx={{ mb: 0, height: 28 }} alignItems="center">
             <Grid item>
                 <Typography
                     sx={{
@@ -103,26 +81,13 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
                 </Typography>
             </Grid>
             <Grid item flexGrow={1}>
-                <Typography
-                    component="div"
-                    sx={{
-                        fontFamily: '"Roboto Mono", monospace',
-                        wordBreak: 'break-word'
-                    }}
-                >
-                    <Skeleton
-                        sx={{
-                            height: 34,
-                            maxWidth: 555,
-                            mb: 1.5
-                        }}
-                        animation="wave"
-                    />
+                <Typography>
+                    <Skeleton variant="text" sx={{ maxWidth: 555 }} />
                 </Typography>
             </Grid>
         </Grid>
 
-        <Grid container sx={{ mb: 0 }} alignItems="center">
+        <Grid container sx={{ mb: 0, height: 28 }} alignItems="center">
             <Grid item>
                 <Typography
                     sx={{
@@ -136,21 +101,8 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
                 </Typography>
             </Grid>
             <Grid item flexGrow={1}>
-                <Typography
-                    component="div"
-                    sx={{
-                        fontFamily: '"Roboto Mono", monospace',
-                        wordBreak: 'break-word'
-                    }}
-                >
-                    <Skeleton
-                        sx={{
-                            height: 34,
-                            maxWidth: 435,
-                            mb: 1.5
-                        }}
-                        animation="wave"
-                    />
+                <Typography>
+                    <Skeleton variant="text" sx={{ maxWidth: 435 }} />
                 </Typography>
             </Grid>
         </Grid>

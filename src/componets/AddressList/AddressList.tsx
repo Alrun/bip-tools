@@ -212,7 +212,7 @@ const AddressList = ({ list, onShowMore, length }: any) => {
                                           )}
                                       </TableRow>
                                   ))
-                                : Array(length/2)
+                                : Array(Math.ceil(length / 2))
                                       .fill('')
                                       .map((_, idx) => (
                                           // eslint-disable-next-line react/no-array-index-key
@@ -373,7 +373,7 @@ const AddressList = ({ list, onShowMore, length }: any) => {
                         ))
                     ) : (
                         <Box>
-                            {Array(length/2)
+                            {Array(Math.ceil(length / 2))
                                 .fill('')
                                 .map((_, idx) => (
                                     // eslint-disable-next-line react/no-array-index-key

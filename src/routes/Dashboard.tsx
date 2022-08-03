@@ -4,7 +4,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Select from '../ui/Select/Select';
 import { AutocompleteOptionInterface } from '../ui/Autocomplete/Autocomplete.d';
-import Accordion from '../ui/Accordiron/Accordion';
+import Typography from '../ui/Typography/Typography';
+import Skeleton from '../ui/Skeleton/Skeleton';
 
 const options = [
     {
@@ -104,15 +105,37 @@ const Dashboard = () => {
                 <Grid item xs={12} sm={5}>
                     <Select fullWidth options={[]} label="Controlled" onChange={handleSelect} value={select} />
                 </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Skeleton height="36px" sx={{ marginTop: '6px' }}/>
+                </Grid>
             </Grid>
 
             <div>
-                <Accordion headerText="Accordion 1" elevation={20} variant="elevation">
-                    11
-                </Accordion>
-                <Accordion headerText="Accordion 1">
-                    22
-                </Accordion>
+                <Typography>111</Typography>
+            </div>
+            <div>
+                <Typography>aaa</Typography>
+            </div>
+            <div>
+                <Typography><Skeleton  variant="text"/></Typography>
+            </div>
+            <div>
+                <Typography variant="h2">111</Typography>
+            </div>
+            <div>
+                <Typography variant="h2">aaa</Typography>
+            </div>
+            <div>
+                <Typography variant="h2"><Skeleton  variant="text"/></Typography>
+            </div>
+            <div>
+                <Skeleton variant="circular" width={40} height={40} />
+            </div>
+            <div>
+                <Skeleton variant="rectangular" width={40} height={40} />
+            </div>
+            <div>
+                <Skeleton height={20} />
             </div>
 
         </>
