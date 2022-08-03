@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Accordion from '../../ui/Accordiron/Accordion';
 import Typography from '../../ui/Typography/Typography';
@@ -38,7 +37,7 @@ const MnemonicGroup = ({
                 }}
             >
                 {!(entropy && list.length) ? (
-                    <Box>Press generate button or enter your entropy value.</Box>
+                    <Typography>Press generate button or enter your entropy value.</Typography>
                 ) : (
                     <Grid container spacing={4}>
                         {wordList.map(({ id, wordBinary, wordIndex, wordString }) => (
