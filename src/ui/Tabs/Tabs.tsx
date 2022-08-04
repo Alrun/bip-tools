@@ -11,13 +11,13 @@ const a11yProps = (idPrefix: string, index: number) => ({
     'aria-controls': `${idPrefix}-tabpanel-${index}`
 });
 
-const TabPanel = ({ idPrefix, index, value, children, ...other }: TabPanelProps) => (
+const TabPanel = ({ idPrefix, index, value, children, ...props }: TabPanelProps) => (
     <div
         role="tabpanel"
         hidden={value !== index}
         id={`${idPrefix}-tabpanel-${index}`}
         aria-labelledby={`${idPrefix}-tab-${index}`}
-        {...other}
+        {...props}
     >
         {value === index && (
             <Fade in>
@@ -27,7 +27,7 @@ const TabPanel = ({ idPrefix, index, value, children, ...other }: TabPanelProps)
     </div>
 );
 
-const Tabs = ({ idPrefix, tabList, activeTab = 0, isSwipeable, isVertical, onChange, ...other }: TabsProps) => {
+const Tabs = ({ idPrefix, tabList, activeTab = 0, isSwipeable, isVertical, onChange, ...props }: TabsProps) => {
     const theme = useTheme();
 
     const [value, setValue] = React.useState(activeTab);
@@ -43,16 +43,16 @@ const Tabs = ({ idPrefix, tabList, activeTab = 0, isSwipeable, isVertical, onCha
                     onChange={handleChange}
                     aria-label={`${idPrefix}-tabs`}
                     orientation={isVertical ? 'vertical' : 'horizontal'}
-                    {...other}
+                    {...props}
                 >
-                    {tabList.map(({ label, icon, content, ...rest }, idx) => (
+                    {tabList.map(({ label, icon, content, ...other }, idx) => (
                         <StyledTab
                             key={label || idx}
                             label={label}
                             icon={icon}
                             isVertical={isVertical}
                             {...a11yProps(idPrefix, idx)}
-                            {...rest}
+                            {...other}
                         />
                     ))}
                 </StyledTabs>

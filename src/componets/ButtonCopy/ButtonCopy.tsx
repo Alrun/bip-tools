@@ -1,10 +1,10 @@
 import React from 'react';
 import copy from 'copy-to-clipboard';
-import Tooltip from '@mui/material/Tooltip';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import Slide, { SlideProps } from '@mui/material/Slide';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Tooltip from '../../ui/Tooltip/Tooltip';
 import Button from '../../ui/Button/Button';
 import { ButtonCopyProps } from './ButtonCopy.d';
 
@@ -18,7 +18,8 @@ const ButtonCopy = ({
     text,
     tooltipText = 'Copy',
     snackText = 'Copied to clipboard!',
-    buttonProps
+    ButtonProps,
+    TooltipProps
 }: ButtonCopyProps) => {
     const [showSnack, setShowSnack] = React.useState(false);
 
@@ -35,14 +36,14 @@ const ButtonCopy = ({
 
     return (
         <>
-            <Tooltip title={tooltipText}>
+            <Tooltip title={tooltipText} {...TooltipProps}>
                 <div
                     style={{
                         width: '100%',
                         height: '100%'
                     }}
                 >
-                    <Button isRound size="small" onClick={handleClick} {...buttonProps}>
+                    <Button isRound size="small" onClick={handleClick} {...ButtonProps}>
                         <ContentCopyIcon fontSize="inherit" />
                     </Button>
                 </div>

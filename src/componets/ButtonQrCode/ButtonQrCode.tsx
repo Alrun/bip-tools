@@ -2,7 +2,7 @@ import React from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '../../ui/Tooltip/Tooltip';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import Button from '../../ui/Button/Button';
 import Modal from '../../ui/Modal/Modal';
@@ -107,7 +107,10 @@ const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
                         >
                             <ButtonCopy
                                 text={text}
-                                buttonProps={{
+                                TooltipProps={{
+                                    placement: 'top'
+                                }}
+                                ButtonProps={{
                                     isRound: false,
                                     variant: 'text',
                                     color: 'secondary',

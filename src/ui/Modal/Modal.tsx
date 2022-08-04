@@ -32,7 +32,7 @@ const Modal = ({
     title,
     scroll = 'paper',
     slide,
-    ...other
+    ...props
 }: ModalProps) => {
     const fullScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -49,7 +49,7 @@ const Modal = ({
             aria-labelledby={`${idPrefix}-modal-title`}
             aria-describedby={`${idPrefix}-modal-description`}
             TransitionComponent={getTransition(slide)}
-            {...other}
+            {...props}
         >
             <StyledModalHeader {...HeaderProps}>
                 {title}

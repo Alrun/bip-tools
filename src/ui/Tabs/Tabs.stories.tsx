@@ -37,18 +37,11 @@ const wrapperDecorator = (Story: any) => (
 
 const BaseTemplate: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} onChange={undefined} />;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <>
-            {items.map((item: any, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <Tabs key={idx} {...rest} {...item} onChange={undefined} />
-            ))}
-        </>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) =>
+    items.map((item: any, idx: number) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Tabs key={idx} {...args} {...item} onChange={undefined} />
+    ));
 
 /**
  * Base

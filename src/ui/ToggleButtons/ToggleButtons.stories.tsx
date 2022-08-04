@@ -43,18 +43,11 @@ const wrapperDecorator = (Story: any) => (
 
 const BaseTemplate: ComponentStory<typeof ToggleButtons> = ({ onChange, ...args }) => <ToggleButtons {...args} />;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, onChange, ...rest } = args;
-
-    return (
-        <>
-            {items.map(({ ...other }: any, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <ToggleButtons key={idx} {...rest} {...other} />
-            ))}
-        </>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, onChange, ...args }) =>
+    items.map((item: any, idx: number) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <ToggleButtons key={idx} {...args} {...item} />
+    ));
 
 /**
  * Base

@@ -33,18 +33,11 @@ export default {
 
 const BaseTemplate: ComponentStory<typeof Checkbox> = (args) => <Checkbox {...args} />;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <>
-            {items.map((item: any, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <Checkbox key={idx} {...rest} {...item} />
-            ))}
-        </>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) =>
+    items.map((item: any, idx: number) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Checkbox key={idx} {...args} {...item} />
+    ));
 
 /**
  * Base

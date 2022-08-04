@@ -34,32 +34,27 @@ const useResetCache = (data: number, scroll: number) => {
 
 const LISTBOX_PADDING = 8; // px
 
-const PopperComponent = (props: PopperComponentProps) => {
-    const { children, ...other } = props;
+const PopperComponent = ({ children, ...props }: PopperComponentProps) => (
+    <StyledPopper role={undefined} placement="bottom-start" transition disablePortal={false} {...props}>
+        {({ TransitionProps, placement }) => (
+            <Grow
+                timeout={{
+                    appear: 0,
+                    enter: 100,
+                    exit: 100
+                }}
+                style={{
+                    transformOrigin: placement === 'bottom-start' ? 'top' : 'bottom'
+                }}
+                {...TransitionProps}
+            >
+                {children}
+            </Grow>
+        )}
+    </StyledPopper>
+);
 
-    return (
-        <StyledPopper role={undefined} placement="bottom-start" transition disablePortal={false} {...other}>
-            {({ TransitionProps, placement }) => (
-                <Grow
-                    timeout={{
-                        appear: 0,
-                        enter: 100,
-                        exit: 100
-                    }}
-                    style={{
-                        transformOrigin: placement === 'bottom-start' ? 'top' : 'bottom'
-                    }}
-                    {...TransitionProps}
-                >
-                    {children}
-                </Grow>
-            )}
-        </StyledPopper>
-    );
-};
-
-const renderRow = (props: ListChildComponentProps) => {
-    const { data, index, style } = props;
+const renderRow = ({ data, index, style }: ListChildComponentProps) => {
     const dataSet = data[index];
     const inlineStyle = {
         ...style,

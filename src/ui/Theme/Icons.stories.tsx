@@ -5,37 +5,30 @@ import Box from '@mui/material/Box';
 import Typography from '../Typography/Typography';
 import {
     ArrowDownIcon,
-    ArrowThinDownIcon, ArrowThinUpIcon, ArrowUpIcon,
-    ChevronDownIcon, ComponentIcon, CrossIcon, DashboardIcon,
+    ArrowThinDownIcon,
+    ArrowThinUpIcon,
+    ArrowUpIcon,
+    ChevronDownIcon,
+    ComponentIcon,
+    CrossIcon,
+    DashboardIcon,
     DotsVerticalIcon,
-    DragIcon, FavoriteBorderIcon, FavoriteIcon, HideIcon, InfoOutlinedIcon, ModeAutoIcon,
+    DragIcon,
+    FavoriteBorderIcon,
+    FavoriteIcon,
+    HideIcon,
+    InfoOutlinedIcon,
+    ModeAutoIcon,
     ModeDarkIcon,
-    ModeLightIcon, PCIcon, PlusIcon, SearchIcon, ShowIcon, StarBorderIcon, StarIcon
+    ModeLightIcon,
+    PCIcon,
+    PlusIcon,
+    SearchIcon,
+    ShowIcon,
+    StarBorderIcon,
+    StarIcon
 } from '../Icons/Icons';
 import ExternalIcon from '../Icons/ExternalIcon';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import ModeNightIcon from '@mui/icons-material/ModeNight';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import StraightIcon from '@mui/icons-material/Straight';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExtensionIcon from '@mui/icons-material/Extension';
-import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AddIcon from '@mui/icons-material/Add';
-import Favorite from '@mui/icons-material/Favorite';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import Star from '@mui/icons-material/Star';
-import StarBorder from '@mui/icons-material/StarBorder';
-import CloseIcon from '@mui/icons-material/Close';
-import MuiSearchIcon from '@mui/icons-material/Search';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import MuiDashboardIcon from '@mui/icons-material/Dashboard';
-import MuiInfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import Brightness4OutlinedIcon from '@mui/icons-material/Brightness4Outlined';
 
 interface IconComponentProps {
     label: string;
@@ -91,23 +84,19 @@ export default {
     }
 } as ComponentMeta<typeof IconComponent>;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexWrap: 'wrap'
-            }}
-        >
-            {items.map((item: IconComponentProps, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <IconComponent key={idx} {...rest} {...item} />
-            ))}
-        </Box>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) => (
+    <Box
+        sx={{
+            display: 'flex',
+            flexWrap: 'wrap'
+        }}
+    >
+        {items.map((item: IconComponentProps, idx: number) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <IconComponent key={idx} {...args} {...item} />
+        ))}
+    </Box>
+);
 
 /**
  * Palette

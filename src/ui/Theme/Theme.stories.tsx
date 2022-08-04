@@ -30,27 +30,23 @@ export default {
     }
 } as ComponentMeta<typeof PaletteComponent>;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <Box
-            sx={{
-                display: 'grid',
-                gridAutoFlow: 'column',
-                gridAutoColumns: '1fr',
-                gridAutoRows: '1fr',
-                gridTemplateColumns: 'repeat(6,minmax(160px,160px))',
-                gridTemplateRows: 'repeat(6,minmax(60px,60px))'
-            }}
-        >
-            {items.map((item: PaletteComponentProps, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <PaletteComponent key={idx} {...rest} {...item} />
-            ))}
-        </Box>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) => (
+    <Box
+        sx={{
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridAutoColumns: '1fr',
+            gridAutoRows: '1fr',
+            gridTemplateColumns: 'repeat(6,minmax(160px,160px))',
+            gridTemplateRows: 'repeat(6,minmax(60px,60px))'
+        }}
+    >
+        {items.map((item: PaletteComponentProps, idx: number) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <PaletteComponent key={idx} {...args} {...item} />
+        ))}
+    </Box>
+);
 
 /**
  * Palette

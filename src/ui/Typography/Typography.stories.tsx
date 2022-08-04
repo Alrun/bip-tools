@@ -30,36 +30,22 @@ const BaseTemplate: ComponentStory<typeof Typography> = ({ children, ...args }) 
     <Typography {...args}>{children}</Typography>
 );
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) =>
+    items.map((item: any, idx: number) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Typography key={idx} {...args} {...item} />
+    ));
 
-    return (
-        <>
-            {items.map((item: any, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <Typography key={idx} {...rest} {...item} />
-            ))}
-        </>
-    );
-};
-
-const LinksTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <>
-            {items.map((item: any, idx: number) => (
-                <Link
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={idx}
-                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()}
-                    {...rest}
-                    {...item}
-                />
-            ))}
-        </>
-    );
-};
+const LinksTemplate: ComponentStory<any> = ({ items, ...args }) =>
+    items.map((item: any, idx: number) => (
+        <Link
+            // eslint-disable-next-line react/no-array-index-key
+            key={idx}
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()}
+            {...args}
+            {...item}
+        />
+    ));
 
 /**
  * Base
