@@ -32,27 +32,23 @@ export default {
     }
 } as ComponentMeta<typeof ShadowsComponent>;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <Box
-            sx={{
-                display: 'grid',
-                gridAutoFlow: 'column',
-                gridAutoColumns: '1fr',
-                gridAutoRows: '1fr',
-                gridTemplateColumns: 'repeat(5,minmax(160px,160px))',
-                gridTemplateRows: 'repeat(5,minmax(90px,90px))'
-            }}
-        >
-            {items.map((item: any, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <ShadowsComponent key={idx} {...rest} {...item} />
-            ))}
-        </Box>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) => (
+    <Box
+        sx={{
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridAutoColumns: '1fr',
+            gridAutoRows: '1fr',
+            gridTemplateColumns: 'repeat(5,minmax(160px,160px))',
+            gridTemplateRows: 'repeat(5,minmax(90px,90px))'
+        }}
+    >
+        {items.map((item: any, idx: number) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <ShadowsComponent key={idx} {...args} {...item} />
+        ))}
+    </Box>
+);
 
 /**
  * Palette

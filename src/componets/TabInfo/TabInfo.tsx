@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '../../ui/Tooltip/Tooltip';
 import Typography from '../../ui/Typography/Typography';
 // import Typography from '@mui/material/Typography';
 import { InfoOutlinedIcon } from '../../ui/Icons/Icons';

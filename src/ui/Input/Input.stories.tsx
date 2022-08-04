@@ -37,18 +37,11 @@ const wrapperDecorator = (Story: any) => (
 
 const BaseTemplate: ComponentStory<typeof Input> = (args) => <Input {...args} />;
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, ...rest } = args;
-
-    return (
-        <>
-            {items.map((item: any, idx: number) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <Input key={idx} {...rest} {...item} />
-            ))}
-        </>
-    );
-};
+const GroupTemplate: ComponentStory<any> = ({ items, ...args }) =>
+    items.map((item: any, idx: number) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Input key={idx} {...args} {...item} />
+    ));
 
 /**
  * Base
@@ -268,9 +261,7 @@ Sizes.args = {
 Sizes.parameters = {
     docs: {
         source: {
-            code:
-                '<Input label="Medium" />\n' +
-                '<Input label="Small" size="small" />'
+            code: '<Input label="Medium" />\n' + '<Input label="Small" size="small" />'
         }
     }
 };

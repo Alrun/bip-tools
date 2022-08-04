@@ -1,7 +1,7 @@
 import React from 'react';
 import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '../../ui/Tooltip/Tooltip';
 import Button from '../../ui/Button/Button';
 import { ModeAutoIcon, ModeDarkIcon, ModeLightIcon } from '../../ui/Icons/Icons';
 import { ThemeModeSwitchProps, ThemeModeType } from './ThemeModeSwitch.d';

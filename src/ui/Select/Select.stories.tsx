@@ -47,19 +47,17 @@ const wrapperDecorator = (Story: any) => (
     </div>
 );
 
-const BaseTemplate: ComponentStory<typeof Select> = (args) => {
-    const { multiple, value, ...rest } = args;
+const BaseTemplate: ComponentStory<typeof Select> = ({ multiple, value, ...args }) => {
     const [selected, setSelected] = React.useState(() => (multiple ? [value] : value));
 
     const handleChange = (val: any) => {
         setSelected(val);
     };
 
-    return <Select {...rest} onChange={handleChange} multiple={multiple} value={selected} />;
+    return <Select {...args} onChange={handleChange} multiple={multiple} value={selected} />;
 };
 
-const GroupTemplate: ComponentStory<any> = (args) => {
-    const { items, value, ...rest } = args;
+const GroupTemplate: ComponentStory<any> = ({ items, value, ...args }) => {
     const { multiple } = items[0];
     const [selected, setSelected] = React.useState(() => (multiple ? [value] : value));
 
@@ -71,7 +69,7 @@ const GroupTemplate: ComponentStory<any> = (args) => {
         <>
             {items.map((item: any, idx: number) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <Select key={idx} {...rest} {...item} value={selected} onChange={handleChange} />
+                <Select key={idx} {...args} {...item} value={selected} onChange={handleChange} />
             ))}
         </>
     );

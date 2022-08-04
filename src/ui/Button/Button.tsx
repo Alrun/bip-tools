@@ -9,10 +9,10 @@ const Button = ({ async, isRound, loading, size = 'medium', variant, ...props }:
     if (isRound) return <StyledIconButton variant={variant} size={size} centerRipple {...props} />;
 
     if (async) {
-        const { children, disabled, ...restProps } = props;
+        const { children, disabled, ...other } = props;
 
         return (
-            <StyledButton disabled={disabled || loading} variant={variant || 'contained'} size={size} {...restProps}>
+            <StyledButton disabled={disabled || loading} variant={variant || 'contained'} size={size} {...other}>
                 {loading && (
                     <Box
                         sx={{
