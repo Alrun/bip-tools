@@ -5,26 +5,30 @@ import Box from '@mui/material/Box';
 import Typography from '../Typography/Typography';
 import {
     ArrowDownIcon,
-    ArrowThinDownIcon,
-    ArrowThinUpIcon,
     ArrowUpIcon,
     ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ChevronUpIcon,
     ComponentIcon,
+    CopyIcon,
     CrossIcon,
     DashboardIcon,
     DotsVerticalIcon,
     DragIcon,
     FavoriteBorderIcon,
     FavoriteIcon,
-    HideIcon,
     InfoOutlinedIcon,
+    MenuIcon,
     ModeAutoIcon,
     ModeDarkIcon,
     ModeLightIcon,
     PCIcon,
     PlusIcon,
+    QrCodeIcon,
     SearchIcon,
-    ShowIcon,
+    ShowOffIcon,
+    ShowOnIcon,
     StarBorderIcon,
     StarIcon
 } from '../Icons/Icons';
@@ -106,8 +110,76 @@ export const Icons = GroupTemplate.bind({});
 Icons.args = {
     items: [
         {
+            label: 'Arrow Down',
+            component: <ArrowDownIcon />
+        },
+        {
+            label: 'Arrow Up',
+            component: <ArrowUpIcon />
+        },
+        {
+            label: 'Chevron Down',
+            component: <ChevronDownIcon />
+        },
+        {
+            label: 'Chevron Up',
+            component: <ChevronUpIcon />
+        },
+        {
+            label: 'Chevron Left',
+            component: <ChevronLeftIcon />
+        },
+        {
+            label: 'Chevron Right',
+            component: <ChevronRightIcon />
+        },
+        {
+            label: 'Component',
+            component: <ComponentIcon />
+        },
+        {
+            label: 'Copy',
+            component: <CopyIcon />
+        },
+        {
+            label: 'Cross',
+            component: <CrossIcon />
+        },
+        {
+            label: 'Dashboard',
+            component: <DashboardIcon />
+        },
+        {
+            label: 'Dots Vertical',
+            component: <DotsVerticalIcon />
+        },
+        {
+            label: 'Drag',
+            component: <DragIcon />
+        },
+        {
             label: 'External',
             component: <ExternalIcon />
+        },
+        {
+            label: 'Favorite',
+            component: <FavoriteIcon />
+        },
+        {
+            label: 'Favorite Border',
+            component: <FavoriteBorderIcon />
+        },
+        {
+            label: 'Info Outlined',
+            component: <InfoOutlinedIcon />
+        },
+        {
+            label: 'Menu',
+            component: <MenuIcon />
+        },
+        {
+            label: 'Mode Auto',
+            component: <ModeAutoIcon />
         },
         {
             label: 'Mode Dark',
@@ -118,88 +190,36 @@ Icons.args = {
             component: <ModeLightIcon />
         },
         {
-            label: 'Drag',
-            component: <DragIcon />
-        },
-        {
-            label: 'DotsVerticalIcon',
-            component: <DotsVerticalIcon />
-        },
-        {
-            label: 'ArrowThinUpIcon',
-            component: <ArrowThinUpIcon />
-        },
-        {
-            label: 'ArrowThinDownIcon',
-            component: <ArrowThinDownIcon />
-        },
-        {
-            label: 'ChevronDownIcon',
-            component: <ChevronDownIcon />
-        },
-        {
-            label: 'ComponentIcon',
-            component: <ComponentIcon />
-        },
-        {
-            label: 'PCIcon',
+            label: 'PC',
             component: <PCIcon />
         },
         {
-            label: 'ArrowUpIcon',
-            component: <ArrowUpIcon />
-        },
-        {
-            label: 'ArrowDownIcon',
-            component: <ArrowDownIcon />
-        },
-        {
-            label: 'PlusIcon',
+            label: 'Plus',
             component: <PlusIcon />
         },
         {
-            label: 'FavoriteIcon',
-            component: <FavoriteIcon />
-        },
-        {
-            label: 'FavoriteBorderIcon',
-            component: <FavoriteBorderIcon />
-        },
-        {
-            label: 'StarIcon',
-            component: <StarIcon />
-        },
-        {
-            label: 'StarBorderIcon',
-            component: <StarBorderIcon />
-        },
-        {
-            label: 'CrossIcon',
-            component: <CrossIcon />
-        },
-        {
-            label: 'SearchIcon',
+            label: 'Search',
             component: <SearchIcon />
         },
         {
-            label: 'ShowIcon',
-            component: <ShowIcon />
+            label: 'Star',
+            component: <StarIcon />
         },
         {
-            label: 'HideIcon',
-            component: <HideIcon />
+            label: 'Star Border',
+            component: <StarBorderIcon />
         },
         {
-            label: 'DashboardIcon',
-            component: <DashboardIcon />
+            label: 'Show On',
+            component: <ShowOnIcon />
         },
         {
-            label: 'InfoOutlinedIcon',
-            component: <InfoOutlinedIcon />
+            label: 'Show Off',
+            component: <ShowOffIcon />
         },
         {
-            label: 'ModeAutoIcon',
-            component: <ModeAutoIcon />
+            label: 'Qr Code',
+            component: <QrCodeIcon />
         }
     ]
 };

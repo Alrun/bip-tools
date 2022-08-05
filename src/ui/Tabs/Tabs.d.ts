@@ -172,7 +172,7 @@ export interface TabsProps {
      */
     TabIndicatorProps?: React.HTMLAttributes<HTMLDivElement> & { sx?: SxProps<Theme> };
     /**
-     * Props applied to the [`TabScrollButton`](/material-ui/api/tab-scroll-button/) element.
+     * Props applied to the [`TabScrollButton`](https://mui.com/material-ui/api/tab-scroll-button/) element.
      *
      * @default {}
      */

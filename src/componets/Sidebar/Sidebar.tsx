@@ -1,16 +1,14 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import AppleIcon from '@mui/icons-material/Apple';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Typography from '@mui/material/Typography';
 import { StyledDrawer, StyledLink } from './SidebarStyles';
 import SidebarMenu from '../SidebarMenu/SidebarMenu';
 import Button from '../../ui/Button/Button';
 import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
 import { isIOS } from '../../utils/featuresDetection/featuresDetection';
+import { ChevronLeftIcon, ChevronRightIcon, PCIcon } from '../../ui/Icons/Icons';
+import Typography from '../../ui/Typography/Typography';
 
 const drawerBleeding = 10;
 
@@ -28,7 +26,7 @@ const SidebarContainer = ({ heightHeader, heightFooter, open, dense, isMobile, s
                     }}
                 >
                     <StyledLink to="/" reloadDocument>
-                        <AppleIcon sx={{ fontSize: 38 }} />
+                        <PCIcon sx={{ fontSize: 38 }} />
                         <Typography variant="h4" component="span" sx={{ m: 0, pl: 6 }}>
                             BIP Tools
                         </Typography>

@@ -261,7 +261,10 @@ Sizes.args = {
 Sizes.parameters = {
     docs: {
         source: {
-            code: '<Input label="Medium" />\n' + '<Input label="Small" size="small" />'
+            code: `
+<Input label="Medium" />
+<Input label="Small" size="small" />
+`
         }
     }
 };

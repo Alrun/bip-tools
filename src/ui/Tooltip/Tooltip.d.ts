@@ -131,7 +131,7 @@ export interface TooltipProps {
      */
     PopperComponent?: MuiTooltipProps['PopperComponent'];
     /**
-     * Props applied to the [`Popper`](/material-ui/api/popper/) element.
+     * Props applied to the [`Popper`](https://mui.com/material-ui/api/popper/) element.
      *
      * @default {}
      */
@@ -146,7 +146,7 @@ export interface TooltipProps {
     title: NonNullable<React.ReactNode>;
     /**
      * The component used for the transition.
-     * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+     * [Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
      *
      * @default Grow
      */

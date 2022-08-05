@@ -125,7 +125,6 @@ Variants.args = {
         {
             children: <span>Custom Styles</span>,
             arrow: true,
-            open: true,
             title: <img src={BitcoinIcon} alt="Bitcoin" style={{ display: 'block', width: 80, height: 80 }} />,
             componentsProps: {
                 tooltip: {

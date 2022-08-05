@@ -3,11 +3,11 @@ import { QRCodeCanvas } from 'qrcode.react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Tooltip from '../../ui/Tooltip/Tooltip';
-import QrCode2Icon from '@mui/icons-material/QrCode2';
 import Button from '../../ui/Button/Button';
 import Modal from '../../ui/Modal/Modal';
 import Typography from '../../ui/Typography/Typography';
 import ButtonCopy from '../ButtonCopy/ButtonCopy';
+import { QrCodeIcon } from '../../ui/Icons/Icons';
 
 const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
     const theme = useTheme();
@@ -27,7 +27,7 @@ const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
             <Tooltip title={tooltipText}>
                 <div>
                     <Button isRound size="small" onClick={handleShowModal}>
-                        <QrCode2Icon fontSize="inherit" />
+                        <QrCodeIcon fontSize="inherit" />
                     </Button>
                 </div>
             </Tooltip>
