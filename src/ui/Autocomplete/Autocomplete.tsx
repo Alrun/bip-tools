@@ -4,7 +4,6 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Grow from '@mui/material/Grow';
 import { createFilterOptions, AutocompleteRenderOptionState } from '@mui/material/Autocomplete';
 import ListSubheader from '@mui/material/ListSubheader';
 import { StyledAutocomplete, StyledPopper } from './AutocompleteStyles';
@@ -17,7 +16,8 @@ import {
     PopperComponentProps
 } from './Autocomplete.d';
 import { ArrowDownIcon, CrossIcon } from '../Icons/Icons';
-import { PreloaderCircle } from '../Preloader/Preloader';
+import Preloader from '../Preloader/Preloader';
+import { Grow } from '../Transitions/Transitions';
 
 const useResetCache = (data: number, scroll: number) => {
     const ref = React.useRef<VariableSizeList>(null);
@@ -282,7 +282,7 @@ const Autocomplete = ({
                         ...params.InputProps,
                         endAdornment: (
                             <>
-                                {loading && <PreloaderCircle color="inherit" size={size === 'medium' ? 20 : 16} />}
+                                {loading && <Preloader color="inherit" size={size === 'medium' ? 20 : 16} />}
                                 {params.InputProps.endAdornment}
                             </>
                         )

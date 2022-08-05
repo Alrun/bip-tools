@@ -1,7 +1,29 @@
 import React from 'react';
-import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
+import { PreloaderProps } from './Preloader.d';
+import StyledLinearProgress from './PreloaderStyles';
 
-export const PreloaderCircle = (props: CircularProgressProps) => <CircularProgress {...props} />;
+const Preloader = ({
+    circularVariant,
+    disableShrink = true,
+    height = 3,
+    isLinear = false,
+    linearVariant,
+    size = 28,
+    thickness,
+    valueBuffer,
+    ...props
+}: PreloaderProps) =>
+    isLinear ? (
+        <StyledLinearProgress height={height} valueBuffer={valueBuffer} variant={linearVariant} {...props} />
+    ) : (
+        <CircularProgress
+            size={size}
+            disableShrink={disableShrink}
+            variant={circularVariant}
+            thickness={thickness}
+            {...props}
+        />
+    );
 
-// TODO: Add Linear Preloader
-export const PreloaderLinear = (props: CircularProgressProps) => <CircularProgress {...props} />;
+export default Preloader;
