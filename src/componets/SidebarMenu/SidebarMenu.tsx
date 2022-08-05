@@ -7,13 +7,12 @@ import ListSubheader from '@mui/material/ListSubheader';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import { linkList } from '../Navigation/Navigation';
 import { SidebarProps } from './SidebarMenu.d';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { sidebarExpand } from '../../redux/slices/app/app';
 import SidebarMenuUILink from './SidebarMenuUILink';
+import { ChevronDownIcon, ChevronUpIcon } from '../../ui/Icons/Icons';
 
 export default function SidebarMenu({ width = '100%', setDrawerOpen }: SidebarProps) {
     const { sidebarExpanded } = useAppSelector((state) => state.app);
@@ -66,7 +65,7 @@ export default function SidebarMenu({ width = '100%', setDrawerOpen }: SidebarPr
                                     >
                                         <ListItemIcon>{icon}</ListItemIcon>
                                         <ListItemText primary={label} />
-                                        {sidebarExpanded === label ? <ExpandLess /> : <ExpandMore />}
+                                        {sidebarExpanded === label ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </ListItemButton>
 
                                     <Collapse
@@ -134,8 +133,7 @@ export default function SidebarMenu({ width = '100%', setDrawerOpen }: SidebarPr
                             )
                         )}
 
-                        <SidebarMenuUILink/>
-
+                        <SidebarMenuUILink />
                     </ul>
                 </li>
             ))}

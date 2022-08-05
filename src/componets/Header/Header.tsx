@@ -3,13 +3,13 @@ import { useLocation } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
-import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import { flatLinkList } from '../Navigation/Navigation';
 import Button from '../../ui/Button/Button';
 import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
+import { MenuIcon } from '../../ui/Icons/Icons';
 
 const Header = ({ height = '50px', mode, isMobile, changeMode, drawerOpen }: any) => {
     const [title, setTitle] = React.useState<string>('');

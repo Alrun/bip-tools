@@ -2,7 +2,7 @@ import React from 'react';
 import debounce from 'lodash/debounce';
 import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
+import Alert from '../../ui/Alert/Alert';
 import Accordion from '../../ui/Accordiron/Accordion';
 import { filterStr } from '../../utils/crypto/crypto';
 import Typography from '../../ui/Typography/Typography';

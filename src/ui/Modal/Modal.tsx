@@ -5,7 +5,7 @@ import { StyledModal, StyledModalContent, StyledModalFooter, StyledModalHeader }
 import Button from '../Button/Button';
 import { CrossIcon } from '../Icons/Icons';
 import { ModalProps } from './Modal.d';
-import { SlideDown, SlideLeft, SlideRigth, SlideUp } from '../Transitions/Transitions';
+import { SlideDown, SlideLeft, SlideRight, SlideUp } from '../Transitions/Transitions';
 
 const getTransition = (slide: ModalProps['slide']) => {
     switch (slide) {
@@ -16,7 +16,7 @@ const getTransition = (slide: ModalProps['slide']) => {
         case 'left':
             return SlideLeft;
         case 'right':
-            return SlideRigth;
+            return SlideRight;
         default:
             return undefined;
     }

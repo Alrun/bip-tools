@@ -1,18 +1,10 @@
 import React from 'react';
 import copy from 'copy-to-clipboard';
-import Snackbar from '@mui/material/Snackbar';
-import { Alert } from '@mui/material';
-import Slide, { SlideProps } from '@mui/material/Slide';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Snackbar from '../../ui/Snackbar/Snackbar';
 import Tooltip from '../../ui/Tooltip/Tooltip';
 import Button from '../../ui/Button/Button';
+import { CopyIcon } from '../../ui/Icons/Icons';
 import { ButtonCopyProps } from './ButtonCopy.d';
-
-const SlideTransition = ({ children, ...props }: SlideProps) => (
-    <Slide {...props} direction="up">
-        {children}
-    </Slide>
-);
 
 const ButtonCopy = ({
     text,
@@ -30,7 +22,9 @@ const ButtonCopy = ({
         }
     };
 
-    const handleClose = () => {
+    const handleClose = (e: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') return;
+
         setShowSnack(false);
     };
 
@@ -44,22 +38,19 @@ const ButtonCopy = ({
                     }}
                 >
                     <Button isRound size="small" onClick={handleClick} {...ButtonProps}>
-                        <ContentCopyIcon fontSize="inherit" />
+                        <CopyIcon fontSize="inherit" />
                     </Button>
                 </div>
             </Tooltip>
             <Snackbar
-                autoHideDuration={1500}
                 open={showSnack}
                 onClose={handleClose}
-                TransitionComponent={SlideTransition}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                message={snackText}
                 key={text}
-            >
-                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    {snackText}
-                </Alert>
-            </Snackbar>
+                AlertProps={{
+                    onClose: handleClose
+                }}
+            />
         </>
     );
 };
