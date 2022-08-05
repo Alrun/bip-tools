@@ -2,9 +2,9 @@ import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Fade from '@mui/material/Fade';
 import { StyledTabs, StyledTab } from './TabsStyles';
 import { TabPanelProps, TabsProps } from './Tabs.d';
+import { Fade } from '../Transitions/Transitions';
 
 const a11yProps = (idPrefix: string, index: number) => ({
     id: `${idPrefix}-tab-${index}`,

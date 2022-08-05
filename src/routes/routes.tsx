@@ -2,7 +2,7 @@ import React from 'react';
 import { Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 import { Route, Routes as RouterRoutes } from 'react-router-dom';
-import Progress from '../ui/Progress/Progress';
+import Preloader from '../ui/Preloader/Preloader';
 import NoMatch from './NoMatch';
 import Dashboard from './Dashboard';
 import Typography from '../ui/Typography/Typography';
@@ -28,7 +28,16 @@ const Routes = () => (
                                 <Skeleton animation="wave" />
                             </Typography>
 
-                            <Progress />
+                            <Preloader
+                                isLinear
+                                sx={{
+                                    position: 'fixed',
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    zIndex: (theme) => theme.zIndex.modal
+                                }}
+                            />
                         </Box>
                     }
                 >

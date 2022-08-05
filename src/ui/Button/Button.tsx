@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-// TODO: Add progress component.
-import CircularProgress from '@mui/material/CircularProgress';
+import Preloader from '../Preloader/Preloader';
 import { StyledButton, StyledIconButton } from './ButtonStyles';
 import { ButtonProps } from './Button.d';
 
@@ -22,7 +21,7 @@ const Button = ({ async, isRound, loading, size = 'medium', variant, ...props }:
                             transform: 'translate(-50%)'
                         }}
                     >
-                        <CircularProgress disableShrink color="inherit" size={24} />
+                        <Preloader color="inherit" size={24} />
                     </Box>
                 )}
                 <Box sx={{ opacity: loading ? 0 : 1 }}>{children}</Box>

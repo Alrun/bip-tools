@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,6 +7,7 @@ import MenuList from '@mui/material/MenuList';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import toLowercase from '../../utils/toLowercase/toLowercase';
 import { isTouch } from '../../utils/featuresDetection/featuresDetection';
+import { Grow } from '../Transitions/Transitions';
 import { ArrowDownIcon, ArrowUpIcon } from '../Icons/Icons';
 import Typography from '../Typography/Typography';
 import Checkbox from '../Checkbox/Checkbox';
@@ -16,6 +16,7 @@ import { SelectProps, SelectOptionsInterface } from './Select.d';
 
 /**
  * Converts the options to the required shape.
+ *
  * @param {any[]} options Raw options.
  * @returns {SelectOptionsInterface[]}
  */
@@ -32,6 +33,7 @@ export const getFormattedOptions = (options: any[]): SelectOptionsInterface[] =>
     });
 /**
  * Filters options by value.
+ *
  * @param {SelectOptionsInterface[]} options Options to filter.
  * @param {SelectProps['value'] | SelectProps['defaultValue']} value Input value to be filtered.
  * @returns {SelectOptionsInterface[]}
@@ -52,6 +54,7 @@ export const filterOptions = (
 };
 /**
  * Gets the text of the option label.
+ *
  * @param {SelectOptionsInterface[]} options Array of options.
  * @param {SelectProps['value'] | SelectProps['defaultValue']} value Value by which options are selected.
  * @param {boolean | undefined} multiple Multiple selections.
@@ -77,6 +80,7 @@ export const getLabelOption = (
 };
 /**
  * Gets option is selected.
+ *
  * @param {SelectOptionsInterface} option Checked option.
  * @param {SelectProps['value'] | undefined} value The value against which the option is checked.
  * @param {SelectProps['defaultValue'] | undefined} defaultValue The value against which the option is checked if the default value.
@@ -126,6 +130,7 @@ const Select = ({
     const anchorRef = React.useRef<HTMLButtonElement>(null);
     /**
      * Native select handler.
+     *
      * @param {React.ChangeEvent<HTMLSelectElement>} event The event source of the callback.
      */
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

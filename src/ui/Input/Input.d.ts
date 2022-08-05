@@ -1,6 +1,5 @@
 import React from 'react';
 import { BaseTextFieldProps } from '@mui/material/TextField/TextField';
-import { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import PropTypes from 'prop-types';
 
 export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
