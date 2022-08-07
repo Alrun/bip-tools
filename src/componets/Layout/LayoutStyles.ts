@@ -21,7 +21,6 @@ const StyledWrapper = styled(Box, {
     }),
     ...(!open && {
         [theme.breakpoints.up('md')]: {
-            // width: '100%'
             ...closedMixin(theme, widthClose),
             width: `calc(100% - ${widthOpen})`
         }

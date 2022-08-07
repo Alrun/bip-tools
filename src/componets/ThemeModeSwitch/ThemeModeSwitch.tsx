@@ -9,7 +9,7 @@ import { ThemeModeSwitchProps, ThemeModeType } from './ThemeModeSwitch.d';
 const ThemeModeSwitch = ({ changeMode, mode, expanded, size = 'medium' }: ThemeModeSwitchProps) => {
     const [expand, setExpand] = React.useState(expanded || false);
 
-    const changeModeHandle = (newMode: ThemeModeType) => changeMode && changeMode(newMode);
+    const changeModeHandle = (newMode: ThemeModeType) => () => changeMode && changeMode(newMode);
 
     return (
         <Box

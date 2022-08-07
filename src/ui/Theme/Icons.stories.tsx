@@ -6,7 +6,10 @@ import Typography from '../Typography/Typography';
 import {
     ArrowDownIcon,
     ArrowUpIcon,
+    BrainIcon,
     ChevronDownIcon,
+    ChevronLargeLeftIcon,
+    ChevronLargeRightIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
     ChevronUpIcon,
@@ -16,8 +19,10 @@ import {
     DashboardIcon,
     DotsVerticalIcon,
     DragIcon,
+    ExternalIcon,
     FavoriteBorderIcon,
     FavoriteIcon,
+    GitHubIcon,
     InfoOutlinedIcon,
     MenuIcon,
     ModeAutoIcon,
@@ -32,7 +37,6 @@ import {
     StarBorderIcon,
     StarIcon
 } from '../Icons/Icons';
-import ExternalIcon from '../Icons/ExternalIcon';
 
 interface IconComponentProps {
     label: string;
@@ -118,6 +122,10 @@ Icons.args = {
             component: <ArrowUpIcon />
         },
         {
+            label: 'Brain',
+            component: <BrainIcon />
+        },
+        {
             label: 'Chevron Down',
             component: <ChevronDownIcon />
         },
@@ -132,6 +140,14 @@ Icons.args = {
         {
             label: 'Chevron Right',
             component: <ChevronRightIcon />
+        },
+        {
+            label: 'Chevron Large Left',
+            component: <ChevronLargeLeftIcon />
+        },
+        {
+            label: 'Chevron Large Right',
+            component: <ChevronLargeRightIcon />
         },
         {
             label: 'Component',
@@ -160,6 +176,10 @@ Icons.args = {
         {
             label: 'External',
             component: <ExternalIcon />
+        },
+        {
+            label: 'GitHub',
+            component: <GitHubIcon />
         },
         {
             label: 'Favorite',

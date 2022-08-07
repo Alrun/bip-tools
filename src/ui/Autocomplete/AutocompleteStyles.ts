@@ -89,7 +89,7 @@ export const StyledPopper = styled(Popper)(({ theme }) => ({
         '& .MuiListSubheader-root': {
             paddingLeft: 10,
             paddingRight: 10,
-            fontWeight: 'bolder'
+            fontWeight: theme.typography.fontWeightMedium
         }
     },
     '& .MuiAutocomplete-noOptions': {

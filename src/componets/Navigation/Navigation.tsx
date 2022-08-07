@@ -1,9 +1,8 @@
 import React from 'react';
-import { DashboardIcon } from '../../ui/Icons/Icons';
-import { RouteLinkInterface, RoutesListInterface } from './Navigation.d';
-import BrainIcon from '../../ui/Icons/BrainIcon';
+import { DashboardIcon, BrainIcon } from '../../ui/Icons/Icons';
+import { RouteLink, RoutesList } from './Navigation.d';
 
-const linkApp: RoutesListInterface[] = [
+const linkApp: RoutesList[] = [
     {
         header: 'General',
         order: 1,
@@ -19,19 +18,25 @@ const linkApp: RoutesListInterface[] = [
                 icon: <BrainIcon />
             }
         ]
+    },
+    {
+        header: 'Additional',
+        order: 2,
+        links: []
     }
 ];
 
 /**
- * Collects links in a flat array
- * @param obj Object with links and nested links
+ * Collects links in a flat array.
+ *
+ * @param {RoutesList} obj Object with links and nested links.
  */
-const collectLinkProps = (obj: RoutesListInterface): Pick<RouteLinkInterface, 'label' | 'to'>[] =>
-    obj.links.reduce<RouteLinkInterface[]>((acc, cur) => {
-        const link = (label: RouteLinkInterface['label'], to: RouteLinkInterface['to']) => ({ label, to });
+const collectLinkProps = (obj: RoutesList): Pick<RouteLink, 'label' | 'to'>[] =>
+    obj.links.reduce<RouteLink[]>((acc, cur) => {
+        const link = (label: RouteLink['label'], to: RouteLink['to']) => ({ label, to });
 
         if (cur.nested) {
-            const nestedLinkList = cur.nested.reduce<RouteLinkInterface[]>(
+            const nestedLinkList = cur.nested.reduce<RouteLink[]>(
                 (nestedAcc, nestedCur) => nestedAcc.concat(link(nestedCur.label, nestedCur.to)),
                 []
             );
@@ -43,11 +48,12 @@ const collectLinkProps = (obj: RoutesListInterface): Pick<RouteLinkInterface, 'l
     }, []);
 
 /**
- * Defines raw links into a flat array
- * @param rawList Raw link list
+ * Defines raw links into a flat array.
+ *
+ * @param {RoutesList[]} rawList Raw link list
  */
-const defineFlatLinkList = (rawList: RoutesListInterface[]): Pick<RouteLinkInterface, 'label' | 'to'>[] =>
-    rawList.reduce<RouteLinkInterface[]>((acc, cur) => acc.concat(collectLinkProps(cur)), []);
+const defineFlatLinkList = (rawList: RoutesList[]): Pick<RouteLink, 'label' | 'to'>[] =>
+    rawList.reduce<RouteLink[]>((acc, cur) => acc.concat(collectLinkProps(cur)), []);
 
 export const linkList = linkApp.sort((a, b) => a.order - b.order);
 export const flatLinkList = defineFlatLinkList(linkList);
