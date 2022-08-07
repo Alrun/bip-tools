@@ -1,84 +1,88 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { StyledDrawer, StyledLink } from './SidebarStyles';
+import { StyledDrawer, StyledScrollWrapper } from './SidebarStyles';
 import SidebarMenu from '../SidebarMenu/SidebarMenu';
 import Button from '../../ui/Button/Button';
 import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
 import { isIOS } from '../../utils/featuresDetection/featuresDetection';
-import { ChevronLeftIcon, ChevronRightIcon, PCIcon } from '../../ui/Icons/Icons';
+import { ChevronLargeLeftIcon, ChevronLargeRightIcon } from '../../ui/Icons/Icons';
 import Typography from '../../ui/Typography/Typography';
+import { SidebarProps, SidebarContainerProps } from './Sidebar.d';
+import LogoDarkIcon from '../../assets/logo-dark.svg';
+import LogoLightIcon from '../../assets/logo-light.svg';
+import Tooltip from '../../ui/Tooltip/Tooltip';
 
 const drawerBleeding = 10;
+const title = 'BIP Tools';
 
-const SidebarContainer = ({ heightHeader, heightFooter, open, dense, isMobile, setOpen, setDense, children }: any) => {
-    const rendersCount = React.useRef(0);
+const SidebarContainer = ({
+    open,
+    children,
+    isCollapsed,
+    isMobile,
+    heightHeader,
+    heightFooter,
+    setCollapsed,
+    setOpen
+}: SidebarContainerProps) => {
+    const theme = useTheme();
+
+    const handleCollapse = (collapse: boolean) => () => {
+        if (setCollapsed) setCollapsed(collapse);
+    };
+
+    const handleSetOpen = (isOpen: boolean) => () => {
+        if (setOpen) setOpen(isOpen);
+    };
 
     return (
         <Box sx={{ height: '100%' }}>
-            <Box sx={{ px: 2 }}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        height: heightHeader
-                    }}
-                >
-                    <StyledLink to="/" reloadDocument>
-                        <PCIcon sx={{ fontSize: 38 }} />
-                        <Typography variant="h4" component="span" sx={{ m: 0, pl: 6 }}>
-                            BIP Tools
-                        </Typography>
-                    </StyledLink>
-
+            <Box sx={{ p: theme.spacing(0, 2, 0, 4) }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', height: heightHeader }}>
+                    <Tooltip title="Go to Homepage">
+                        <Link
+                            to="/"
+                            reloadDocument
+                            style={{
+                                display: 'flex',
+                                textDecoration: 'none',
+                                alignItems: 'center',
+                                color: theme.palette.text.primary,
+                                border: 0,
+                                marginTop: theme.spacing(-1)
+                            }}
+                        >
+                            <img
+                                src={theme.palette.mode === 'dark' ? LogoDarkIcon : LogoLightIcon}
+                                alt="Logo"
+                                style={{ display: 'block', width: 32, height: 32 }}
+                            />
+                            <Typography variant="h4" component="span" sx={{ m: 0, pl: 6, mt: 2 }}>
+                                {title}
+                            </Typography>
+                        </Link>
+                    </Tooltip>
                     <Button
                         isRound
                         size="large"
-                        sx={{ display: isMobile ? 'flex' : 'none', ml: 'auto' }}
-                        onClick={() => setOpen(false)}
+                        color="inherit"
+                        sx={{ display: isMobile ? 'flex' : 'none', ml: 'auto', mr: -0.25 }}
+                        onClick={handleSetOpen(false)}
                     >
-                        <ChevronLeftIcon fontSize="large" />
+                        <ChevronLargeLeftIcon sx={{ fontSize: '2rem' }} />
                     </Button>
                 </Box>
-                {/* <Divider sx={{ xs: { display: 'block' } }} /> */}
             </Box>
-
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    // height: isMobile
-                    //     ? `calc(100% - ${heightHeader})`
-                    //     : `calc(100% - ${heightHeader} - ${heightFooter})`,
-                    height: `calc(100% - ${heightHeader} - ${heightFooter})`,
-                    overflowX: 'hidden',
-                    overscrollBehavior: 'none',
-                    msOverflowStyle: 'none' /* Hide scrollbar for IE and Edge */,
-                    scrollbarWidth: 'none' /* Hide scrollbar for Firefox */,
-                    /* Hide scrollbar for Chrome, Safari and Opera */
-                    '::-webkit-scrollbar': {
-                        display: 'none'
-                    },
-                    ':hover': {
-                        msOverflowStyle: 'auto' /* Show scrollbar for IE and Edge */,
-                        scrollbarWidth: 'auto' /* Show scrollbar for Firefox */,
-                        /* Show scrollbar for Chrome, Safari and Opera */
-                        '::-webkit-scrollbar': {
-                            display: 'block'
-                        }
-
-                        // overflowY: 'auto',
-                        //     webkitScrollbar: {
-                        //         display: 'block'
-                        //     }
-                    }
-                }}
+            <StyledScrollWrapper
+                heightHeader={typeof heightHeader === 'number' ? `${heightHeader}px` : heightHeader}
+                heightFooter={typeof heightFooter === 'number' ? `${heightFooter}px` : heightFooter}
             >
                 {children}
-            </Box>
-
+            </StyledScrollWrapper>
             <Box
                 sx={{
                     display: open ? 'none' : 'block',
@@ -88,58 +92,50 @@ const SidebarContainer = ({ heightHeader, heightFooter, open, dense, isMobile, s
                     bottom: 0,
                     left: 0,
                     right: 0
-                    // backgroundColor: '#fff'
                 }}
             >
-                <Divider
-                    sx={{
-                        mb: 1
-                    }}
-                />
-
-                {dense ? (
+                <Divider sx={{ mb: 1 }} />
+                {isCollapsed ? (
                     <Button
                         isRound
-                        sx={{ ml: -1 }}
-                        size="small"
+                        sx={{ ml: -1, mt: -0.25 }}
+                        size="large"
+                        color="inherit"
                         aria-label="Expand main navigation"
-                        onClick={() => setDense(false)}
+                        onClick={handleCollapse(false)}
                     >
-                        <ChevronRightIcon fontSize="large" />
+                        <ChevronLargeRightIcon sx={{ fontSize: '2rem' }} />
                     </Button>
                 ) : (
                     <Button
                         isRound
-                        sx={{ ml: -1 }}
-                        size="small"
+                        sx={{ ml: -1, mt: -0.25 }}
+                        color="inherit"
+                        size="large"
                         aria-label="Shrink main navigation"
-                        onClick={() => setDense(true)}
+                        onClick={handleCollapse(true)}
                     >
-                        <ChevronLeftIcon fontSize="large" />
+                        <ChevronLargeLeftIcon sx={{ fontSize: '2rem' }} />
                     </Button>
                 )}
             </Box>
-            <b style={{ position: 'absolute', bottom: '130px' }}>
-                {/* eslint-disable-next-line no-plusplus */}
-                Sidebar RENDER: {++rendersCount.current}
-            </b>
         </Box>
     );
 };
 
 const Sidebar = ({
-    dense,
-    heightHeader = '50px',
-    heightFooter = '50px',
-    widthOpen = '200px',
-    widthClose = '60px',
-    open,
+    changeMode,
+    isCollapsed,
     isMobile,
-    setOpen,
-    setDense,
+    open,
     mode,
-    changeMode
-}: any) => {
+    heightHeader = 50,
+    heightFooter = 50,
+    setOpen,
+    setCollapsed,
+    widthExpanded = 200,
+    widthCollapsed = 60
+}: SidebarProps) => {
     const container = window !== undefined ? () => window.document.body : undefined;
 
     return isMobile ? (
@@ -156,20 +152,20 @@ const Sidebar = ({
             ModalProps={{
                 keepMounted: true,
                 sx: {
-                    '.MuiPaper-root': { width: widthOpen }
+                    '.MuiPaper-root': { width: widthExpanded }
                 }
             }}
         >
             <SidebarContainer
                 heightHeader={heightHeader}
                 heightFooter={heightFooter}
-                widthOpen={widthOpen}
-                widthClose={widthClose}
-                open={open}
+                widthExpanded={widthExpanded}
+                widthCollapsed={widthCollapsed}
                 isMobile={isMobile}
+                open={open}
                 setOpen={setOpen}
             >
-                <SidebarMenu width={widthOpen} setDrawerOpen={setOpen} />
+                <SidebarMenu setDrawerOpen={setOpen} />
                 <Box
                     sx={{
                         position: 'absolute',
@@ -186,17 +182,17 @@ const Sidebar = ({
             </SidebarContainer>
         </SwipeableDrawer>
     ) : (
-        <StyledDrawer variant="permanent" open={!dense} widthOpen={widthOpen} widthClose={widthClose}>
+        <StyledDrawer variant="permanent" open={!isCollapsed} widthOpen={widthExpanded} widthClose={widthCollapsed}>
             <SidebarContainer
                 isMobile={isMobile}
-                dense={dense}
+                isCollapsed={isCollapsed}
                 heightHeader={heightHeader}
                 heightFooter={heightFooter}
-                setDense={setDense}
-                widthOpen={widthOpen}
-                widthClose={widthClose}
+                setCollapsed={setCollapsed}
+                widthExpanded={widthExpanded}
+                widthCollapsed={widthCollapsed}
             >
-                <SidebarMenu width={widthOpen} />
+                <SidebarMenu />
             </SidebarContainer>
         </StyledDrawer>
     );

@@ -18,7 +18,7 @@ const wrapperDecorator = (Story: any) => (
         style={{
             gap: '2rem',
             display: 'flex',
-            alignItems: 'baseline',
+            alignItems: 'center',
             flexWrap: 'wrap'
         }}
     >

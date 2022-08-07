@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface RouteLinkInterface {
+export interface RouteLink {
     /**
      * Link label
      */
@@ -19,14 +19,14 @@ export interface RouteLinkInterface {
     requireAuth?: boolean;
 }
 
-export interface NestedLinkInterface extends RouteLinkInterface {
+export interface NestedLink extends RouteLink {
     /**
      * Nested links
      */
-    nested?: RouteLinkInterface[];
+    nested?: RouteLink[];
 }
 
-export interface RoutesListInterface {
+export interface RoutesList {
     /**
      * Group header
      */
@@ -38,5 +38,5 @@ export interface RoutesListInterface {
     /**
      * Nested links
      */
-    links: NestedLinkInterface[];
+    links: NestedLink[];
 }

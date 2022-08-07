@@ -8,7 +8,7 @@ const StyledLink = styled(Link, {
     textDecoration: 'none',
     marginRight: external && '1ch',
     '& .MuiSvgIcon-root': {
-        position: 'absolute'
+        position: external && 'absolute'
     }
 }));
 

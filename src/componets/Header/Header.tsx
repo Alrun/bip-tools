@@ -3,19 +3,19 @@ import { useLocation } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
-import { flatLinkList } from '../Navigation/Navigation';
 import Button from '../../ui/Button/Button';
-import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
 import { MenuIcon } from '../../ui/Icons/Icons';
+import { flatLinkList } from '../Navigation/Navigation';
+import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
+import { HeaderProps } from './Header.d';
 
-const Header = ({ height = '50px', mode, isMobile, changeMode, drawerOpen }: any) => {
-    const [title, setTitle] = React.useState<string>('');
+const Header = ({ changeMode, drawerOpen, isMobile, mode, height = '50px' }: HeaderProps) => {
+    const [title, setTitle] = React.useState('');
     const location = useLocation();
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         const currentLabel = () => {
             const currentLink = flatLinkList.find((item) => item.to === location.pathname);
 
@@ -24,9 +24,6 @@ const Header = ({ height = '50px', mode, isMobile, changeMode, drawerOpen }: any
 
         setTitle(currentLabel);
     }, [location.pathname]);
-
-    // TODO: Remove after render check
-    const rendersCount = React.useRef<number>(0);
 
     return (
         <AppBar
@@ -37,51 +34,32 @@ const Header = ({ height = '50px', mode, isMobile, changeMode, drawerOpen }: any
                 color: 'text.primary'
             }}
         >
-            <Toolbar
-                sx={{
-                    height,
-                    minHeight: 'auto',
-                    px: {
-                        lg: 8
-                    }
-                }}
-                variant="dense"
-            >
+            <Toolbar variant="dense" sx={{ height, minHeight: 'auto', px: { lg: 8 } }}>
                 <Grid container justifyContent="space-between" alignItems="center" spacing={4}>
                     <Grid item sx={{ display: isMobile ? 'block' : 'none' }}>
                         <Button
-                            isRound
-                            size="small"
-                            onClick={() => drawerOpen(true)}
-                            color="inherit"
                             aria-label="menu"
+                            color="inherit"
+                            isRound
+                            onClick={() => drawerOpen(true)}
+                            size="large"
                             sx={{ zIndex: 'drawer' }}
                         >
                             <MenuIcon fontSize="large" />
                         </Button>
                     </Grid>
-                    <Grid item xs justifyContent={{ xs: 'center', md: 'flex-start' }} sx={{ display: 'flex' }}>
-                        <Typography variant="h3">{title}</Typography>
-                        {/* TODO: Remove after render check */}
-                        <div style={{ position: 'fixed', right: 10, bottom: '6rem' }}>
-                            <b>
-                                {/* eslint-disable-next-line no-plusplus */}
-                                Header RENDER COUNT: {++rendersCount.current}
-                            </b>
-                        </div>
-                    </Grid>
-                    <Grid item>
-                        <Box>Theme</Box>
-                    </Grid>
                     <Grid
                         item
+                        xs
                         sx={{
-                            display: {
-                                xs: 'none',
-                                md: 'flex'
-                            }
+                            display: 'flex',
+                            justifyContent: { xs: 'center', md: 'flex-start' },
+                            ml: { xs: -56, md: 0 }
                         }}
                     >
+                        <Typography variant="h3">{title}</Typography>
+                    </Grid>
+                    <Grid item sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <ThemeModeSwitch mode={mode} changeMode={changeMode} size="small" />
                     </Grid>
                 </Grid>

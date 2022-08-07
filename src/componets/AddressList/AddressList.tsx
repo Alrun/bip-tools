@@ -249,11 +249,11 @@ const AddressList = ({ list, onShowMore, length }: any) => {
                                         <Typography
                                             sx={{
                                                 mr: 2,
-                                                fontWeight: 'bolder',
                                                 color: (theme) =>
                                                     theme.palette.mode === 'dark'
                                                         ? theme.palette.secondary.dark
-                                                        : theme.palette.secondary.light
+                                                        : theme.palette.secondary.light,
+                                                fontWeight: (theme) => theme.typography.fontWeightMedium
                                             }}
                                         >
                                             Address:
@@ -280,7 +280,14 @@ const AddressList = ({ list, onShowMore, length }: any) => {
 
                                 {showBalance && (
                                     <Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 0 }}>
-                                        <Typography sx={{ mr: 2, fontWeight: 'bolder' }}>Balance:</Typography>
+                                        <Typography
+                                            sx={{
+                                                mr: 2,
+                                                fontWeight: (theme) => theme.typography.fontWeightMedium
+                                            }}
+                                        >
+                                            Balance:
+                                        </Typography>
                                         <Typography sx={{ wordBreak: 'break-word' }}>0</Typography>
                                     </Box>
                                 )}
@@ -305,7 +312,7 @@ const AddressList = ({ list, onShowMore, length }: any) => {
                                         <Typography
                                             sx={{
                                                 mr: 2,
-                                                fontWeight: 'bolder',
+                                                fontWeight: (theme) => theme.typography.fontWeightMedium,
                                                 color: (theme) =>
                                                     theme.palette.mode === 'dark'
                                                         ? theme.palette.secondary.dark
@@ -339,7 +346,7 @@ const AddressList = ({ list, onShowMore, length }: any) => {
                                         <Typography
                                             sx={{
                                                 mr: 2,
-                                                fontWeight: 'bolder',
+                                                fontWeight: (theme) => theme.typography.fontWeightMedium,
                                                 color: (theme) =>
                                                     theme.palette.mode === 'dark'
                                                         ? theme.palette.secondary.dark

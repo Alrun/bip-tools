@@ -3,21 +3,27 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { DrawerWidthInterface, LayoutHeightInterface, LayoutProps } from './Layout.d';
+import { isTouch } from '../../utils/featuresDetection/featuresDetection';
 import { drawerDenseToggle } from '../../redux/slices/app/app';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import StyledWrapper from './LayoutStyles';
-import { isTouch } from '../../utils/featuresDetection/featuresDetection';
+import { LayoutProps } from './Layout.d';
 
-const drawerWidth: DrawerWidthInterface = {
-    open: '15rem',
-    close: '4rem'
+/**
+ * Width of layout with expanded and collapsed sidebar for layout.
+ */
+const sidebarWidth: Record<'expanded' | 'collapsed', string> = {
+    expanded: '15rem',
+    collapsed: '4rem'
 };
 
-const layoutHeight: LayoutHeightInterface = {
+/**
+ * Header and footer height.
+ */
+const layoutHeight: Record<'header' | 'footer', string> = {
     header: '3.5rem',
     footer: '3.5rem'
 };
@@ -27,35 +33,28 @@ const Layout = ({ mode, changeMode }: LayoutProps) => {
     const dispatch = useAppDispatch();
 
     const isMobile = isTouch() || useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-    const [isOpen, setOpen] = React.useState<boolean>(false);
 
-    const handleOpen = (open: boolean) => {
-        setOpen(open);
-    };
+    const [isOpen, setOpen] = React.useState(false);
 
-    const handleDense = React.useCallback((dense: boolean) => {
-        dispatch(drawerDenseToggle(dense));
-    }, []);
-
-    // TODO: Remove after render check
-    const rendersCount = React.useRef<number>(0);
+    const handleOpen = React.useCallback((open: boolean) => setOpen(open), []);
+    const handleCollapse = React.useCallback((collapse: boolean) => dispatch(drawerDenseToggle(collapse)), []);
 
     return (
         <Box sx={{ display: 'flex', height: '100%' }}>
             <Sidebar
                 heightHeader={layoutHeight.header}
                 heightFooter={layoutHeight.footer}
-                widthOpen={drawerWidth.open}
-                widthClose={drawerWidth.close}
+                widthExpanded={sidebarWidth.expanded}
+                widthCollapsed={sidebarWidth.collapsed}
                 isMobile={isMobile}
                 open={isOpen}
-                dense={drawerDense}
                 setOpen={handleOpen}
-                setDense={handleDense}
+                isCollapsed={drawerDense}
+                setCollapsed={handleCollapse}
                 mode={mode}
                 changeMode={changeMode}
             />
-            <StyledWrapper open={drawerDense} widthOpen={drawerWidth.open} widthClose={drawerWidth.close}>
+            <StyledWrapper open={drawerDense} widthOpen={sidebarWidth.expanded} widthClose={sidebarWidth.collapsed}>
                 <Header
                     height={layoutHeight.header}
                     mode={mode}
@@ -64,11 +63,6 @@ const Layout = ({ mode, changeMode }: LayoutProps) => {
                     changeMode={changeMode}
                 />
                 <Main />
-                {/* TODO: Remove after render check */}
-                <b style={{ position: 'absolute', bottom: 60, right: 10 }}>
-                    {/* eslint-disable-next-line no-plusplus */}
-                    Layout RENDER COUNT: {++rendersCount.current}
-                </b>
                 <Footer height={layoutHeight.footer} />
             </StyledWrapper>
         </Box>

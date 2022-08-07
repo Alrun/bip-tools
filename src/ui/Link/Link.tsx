@@ -1,7 +1,7 @@
 import React from 'react';
 import StyledLink from './LinkStyles';
 import { LinkProps } from './Link.d';
-import ExternalIcon from '../Icons/ExternalIcon';
+import { ExternalIcon } from '../Icons/Icons';
 
 const Link = ({ href, external, children, ...props }: LinkProps) =>
     external ? (

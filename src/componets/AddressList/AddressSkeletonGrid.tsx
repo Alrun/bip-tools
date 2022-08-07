@@ -32,7 +32,7 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
                 <Typography
                     sx={{
                         mr: 2,
-                        fontWeight: 'bolder',
+                        fontWeight: (theme) => theme.typography.fontWeightMedium,
                         color: (theme) =>
                             theme.palette.mode === 'dark' ? theme.palette.secondary.dark : theme.palette.secondary.light
                     }}
@@ -72,7 +72,7 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
                 <Typography
                     sx={{
                         mr: 2,
-                        fontWeight: 'bolder',
+                        fontWeight: (theme) => theme.typography.fontWeightMedium,
                         color: (theme) =>
                             theme.palette.mode === 'dark' ? theme.palette.secondary.dark : theme.palette.secondary.light
                     }}
@@ -92,7 +92,7 @@ const AddressSkeletonGrid = ({ showBalance }: AddressSkeletonGridProps) => (
                 <Typography
                     sx={{
                         mr: 2,
-                        fontWeight: 'bolder',
+                        fontWeight: (theme) => theme.typography.fontWeightMedium,
                         color: (theme) =>
                             theme.palette.mode === 'dark' ? theme.palette.secondary.dark : theme.palette.secondary.light
                     }}
