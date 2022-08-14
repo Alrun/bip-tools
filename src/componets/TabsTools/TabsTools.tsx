@@ -3,10 +3,10 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TabMnemonic from '../TabMnemonic/TabMnemonic';
 import TabAddress from '../TabAddress/TabAddress';
-import TabInfo from '../TabInfo/TabInfo';
 import Tabs from '../../ui/Tabs/Tabs';
+import { TabList } from './TabsTools.d';
 
-const tabList = [
+const tabList: TabList[] = [
     {
         label: 'Generator',
         content: <TabMnemonic />
@@ -14,10 +14,6 @@ const tabList = [
     {
         label: 'Addresses',
         content: <TabAddress />
-    },
-    {
-        label: 'Info',
-        content: <TabInfo />
     }
 ];
 

@@ -4,7 +4,7 @@ import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { isTouch } from '../../utils/featuresDetection/featuresDetection';
-import { drawerDenseToggle } from '../../redux/slices/app/app';
+import { setSidebarDense } from '../../redux/slices/app/app';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -12,24 +12,13 @@ import Footer from '../Footer/Footer';
 import StyledWrapper from './LayoutStyles';
 import { LayoutProps } from './Layout.d';
 
-/**
- * Width of layout with expanded and collapsed sidebar for layout.
- */
-const sidebarWidth: Record<'expanded' | 'collapsed', string> = {
-    expanded: '15rem',
-    collapsed: '4rem'
-};
-
-/**
- * Header and footer height.
- */
-const layoutHeight: Record<'header' | 'footer', string> = {
-    header: '3.5rem',
-    footer: '3.5rem'
-};
+const SIDEBAR_WIDTH_FULL = '15rem';
+const SIDEBAR_WIDTH_SLIM = '4rem';
+const LAYOUT_HEADER = '3.5rem';
+const LAYOUT_FOOTER = '3.5rem';
 
 const Layout = ({ mode, changeMode }: LayoutProps) => {
-    const { drawerDense } = useAppSelector((state) => state.app);
+    const { sidebarDense } = useAppSelector((state) => state.app);
     const dispatch = useAppDispatch();
 
     const isMobile = isTouch() || useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
@@ -37,33 +26,33 @@ const Layout = ({ mode, changeMode }: LayoutProps) => {
     const [isOpen, setOpen] = React.useState(false);
 
     const handleOpen = React.useCallback((open: boolean) => setOpen(open), []);
-    const handleCollapse = React.useCallback((collapse: boolean) => dispatch(drawerDenseToggle(collapse)), []);
+    const handleDense = React.useCallback((collapse: boolean) => dispatch(setSidebarDense(collapse)), []);
 
     return (
         <Box sx={{ display: 'flex', height: '100%' }}>
             <Sidebar
-                heightHeader={layoutHeight.header}
-                heightFooter={layoutHeight.footer}
-                widthExpanded={sidebarWidth.expanded}
-                widthCollapsed={sidebarWidth.collapsed}
+                heightHeader={LAYOUT_HEADER}
+                heightFooter={LAYOUT_FOOTER}
+                widthFull={SIDEBAR_WIDTH_FULL}
+                widthSlim={SIDEBAR_WIDTH_SLIM}
                 isMobile={isMobile}
                 open={isOpen}
                 setOpen={handleOpen}
-                isCollapsed={drawerDense}
-                setCollapsed={handleCollapse}
+                dense={sidebarDense}
+                setDense={handleDense}
                 mode={mode}
                 changeMode={changeMode}
             />
-            <StyledWrapper open={drawerDense} widthOpen={sidebarWidth.expanded} widthClose={sidebarWidth.collapsed}>
+            <StyledWrapper open={sidebarDense} widthFull={SIDEBAR_WIDTH_FULL} widthSlim={SIDEBAR_WIDTH_SLIM}>
                 <Header
-                    height={layoutHeight.header}
-                    mode={mode}
+                    height={LAYOUT_HEADER}
                     isMobile={isMobile}
-                    drawerOpen={handleOpen}
+                    mode={mode}
                     changeMode={changeMode}
+                    setSidebarOpen={handleOpen}
                 />
                 <Main />
-                <Footer height={layoutHeight.footer} />
+                <Footer height={LAYOUT_FOOTER} />
             </StyledWrapper>
         </Box>
     );

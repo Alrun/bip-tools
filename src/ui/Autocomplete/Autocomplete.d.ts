@@ -1,6 +1,4 @@
 import React from 'react';
-import { Theme } from '@mui/material/styles';
-import { SxProps } from '@mui/system';
 import {
     AutocompleteCloseReason,
     AutocompleteHighlightChangeReason,
@@ -9,22 +7,32 @@ import {
 } from '@mui/base/AutocompleteUnstyled/useAutocomplete';
 import { AutocompleteRenderOptionState } from '@mui/material/Autocomplete/Autocomplete';
 import { InputProps } from '../Input/Input';
+import { VirtualElement } from '@popperjs/core';
+import { BaseTextFieldProps } from '@mui/material/TextField/TextField';
 
-export interface AutocompleteOptionInterface {
+export interface AutocompleteOption {
+    /**
+     * Option label.
+     */
     label: string;
 
+    /**
+     * Option value.
+     */
     [key: string]: string | number;
 }
 
 export interface AutocompleteProps {
     /**
      * If the value is true, when selecting options using the keyboard,
-     * sets the value of the input field
+     * sets the value of the input field.
+     *
      * @default true
      */
     autoComplete?: boolean;
     /**
      * If `true`, the first option is automatically highlighted.
+     *
      * @default false
      */
     autoHighlight?: boolean;
@@ -32,6 +40,7 @@ export interface AutocompleteProps {
      * If `true`, the selected option becomes the value of the input
      * when the Autocomplete loses focus unless the user chooses
      * a different option or changes the character string in the input.
+     *
      * @default false
      */
     autoSelect?: boolean;
@@ -41,16 +50,19 @@ export interface AutocompleteProps {
      * - `true` the input is always blurred.
      * - `touch` the input is blurred after a touch event.
      * - `mouse` the input is blurred after a mouse event.
+     *
      * @default false
      */
     blurOnSelect?: 'touch' | 'mouse' | true | false;
     /**
      * Override the default text for the *clear* icon button.
+     *
      * @default 'Clear'
      */
     clearText?: string;
     /**
      * Override the default text for the *close popup* icon button.
+     *
      * @default 'Close'
      */
     closeText?: string;
@@ -58,50 +70,59 @@ export interface AutocompleteProps {
      * If `true`, the input's text is cleared on blur if no value is selected.
      * Set to `true` if you want to help the user enter a new value.
      * Set to `false` if you want to help the user resume their search.
+     *
      * @default !props.freeSolo
      */
     clearOnBlur?: boolean;
     /**
      * If `true`, clear all values when the user presses escape and the popup is closed.
+     *
      * @default false
      */
     clearOnEscape?: boolean;
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue?: AutocompleteOptionInterface | string;
+    defaultValue?: AutocompleteOption | string;
     /**
      * If `true`, the component is disabled.
+     *
      * @default false
      */
     disabled?: boolean;
     /**
      * If `true`, the input can't be cleared.
+     *
      * @default false
      */
     disableClearable?: boolean;
     /**
      * If `true`, the popup won't close when a value is selected.
+     *
      * @default false
      */
     disableCloseOnSelect?: boolean;
     /**
      * If `true`, will allow focus on disabled items.
+     *
      * @default false
      */
     disabledItemsFocusable?: boolean;
     /**
      * Force the visibility display of the popup icon.
+     *
      * @default true
      */
     forcePopupIcon?: boolean;
     /**
      * If `true`, the input will take up the full width of its container.
+     *
      * @default false
      */
     fullWidth?: boolean;
     /**
      * A function that determines the filtered options to be rendered on search.
+     *
      * @param {T[]} options The options to render.
      * @param {object} state The state of the component.
      * @returns {T[]}
@@ -109,16 +130,19 @@ export interface AutocompleteProps {
     filterOptions?: (options: T[], state: FilterOptionsState<T>) => T[];
     /**
      * If `true`, hide the selected options from the list box.
+     *
      * @default false
      */
     filterSelectedOptions?: boolean;
     /**
      * If `true`, the Autocomplete is free solo, meaning that the user input is not bound to provided options.
+     *
      * @default false
      */
     freeSolo?: boolean;
     /**
      * Used to determine the disabled state for a given option.
+     *
      * @param {T} option The option to test.
      * @returns {boolean}
      */
@@ -126,6 +150,7 @@ export interface AutocompleteProps {
     /**
      * If provided, the options will be grouped under the returned string.
      * The groupBy value is also used as the text for group headings when `renderGroup` is not provided.
+     *
      * @param {T} options The options to group. (option) => (option as string)[0].toUpperCase()
      * @returns {string}
      */
@@ -137,6 +162,7 @@ export interface AutocompleteProps {
     /**
      * If `true`, the component handles the "Home" and "End" keys when the popup is open.
      * It should move focus to the first option and last option, respectively.
+     *
      * @default !props.freeSolo
      */
     handleHomeEndKeys?: boolean;
@@ -160,12 +186,14 @@ export interface AutocompleteProps {
     /**
      * If `true`, the component is in a loading state.
      * This shows the `loadingText` in place of suggestions (only if there are no suggestions to show, e.g. `options` are empty).
+     *
      * @default false
      */
     loading?: boolean;
     /**
      * Text to display when in a loading state.
      * For localization purposes, you can use the provided.
+     *
      * @default 'Loading…'
      */
     loadingText?: React.ReactNode;
@@ -176,12 +204,14 @@ export interface AutocompleteProps {
     /**
      * Text to display when there are no options.
      * For localization purposes, you can use the provided.
+     *
      * @default 'No options'
      */
     noOptionsText?: React.ReactNode;
     /**
      * Override the default text for the *open popup* icon button.
      * For localization purposes, you can use the provided.
+     *
      * @default 'Open'
      */
     openText?: string;
@@ -192,6 +222,7 @@ export interface AutocompleteProps {
     options: ReadonlyArray<T>;
     /**
      * Callback fired when the value changes.
+     *
      * @param {React.SyntheticEvent} event The event source of the callback.
      * @param {T|T[]} value The new value of the component.
      * @param {string} reason One of "createOption", "selectOption", "removeOption", "blur" or "clear".
@@ -202,12 +233,14 @@ export interface AutocompleteProps {
     /**
      * Callback fired when the popup requests to be closed.
      * Use in controlled mode (see open).
+     *
      * @param {React.SyntheticEvent} event The event source of the callback.
      * @param {string} reason Can be: `"toggleInput"`, `"escape"`, `"selectOption"`, `"removeOption"`, `"blur"`.
      */
     onClose?: (event: React.SyntheticEvent, reason: AutocompleteCloseReason) => void;
     /**
      * Callback fired when the input value changes.
+     *
      * @param {React.SyntheticEvent} event The event source of the callback.
      * @param {string} value The new value of the text input.
      * @param {string} reason Can be: `"input"` (user input), `"reset"` (programmatic change), `"clear"`.
@@ -220,11 +253,13 @@ export interface AutocompleteProps {
     /**
      * Callback fired when the popup requests to be opened.
      * Use in controlled mode (see open).
+     *
      * @param {React.SyntheticEvent} event The event source of the callback.
      */
     onOpen?: (event: React.SyntheticEvent) => void;
     /**
      * Callback fired when the highlight option changes.
+     *
      * @param {React.SyntheticEvent} event The event source of the callback.
      * @param {T} option The highlighted option.
      * @param {string} reason Can be: `"keyboard"`, `"auto"`, `"mouse"`.
@@ -240,21 +275,25 @@ export interface AutocompleteProps {
     open?: boolean;
     /**
      * If `true`, the popup will open on input focus.
+     *
      * @default false
      */
     openOnFocus?: boolean;
     /**
      * The icon to display in place of the default popup icon.
+     *
      * @default <ArrowDownIcon />
      */
     popupIcon?: React.ReactNode;
     /**
      * If `true`, the component becomes readonly. It is also supported for multiple tags where the tag cannot be deleted.
+     *
      * @default false
      */
     readOnly?: boolean;
     /**
      * Render the option, use `getOptionLabel` by default.
+     *
      * @param {object} props The props to apply on the li element.
      * @param {T} option The option to render.
      * @param {object} state The state of the component.
@@ -267,16 +306,18 @@ export interface AutocompleteProps {
     ) => React.ReactNode;
     /**
      * The size of the component.
+     *
      * @default 'medium'
      */
     size?: 'small' | 'medium';
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx?: SxProps<Theme>;
+    sx?: BaseTextFieldProps['sx'];
     /**
      * If `true`, the input's text is selected on focus.
      * It helps the user clear the selected value.
+     *
      * @default !props.freeSolo
      */
     selectOnFocus?: boolean;
@@ -285,22 +326,46 @@ export interface AutocompleteProps {
      * The value must have reference equality with the option in order to be selected.
      * You can customize the equality behavior with the `isOptionEqualToValue` prop.
      */
-    value?: AutocompleteOptionInterface | string;
+    value?: AutocompleteOption | string;
     /**
      * If true, then the list will be virtualized.
+     *
      * @default false
      */
     virtualize?: boolean;
 }
 
 export interface PopperComponentProps {
-    anchorEl?: any;
+    /**
+     * An HTML element, [virtualElement](https://popper.js.org/docs/v2/virtual-elements/),
+     * or a function that returns either.
+     * It's used to set the position of the popper.
+     * The return value will passed as the reference object of the Popper instance.
+     */
+    anchorEl?: null | VirtualElement | (() => VirtualElement);
+    /**
+     * The `children` will be under the DOM hierarchy of the parent component.
+     *
+     * @default false
+     */
     disablePortal?: boolean;
+    /**
+     * If `true`, the component is shown.
+     */
     open: boolean;
-    children?: any;
+    /**
+     * A single child content element.
+     */
+    children?: React.ReactNode;
 }
 
 export interface ListboxComponentProps extends React.HTMLAttributes<HTMLElement> {
+    /**
+     * Number of visible elements.
+     */
     maxItems: number;
+    /**
+     * If `true`, the corresponding part of the text will be highlighted.
+     */
     hightlight?: number;
 }

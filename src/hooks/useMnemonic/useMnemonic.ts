@@ -1,11 +1,11 @@
 import React from 'react';
-import { getChecksum } from '../../libs/bip39/mnemonic/mnemonic';
+import { getMnemonicList } from '../../libs/bip39/mnemonic/mnemonic';
 
-type MType = {
+interface MnemonicList {
     /**
      * List of bits.
      */
-    list: Array<string>;
+    list: string[];
     /**
      * Raw binary.
      */
@@ -14,27 +14,28 @@ type MType = {
      * Checksum of binary data.
      */
     checksum: string;
-};
+}
 
 /**
- * BIP39 Mnemonic.
- * @param {string} hex String in hex.
- * @returns {MType}
+ * Converts entropy to a list of mnemonic phrase bits.
+ *
+ * @param {string} entropy Entropy value in hex.
+ * @returns {MnemonicList}
  */
-const useMnemonic = (hex: string): MType => {
-    const [state, setState] = React.useState<MType>({
+const useMnemonic = (entropy: string): MnemonicList => {
+    const [state, setState] = React.useState<MnemonicList>({
         list: [],
         raw: '',
         checksum: ''
     });
 
     React.useEffect(() => {
-        if (hex) {
-            const { list, raw, checksum } = getChecksum(hex);
+        if (entropy) {
+            const { list, raw, checksum } = getMnemonicList(entropy);
 
             setState({ list, raw, checksum });
         }
-    }, [hex]);
+    }, [entropy]);
 
     return state;
 };

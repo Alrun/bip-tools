@@ -1,20 +1,25 @@
 import bs58 from 'bs58';
 import { CURVE, getPublicKey as getPublicKeyNoble } from '@noble/secp256k1';
 import { bufferToHex, hash160, hexToBuffer, hmac512, sha256 } from '../../utils/crypto/crypto';
-import { BipType } from '../bips/bips.d';
 import { getKeyVersion } from '../bips/bips';
+import { Bip } from '../bips/bips.d';
 
 /**
  * Gets compressed public key from private key.
+ * '02' at the start if y co-ordinate is even.
+ * '03' at the start if y co-ordinate is odd.
+ *
  * @param {string} privateKey Hex string with private key.
+ * @param {boolean} isCompressed '04' at the start.
  */
-export const getPublicKey = (privateKey: string) => getPublicKeyNoble(privateKey, true);
+export const getPublicKey = (privateKey: string, isCompressed = true) => getPublicKeyNoble(privateKey, isCompressed);
 
 /**
  * Generates master key from seed.
  *        seed
  *        |
  *        m
+ *
  * @param seed {string} Hex string with seed.
  */
 export const generateMasterKeys = (seed: string) => {
@@ -40,6 +45,7 @@ export const generateMasterKeys = (seed: string) => {
  *        ...
  *        |- m/2147483648 (hardened - m/0')
  *        ...
+ *
  * @param {string} privateKey Hex string with private key.
  * @param {string} publicKey Hex string with public key.
  * @param {string} chainCode Hex string with chain code.
@@ -80,12 +86,14 @@ export const deriveChildKeys = (privateKey: string, publicKey: string, chainCode
 
 /**
  * Gets fingerprint.
+ *
  * @param {string} publicKey Hex string with public key.
  */
 export const getFingerprint = (publicKey: string) => hash160(publicKey).slice(0, 8);
 
 /**
  * Gets checksum for serialized key.
+ *
  * @param {string} hex Hex string (version + depth + fingerprint + index + chainCode + key).
  */
 export const getChecksum = (hex: string) => bufferToHex(sha256(sha256(hexToBuffer(hex)))).slice(0, 8);
@@ -94,15 +102,16 @@ export const getChecksum = (hex: string) => bufferToHex(sha256(sha256(hexToBuffe
  * Serializes the extended key.
  *        version | depth  | fingerprint | index   | chain code | key      | checksum
  *        4 bytes | 1 byte | 4 bytes     | 4 bytes | 33 bytes   | 33 bytes | 4 bytes
+ *
  * @param {string} privateKey Hex string with private key.
  * @param {string} publicKey Hex string with public key.
  * @param {string} chainCode Hex string with chain code.
  * @param {string} version Version bytes.
  *        "xprv" - 0488ade4
  *        "xpub" - 0488b21e
- *        "yprv" - 049d7878 (for extended keys in a BIP 49 derivation path)
+ *        "yprv" - 049d7878 (for extended keys in a BIP49 derivation path)
  *        "ypub" - 049d7cb2
- *        "zprv" - 04b2430c (for extended keys in a BIP 84 derivation path)
+ *        "zprv" - 04b2430c (for extended keys in a BIP84 derivation path)
  *        "zpub" - 04b24746
  * @param {string} depth Derivation path depth.
  *        0 for master nodes — m
@@ -169,6 +178,7 @@ export const serializeExtendedKey = (
 
 /**
  * Decodes serialized key.
+ *
  * @param {string} serializedKey Key in base58.
  * @param {boolean} check Check checksum after decode.
  */
@@ -199,11 +209,12 @@ export const decodeSerializedKey = (serializedKey: string, check = false) => {
 
 /**
  * Gets derived extended serialized keys.
+ *
  * @param {string} serializedExtendedPrivateKey Base58 string with extended serialized private key.
- * @param {BipType} bip Type of BIP.
+ * @param {Bip} bip Type of BIP.
  * @param {string} path Derived path.
  */
-export const getDerivedKeys = (serializedExtendedPrivateKey: string, path = '/', bip: BipType = 'bip44') => {
+export const getDerivedKeys = (serializedExtendedPrivateKey: string, path = '/', bip: Bip = 'bip44') => {
     if (serializedExtendedPrivateKey) {
         const { chainCode, key } = decodeSerializedKey(serializedExtendedPrivateKey);
         const { privateVersion, publicVersion } = getKeyVersion(bip);
@@ -222,6 +233,7 @@ export const getDerivedKeys = (serializedExtendedPrivateKey: string, path = '/',
         let idx = 0;
 
         pathDepth.forEach((item) => {
+            /* istanbul ignore if */
             if (item) {
                 const getNumber = item.split("'");
                 const currentIndex = getNumber.length > 1 ? +getNumber[0] + 2147483648 : +getNumber[0];
@@ -264,5 +276,6 @@ export const getDerivedKeys = (serializedExtendedPrivateKey: string, path = '/',
 
         return [serializedPrivateKey, serializedPublicKey, derivationPath];
     }
+
     return [];
 };

@@ -3,8 +3,12 @@ import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 import customTheme from '../../ui/Theme/Theme';
-// eslint-disable-next-line import/prefer-default-export
+import App from '../../componets/App/App';
+
 export const renderWithTheme = (component: React.ReactNode, mode: 'dark' | 'light' = 'light'): RenderResult => {
     const theme = customTheme(mode);
 
@@ -15,3 +19,12 @@ export const renderWithTheme = (component: React.ReactNode, mode: 'dark' | 'ligh
         </ThemeProvider>
     );
 };
+
+export const renderWithRouter = (initialRoute = '/'): RenderResult =>
+    render(
+        <MemoryRouter initialEntries={[initialRoute]}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </MemoryRouter>
+    );

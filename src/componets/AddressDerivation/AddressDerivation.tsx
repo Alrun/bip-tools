@@ -1,17 +1,19 @@
 import React from 'react';
+import debounce from 'lodash/debounce';
 import { Theme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { filterStr } from '../../utils/crypto/crypto';
 import coinTypeList from '../../libs/bip44/coinTypeList';
-import { BipType, Script } from '../../libs/bips/bips.d';
 import { getPath } from '../../libs/bips/bips';
-import Typography from '../../ui/Typography/Typography';
 import Input from '../../ui/Input/Input';
 import Select from '../../ui/Select/Select';
 import Switch from '../../ui/Switch/Switch';
 import Accordion from '../../ui/Accordiron/Accordion';
 import ToggleButtons from '../../ui/ToggleButtons/ToggleButtons';
+import { AddressDerivationProps } from './AddressDerivation.d';
+import formatPathValue from '../../libs/bip44/formatPathValue/formatPathValue';
+import { Bip, Script } from '../../libs/bips/bips.d';
 
 const coinOptions = coinTypeList.map(({ coin, type }) => ({ label: coin, value: type }));
 
@@ -35,26 +37,32 @@ const scriptOptions = [
 
 const AddressDerivation = ({
     bip,
-    onChangeBip,
-    expandedPanel,
-    onExpandPanel,
-    pathDerivation,
-    onChangePathDerivation,
-    script,
-    onChangeScript,
-    isHardened,
-    onChangeHardened,
     coinType,
-    onChangeCoin,
     extendedDerivedPrivateKey = '',
-    extendedDerivedPublicKey = ''
-}: any) => {
+    extendedDerivedPublicKey = '',
+    expandedPanel,
+    isHardened,
+    derivationPath,
+    script,
+    showBalances,
+    onChangeBip,
+    onChangeCoin,
+    onChangeHardened,
+    onExpandPanel,
+    onChangePathDerivation,
+    onChangeScript,
+    onChangeShowBalances
+}: AddressDerivationProps) => {
     const [master, setMaster] = React.useState(() => getPath(bip, coinType));
-    const [path, setPath] = React.useState(() => pathDerivation);
-    const [bipValue, setBipValue] = React.useState<BipType>(bip);
-    // const [scriptValue, setScriptValue] = React.useState(script);
+    const [path, setPath] = React.useState(() => derivationPath);
+    const [bipValue, setBipValue] = React.useState<Bip>(bip);
 
-    const handleChangeBip = (val: BipType | null) => {
+    const delayedPathChangeHandle = React.useCallback(
+        debounce((nextPath: string) => onChangePathDerivation(nextPath), 300),
+        []
+    );
+
+    const handleChangeBip = (val: Bip | null) => {
         if (val) {
             setBipValue(val);
             setMaster(getPath(val, coinType));
@@ -73,10 +81,7 @@ const AddressDerivation = ({
     };
 
     const handleChangeScript = (val: `${Script}` | null) => {
-        if (val) {
-            // setScriptValue(val);
-            onChangeScript(val);
-        }
+        if (val) onChangeScript(val);
     };
 
     const handleChangePath = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -84,18 +89,21 @@ const AddressDerivation = ({
         const filteredValue = filterStr(e.target.value, chars)
             .replace(/[h']+/g, "'")
             .replace(/\/+/g, '/')
-            .replace(/^[/']/g, '');
+            .replace(/^[/']/g, '')
+            .replace(/^['.+$]/g, '');
 
-        setPath(filteredValue);
-        onChangePathDerivation(filteredValue);
+        const validatedValue = filteredValue
+            .split('/')
+            .map((item) => formatPathValue(item))
+            .join('/');
+
+        setPath(validatedValue);
+        delayedPathChangeHandle(validatedValue);
     };
 
     React.useEffect(() => {
-        setPath(pathDerivation);
-    }, [pathDerivation]);
-
-    // TODO: Remove after render check
-    const rendersCount = React.useRef(0);
+        setPath(derivationPath);
+    }, [derivationPath]);
 
     return (
         <>
@@ -158,7 +166,6 @@ const AddressDerivation = ({
                 <Grid item xs={12} sm order={{ xs: 3 }}>
                     <Input
                         label="Derivation Path"
-                        // multiline
                         fullWidth
                         value={path}
                         iconPosition="start"
@@ -172,29 +179,19 @@ const AddressDerivation = ({
                                 color: (theme: Theme) => `${theme.palette.primary.main} !important`
                             }
                         }}
-                        // error={!!value && checkLength(value)}
-                        // helperText={
-                        //     !!value && checkLength(value) && 'The number of characters must be equal 32, 40, 48, 56, 64'
-                        // }
                         onChange={handleChangePath}
                         sx={{ minWidth: 140, '& input': { pl: '0 !important' } }}
-                        // InputProps={{
-                        // spellCheck: false
-                        // sx: { fontFamily: 'Monospace' },
-                        // shrink: true
-                        //>}}
                     />
                 </Grid>
                 <Grid item order={{ xs: 5 }}>
                     <Switch
                         label="Show balances"
                         labelPlacement="end"
-                        checked={isHardened}
-                        // onChange={handleChangeHardened}
+                        checked={showBalances}
+                        onChange={(_, checked) => onChangeShowBalances(checked)}
                     />
                 </Grid>
             </Grid>
-
             <Box sx={{ mb: 4 }}>
                 <Accordion
                     headerText="Extended Derived Keys"
@@ -213,7 +210,6 @@ const AddressDerivation = ({
                             fullWidth
                             margin="dense"
                             disabled
-                            // variant="filled"
                         />
                         <Input
                             label="Derived Extended Public Key"
@@ -222,16 +218,10 @@ const AddressDerivation = ({
                             fullWidth
                             margin="dense"
                             disabled
-                            // variant="filled"
                         />
                     </>
                 </Accordion>
             </Box>
-
-            <b>
-                {/* eslint-disable-next-line no-plusplus */}
-                Derivation RENDER COUNT: {++rendersCount.current}
-            </b>
         </>
     );
 };

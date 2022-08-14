@@ -7,23 +7,23 @@ export interface ButtonProps
         'action' | 'classes' | 'disableElevation' | 'focusVisibleClassName' | 'touchRippleRef' | 'TouchRippleProps'
     > {
     /**
-     * If `true`, renders loading button.
+     * If 'true', renders loading button.
      */
     async?: boolean;
     /**
-     * If `true`, the component is disabled.
+     * If 'true', the component is disabled.
      *
      * @default false
      */
     disabled?: boolean;
     /**
-     * If `true`, the button will be round.
+     * If 'true', the button will be round.
      *
      * @default false
      */
     isRound?: boolean;
     /**
-     * If `true`, the loading indicator is shown.
+     * If 'true', the loading indicator is shown.
      */
     loading?: boolean;
     /**

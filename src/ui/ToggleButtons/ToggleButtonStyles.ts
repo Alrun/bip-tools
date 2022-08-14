@@ -9,6 +9,7 @@ export const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     padding: '0.615em',
     height: 36,
     lineHeight: 1,
+    color: theme.palette.text.primary,
     '&.MuiToggleButton-sizeSmall': {
         fontSize: theme.typography.smRegular.fontSize,
         padding: '0.484em',

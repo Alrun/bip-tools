@@ -132,3 +132,47 @@ Variants.parameters = {
         }
     }
 };
+
+/**
+ * Disabled
+ */
+export const Disabled = GroupTemplate.bind({});
+
+Disabled.decorators = [wrapperDecorator];
+
+Disabled.args = {
+    accordions: [
+        {
+            items: [
+                {
+                    headerText: 'Accordion Header 1',
+                    children: 'Accordion content 1',
+                    variant: 'elevation'
+                },
+                {
+                    headerText: 'Accordion Header 2',
+                    children: 'Accordion content 2'
+                },
+                {
+                    headerText: 'Disabled Accordion Header 3',
+                    children: 'Disabled accordion content 3',
+                    disabled: true
+                }
+            ]
+        }
+    ]
+};
+
+Variants.parameters = {
+    docs: {
+        source: {
+            code: `
+<div>
+    <Accordion headerText="Elevation Accordion Header 1">Accordion content 1</Accordion>
+    <Accordion headerText="Elevation Accordion Header 2">Accordion content 2</Accordion>
+    <Accordion disabled headerText="Disabled Accordion Header 3">Disabled accordion content 3</Accordion>
+</div>
+`
+        }
+    }
+};

@@ -10,32 +10,38 @@ export interface CheckboxProps
         'action' | 'centerRipple' | 'focusVisibleClassName' | 'LinkComponent' | 'TouchRippleProps' | 'touchRippleRef'
     > {
     /**
-     * If `true`, the component is checked.
+     * If 'true', the component is checked.
+     *
      * @default false
      */
     checked?: boolean;
     /**
      * The icon to display when the component is checked.
+     *
      * @default <CheckBoxIcon />
      */
     checkedIcon?: React.ReactNode;
     /**
      * Override or extend the styles applied to the component.
+     *
      * @default primary
      */
     color?: MuiCheckboxProps['color'];
     /**
      * The default checked state. Use when the component is not controlled.
+     *
      * @default false
      */
     defaultChecked?: boolean;
     /**
-     * If `true`, the component is disabled.
+     * If 'true', the component is disabled.
+     *
      * @default false
      */
     disabled?: boolean;
     /**
-     * If `true`, the ripple effect is disabled.
+     * If 'true`, the ripple effect is disabled.
+     *
      * @default false
      */
     disableRipple?: boolean;
@@ -58,6 +64,7 @@ export interface CheckboxProps
      * This does not set the native input element to indeterminate due
      * to inconsistent behavior across browsers.
      * However, we set a `data-indeterminate` attribute on the `input`.
+     *
      * @default false
      */
     indeterminate?: boolean;
@@ -71,6 +78,7 @@ export interface CheckboxProps
     label?: FormControlLabelProps['label'];
     /**
      * The position of the label.
+     *
      * @default end
      */
     labelPlacement?: FormControlLabelProps['labelPlacement'];
@@ -83,12 +91,14 @@ export interface CheckboxProps
     onChange?: MuiCheckboxProps['onChange'];
     /**
      * If `true`, the `input` element is required.
+     *
      * @default false
      */
     required?: boolean;
     /**
      * The size of the component.
      * `small` is equivalent to the dense checkbox styling.
+     *
      * @default 'medium'
      */
     size?: MuiCheckboxProps['size'];

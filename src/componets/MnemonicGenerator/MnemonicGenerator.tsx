@@ -4,16 +4,22 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { binToHex, filterStr, getRandomHex, hexToBin } from '../../utils/crypto/crypto';
 import { wordCountList } from '../../libs/bip39/mnemonic/mnemonic';
-import { isValidLength } from '../../libs/bip39/validate/validate';
-import { GeneratorState } from '../../redux/slices/mnemonic/mnemonic.d';
+import { isEntropyValidLength } from '../../libs/bip39/validateEntropy/validateEntropy';
 import Input from '../../ui/Input/Input';
 import Button from '../../ui/Button/Button';
 import Typography from '../../ui/Typography/Typography';
 import ToggleButtons from '../../ui/ToggleButtons/ToggleButtons';
+import { MnemonicGeneratorProps } from './MnemonicGenerator.d';
 
 const wordCountOptions = wordCountList.map((num) => ({ value: num, children: num }));
 
-const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, onChangeEntropy }: any) => {
+const MnemonicGenerator = ({
+    entropy,
+    checksum,
+    wordCount,
+    onChangeWordCount,
+    onChangeEntropy
+}: MnemonicGeneratorProps) => {
     const [entropyValue, setEntropyValue] = React.useState(() => entropy);
     const [binaryValue, setBinaryValue] = React.useState(() => hexToBin(entropy));
 
@@ -41,7 +47,7 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
         delayedEntropyChangeHandle(hexValue);
     };
 
-    const handleChangeWordCount = (count: GeneratorState['wordCount'] | null) => {
+    const handleChangeWordCount = (count: typeof wordCountList[number] | null) => {
         if (count) onChangeWordCount(count);
     };
 
@@ -57,9 +63,6 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
         setEntropyValue(entropy);
         setBinaryValue(hexToBin(entropy));
     }, [entropy]);
-
-    // TODO: Remove after render check
-    const rendersCount = React.useRef(0);
 
     return (
         <>
@@ -100,10 +103,10 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
                         label="Entropy"
                         multiline
                         value={entropyValue}
-                        error={!!entropyValue && !isValidLength(entropyValue)}
+                        error={!!entropyValue && !isEntropyValidLength(entropyValue)}
                         helperText={
                             !!entropyValue &&
-                            !isValidLength(entropyValue) &&
+                            !isEntropyValidLength(entropyValue) &&
                             `The number of characters must be equal 32, 40, 48, 56, 64 (current ${entropyValue.length})`
                         }
                         onChange={handleChangeEntropyValue}
@@ -129,7 +132,7 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
                         spellCheck: false
                     }}
                 />
-                {!!entropyValue && (
+                {!!entropyValue && checksum && (
                     <Box>
                         <Typography
                             component="span"
@@ -152,10 +155,6 @@ const MnemonicGenerator = ({ entropy, checksum, wordCount, onChangeWordCount, on
                     </Box>
                 )}
             </Box>
-            {/*<b>*/}
-            {/*    /!* eslint-disable-next-line no-plusplus *!/*/}
-            {/*    Generator RENDER COUNT: {++rendersCount.current}*/}
-            {/*</b>*/}
         </>
     );
 };

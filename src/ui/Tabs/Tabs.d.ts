@@ -1,7 +1,6 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { SxProps } from '@mui/system';
-import { Theme } from '@mui/material/styles';
+import { TabProps as MuiTabProps } from '@mui/material/Tab';
+import { TabsProps as MuiTabsProps } from '@mui/material/Tabs';
 
 export interface TabProps {
     /**
@@ -13,13 +12,13 @@ export interface TabProps {
      */
     content?: React.ReactNode;
     /**
-     * If `true`, the component is disabled.
+     * If 'true', the component is disabled.
      *
      * @default false
      */
     disabled?: boolean;
     /**
-     * If `true`, the  keyboard focus ripple is disabled.
+     * If 'true', the  keyboard focus ripple is disabled.
      *
      * @default false
      */
@@ -45,7 +44,7 @@ export interface TabProps {
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx?: SxProps<Theme>;
+    sx?: MuiTabProps['sx'];
     /**
      * Child position index.
      */
@@ -78,7 +77,7 @@ export interface StyledTabsProps {
      */
     onChange: (event: React.SyntheticEvent, newValue: number) => void;
     /**
-     * The value of the currently selected `Tab`.
+     * The value of the currently selected 'Tab'.
      */
     value: number;
 }
@@ -89,8 +88,8 @@ export interface TabsProps {
      */
     activeTab?: number;
     /**
-     * If `true`, the scroll buttons aren't forced hidden on mobile.
-     * By default, the scroll buttons are hidden on mobile and takes precedence over `scrollButtons`.
+     * If 'true', the scroll buttons aren't forced hidden on mobile.
+     * By default, the scroll buttons are hidden on mobile and takes precedence over 'scrollButtons'.
      *
      * @default false
      */
@@ -104,7 +103,7 @@ export interface TabsProps {
      */
     'aria-labelledby'?: string;
     /**
-     * If `true`, the tabs are centered. This prop is intended for large views.
+     * If 'true', the tabs are centered. This prop is intended for large views.
      *
      * @default false
      */
@@ -142,12 +141,12 @@ export interface TabsProps {
     /**
      * Determine behavior of scroll buttons when tabs are set to scroll:
      *
-     * - `auto` will only present them when not all the items are visible.
-     * - `true` will always present them.
-     * - `false` will never present them.
+     * - 'auto' will only present them when not all the items are visible.
+     * - 'true' will always present them.
+     * - 'false' will never present them.
      *
      * By default, the scroll buttons are hidden on mobile.
-     * This behavior can be disabled with `allowScrollButtonsMobile`.
+     * This behavior can be disabled with 'allowScrollButtonsMobile`.
      *
      * @default 'auto'
      */
@@ -160,7 +159,7 @@ export interface TabsProps {
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx?: SxProps<Theme>;
+    sx?: MuiTabsProps['sx'];
     /**
      * Tab list.
      */
@@ -170,13 +169,13 @@ export interface TabsProps {
      *
      * @default  {}
      */
-    TabIndicatorProps?: React.HTMLAttributes<HTMLDivElement> & { sx?: SxProps<Theme> };
+    TabIndicatorProps?: MuiTabsProps['TabIndicatorProps'];
     /**
      * Props applied to the [`TabScrollButton`](https://mui.com/material-ui/api/tab-scroll-button/) element.
      *
      * @default {}
      */
-    TabScrollButtonProps?: Partial<TabScrollButtonProps>;
+    TabScrollButtonProps?: MuiTabsProps['TabScrollButtonProps'];
     /**
      * Determines the color of the `Tab`.
      *
@@ -233,5 +232,5 @@ export interface TabPanelProps {
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx?: SxProps<Theme>;
+    sx?: MuiTabsProps['sx'];
 }

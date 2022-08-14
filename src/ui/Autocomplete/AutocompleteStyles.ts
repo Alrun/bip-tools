@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Popper from '@mui/material/Popper';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 
-export const StyledAutocomplete = styled(Autocomplete)({
+export const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
     '&.MuiAutocomplete-hasPopupIcon': {
         '& .MuiOutlinedInput-root.MuiInputBase-adornedEnd': {
             paddingRight: 32
@@ -69,8 +69,11 @@ export const StyledAutocomplete = styled(Autocomplete)({
         '& .MuiAutocomplete-endAdornment': {
             top: 'calc(50% - 9.5px)'
         }
+    },
+    '& .MuiAutocomplete-popupIndicator': {
+        color: theme.palette.text.primary
     }
-});
+}));
 
 export const StyledPopper = styled(Popper)(({ theme }) => ({
     [`& .${autocompleteClasses.listbox}`]: {

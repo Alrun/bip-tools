@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import useExtendedKeys from '../../hooks/useExtendedKeys/useExtendedKeys';
-import useAddresses, { AddressInterface } from '../../hooks/useAddresses/useAddresses';
+import useAddresses, { Address } from '../../hooks/useAddresses/useAddresses';
 import {
     setCoinType,
     setEntropy,
@@ -13,14 +13,15 @@ import {
     setBip,
     setHardened,
     setScript,
+    setShowBalances,
     setPath
 } from '../../redux/slices/mnemonic/mnemonic';
 import AddressExtendedRoot from '../AddressExtended/AddressExtended';
 import AddressExtendedDerivation from '../AddressDerivation/AddressDerivation';
 import AddressList from '../AddressList/AddressList';
 import useSeed from '../../hooks/useSeed/useSeed';
-import { BipType, Script } from '../../libs/bips/bips.d';
 import useDerivationKeys from '../../hooks/useDerivationKeys/useDerivationKeys';
+import { Bip, Script } from '../../libs/bips/bips.d';
 
 const START_COUNT = 0;
 const ITEMS_COUNT = 20;
@@ -37,12 +38,13 @@ const TabAddress = () => {
         derivationPath,
         isHardened,
         script,
+        showBalances,
         expandedPanel
     } = useAppSelector((state) => state.mnemonic);
     const dispatch = useAppDispatch();
 
     const [startIndex, setStartIndex] = React.useState(START_COUNT);
-    const [addresses, setAddresses] = React.useState<AddressInterface[]>([]);
+    const [addresses, setAddresses] = React.useState<Address[]>([]);
 
     const words = React.useMemo(() => wordList.map((item) => item.wordString), [wordList]);
 
@@ -59,6 +61,7 @@ const TabAddress = () => {
     const addressList = useAddresses(
         extendedDerivedPrivateKey,
         derivationPath,
+        coinType,
         script,
         isHardened,
         startIndex,
@@ -79,8 +82,9 @@ const TabAddress = () => {
 
     const handleExpandPanel = React.useCallback((panel: string) => () => dispatch(setExpandedPanel(panel)), []);
     const handleChangePassphrase = React.useCallback((pass: string) => dispatch(setPassphrase(pass)), []);
+    const handleShowBalances = React.useCallback((show: boolean) => dispatch(setShowBalances(show)), []);
 
-    const handleChangeBip = React.useCallback((newBip: BipType) => {
+    const handleChangeBip = React.useCallback((newBip: Bip) => {
         setStartIndex(START_COUNT);
         dispatch(setBip(newBip));
     }, []);
@@ -123,9 +127,6 @@ const TabAddress = () => {
         }
     }, [addressList, startIndex]);
 
-    // TODO: Remove after render check
-    const rendersCount = React.useRef(0);
-
     return (
         <>
             <Box sx={{ mt: -1.5 }}>
@@ -144,7 +145,7 @@ const TabAddress = () => {
             <AddressExtendedDerivation
                 extendedDerivedPrivateKey={extendedDerivedPrivateKey}
                 extendedDerivedPublicKey={extendedDerivedPublicKey}
-                pathDerivation={path}
+                derivationPath={path}
                 onChangePathDerivation={handleChangePath}
                 bip={bip}
                 onChangeBip={handleChangeBip}
@@ -156,17 +157,15 @@ const TabAddress = () => {
                 onChangeScript={handleChangeScript}
                 expandedPanel={expandedPanel}
                 onExpandPanel={handleExpandPanel}
+                showBalances={showBalances}
+                onChangeShowBalances={handleShowBalances}
             />
             <AddressList
                 list={addresses}
                 length={ITEMS_COUNT}
-                onShowMore={handleShowMore} />
-            <div>
-                <b>
-                    {/* eslint-disable-next-line no-plusplus */}
-                    Tab Address RENDER COUNT: {++rendersCount.current}
-                </b>
-            </div>
+                showBalances={showBalances}
+                onShowMore={handleShowMore}
+            />
         </>
     );
 };

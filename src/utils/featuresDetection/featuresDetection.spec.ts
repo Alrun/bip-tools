@@ -1,4 +1,3 @@
-import '../../mocks/jest/matchMedia.mock';
 import { detectColorScheme, isTouch } from './featuresDetection';
 
 describe('features detection', () => {

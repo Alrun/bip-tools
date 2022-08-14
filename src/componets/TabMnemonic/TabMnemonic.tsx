@@ -2,12 +2,11 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { binToHex, hexToBin, strToChunks } from '../../utils/crypto/crypto';
 import { setEntropy, setExpandedPanel, setWordCount, setWordList } from '../../redux/slices/mnemonic/mnemonic';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getIndex, getWord, wordCountList } from '../../libs/bip39/mnemonic/mnemonic';
 import useMnemonic from '../../hooks/useMnemonic/useMnemonic';
 import MnemonicEditableContent from '../MnemonicEditableContent/MnemonicEditableContent';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { getIndex, getWord } from '../../libs/bip39/mnemonic/mnemonic';
-import { GeneratorState } from '../../redux/slices/mnemonic/mnemonic.d';
-import MnemonicExtended from '../MnemonicGroup/MnemonicGroup';
+import MnemonicGroup from '../MnemonicGroup/MnemonicGroup';
 import MnemonicGenerator from '../MnemonicGenerator/MnemonicGenerator';
 
 const TabMnemonic = () => {
@@ -17,12 +16,13 @@ const TabMnemonic = () => {
     const { list, checksum } = useMnemonic(entropy);
 
     const currentWords = React.useMemo(() => list.map((item) => getWord(item)), [list]);
+
     const handleChangeEntropy = React.useCallback((hex: string) => dispatch(setEntropy(hex)), []);
     const handleExpandPanel = React.useCallback((panel: string) => () => dispatch(setExpandedPanel(panel)), []);
     const handleChangePhrase = React.useCallback((binStr: string) => handleChangeEntropy(binStr), []);
 
     const handleChangeWordCount = React.useCallback(
-        (count: GeneratorState['wordCount']) => dispatch(setWordCount(count)),
+        (count: typeof wordCountList[number]) => dispatch(setWordCount(count)),
         []
     );
 
@@ -54,9 +54,6 @@ const TabMnemonic = () => {
         }
     }, [list]);
 
-    // TODO: Remove after render check
-    const rendersCount = React.useRef(0);
-
     return (
         <>
             <Box sx={{ mb: 4 }}>
@@ -72,7 +69,7 @@ const TabMnemonic = () => {
                 <MnemonicEditableContent words={currentWords} onChange={handleChangePhrase} />
             </Box>
             <Box sx={{ mb: 4 }}>
-                <MnemonicExtended
+                <MnemonicGroup
                     list={list}
                     entropy={entropy}
                     wordList={wordList}
@@ -81,11 +78,6 @@ const TabMnemonic = () => {
                     onChangeGroup={handleChangeGroup}
                 />
             </Box>
-
-            <b>
-                {/* eslint-disable-next-line no-plusplus */}
-                Tab Generator RENDER COUNT: {++rendersCount.current}
-            </b>
         </>
     );
 };

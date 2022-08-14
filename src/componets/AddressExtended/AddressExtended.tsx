@@ -8,6 +8,7 @@ import { filterStr } from '../../utils/crypto/crypto';
 import Typography from '../../ui/Typography/Typography';
 import Input from '../../ui/Input/Input';
 import Button from '../../ui/Button/Button';
+import { AddressExtendedProps } from './AddressExtended.d';
 
 const AddressExtended = ({
     seed,
@@ -19,7 +20,7 @@ const AddressExtended = ({
     onExpandPanel,
     serializedExtendedPrivateKey,
     serializedExtendedPublicKey
-}: any) => {
+}: AddressExtendedProps) => {
     const [seedValue, setSeedValue] = React.useState(() => seed);
     const [passphraseValue, setPassphraseValue] = React.useState(() => passphrase);
     const [openWarning, setOpenWarning] = React.useState(false);
@@ -27,14 +28,12 @@ const AddressExtended = ({
     const [error, setError] = React.useState('');
 
     const delayedSeedChangeHandle = React.useCallback(
-        debounce((nextSeed) => onChangeSeed(nextSeed), 300),
+        debounce((nextSeed: string) => onChangeSeed(nextSeed), 300),
         []
     );
 
     const delayedPhraseChangeHandle = React.useCallback(
-        debounce((eventData) => {
-            onChangePassphrase(eventData);
-        }, 300),
+        debounce((nextPass: string) => onChangePassphrase(nextPass), 300),
         []
     );
 
@@ -99,9 +98,6 @@ const AddressExtended = ({
         }
     }, []);
 
-    // TODO: Remove after render check
-    const rendersCount = React.useRef(0);
-
     return (
         <>
             <Collapse in={openWarning}>
@@ -119,7 +115,7 @@ const AddressExtended = ({
                         </Box>
                     }
                 >
-                    This will clear existing mnemonic and passphrase!
+                    <Typography>This will clear existing mnemonic and passphrase!</Typography>
                 </Alert>
             </Collapse>
             <Box sx={{ mb: 6 }}>
@@ -137,7 +133,6 @@ const AddressExtended = ({
                     }}
                 />
             </Box>
-
             <Box sx={{ mb: 4.5 }}>
                 <Accordion
                     headerText="Extended"
@@ -178,10 +173,6 @@ const AddressExtended = ({
                         />
                     </>
                 </Accordion>
-                <b>
-                    {/* eslint-disable-next-line no-plusplus */}
-                    Root RENDER COUNT: {++rendersCount.current}
-                </b>
             </Box>
         </>
     );

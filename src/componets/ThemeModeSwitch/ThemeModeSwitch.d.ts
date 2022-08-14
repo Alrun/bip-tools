@@ -1,20 +1,20 @@
-export type ThemeModeType = 'auto' | 'light' | 'dark';
+export type ThemeMode = 'auto' | 'light' | 'dark';
 
 export interface ThemeModeSwitchProps {
     /**
-     * Theme mode.
-     */
-    mode: ThemeModeType;
-    /**
      * The callback fires when the theme mode changes.
      *
-     * @param {ThemeModeType} mode Theme mode.
+     * @param {ThemeMode} mode Theme mode.
      */
-    changeMode?: (mode: ThemeModeType) => void;
+    changeMode?: (mode: ThemeMode) => void;
     /**
      * If `true`, expands the collapsed component.
      */
     expanded?: boolean;
+    /**
+     * Theme mode.
+     */
+    mode: ThemeMode;
     /**
      * The size of the component.
      *

@@ -1,6 +1,5 @@
 import { darken, styled } from '@mui/material/styles';
 import List from '@mui/material/List';
-
 // eslint-disable-next-line import/prefer-default-export
 export const StyledList = styled(List)(({ theme }) => ({
     position: 'relative',
@@ -21,14 +20,10 @@ export const StyledList = styled(List)(({ theme }) => ({
         '&:hover': {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.getContrastText(theme.palette.primary.main)
-        },
-
-        '& .MuiSvgIcon-root': {
-            color: theme.palette.getContrastText(theme.palette.primary.main),
-            transition: theme.transitions.create('color', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.shortest
-            })
         }
+    },
+    '& .MuiListItemIcon-root': {
+        color: 'inherit',
+        transition: theme.transitions.create('color', { duration: 50 })
     }
 }));

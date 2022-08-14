@@ -2,41 +2,41 @@ import React from 'react';
 
 export interface RouteLink {
     /**
-     * Link label
+     * Link label.
      */
     label: string;
     /**
-     * Link url
+     * Link url.
      */
     to: string;
     /**
-     * Link icon
+     * Link icon.
      */
     icon?: React.ReactElement<React.ReactSVGElement>;
     /**
-     * Login required to access
+     * Login required to access.
      */
     requireAuth?: boolean;
 }
 
 export interface NestedLink extends RouteLink {
     /**
-     * Nested links
+     * Nested links.
      */
     nested?: RouteLink[];
 }
 
 export interface RoutesList {
     /**
-     * Group header
+     * Group header.
      */
     header: string;
     /**
-     * Sorting order
+     * Sorting order.
      */
     order: number;
     /**
-     * Nested links
+     * Nested links.
      */
     links: NestedLink[];
 }
