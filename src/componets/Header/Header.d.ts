@@ -3,11 +3,11 @@ import { SidebarProps } from '../Sidebar/Sidebar';
 
 export interface HeaderProps extends Pick<ThemeModeSwitchProps, 'changeMode' | 'mode'> {
     /**
-     * Sets the drawer state to closed or open.
+     * Sets the sidebar state to closed or open.
      *
-     * @param {boolean} open The `open` state of the drawer.
+     * @param {boolean} open The 'open' state of the sidebar.
      */
-    drawerOpen: (open: boolean) => void
+    setSidebarOpen: (open: boolean) => void
     /**
      * Header height.
      */

@@ -8,19 +8,15 @@ import Modal from '../../ui/Modal/Modal';
 import Typography from '../../ui/Typography/Typography';
 import ButtonCopy from '../ButtonCopy/ButtonCopy';
 import { QrCodeIcon } from '../../ui/Icons/Icons';
+import { ButtonQrCodeProps } from './ButtonQrCode.d';
 
-const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
+const ButtonQrCode = ({ icon, text, title, tooltipText = 'QR code' }: ButtonQrCodeProps) => {
     const theme = useTheme();
 
     const [showModal, setShowModal] = React.useState(false);
 
-    const handleShowModal = () => {
-        setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
 
     return (
         <>
@@ -41,11 +37,7 @@ const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
                         height: '100%'
                     }}
                 >
-                    <Box
-                        sx={{
-                            mb: 1
-                        }}
-                    >
+                    <Box sx={{ mb: 1 }}>
                         <QRCodeCanvas
                             value={text}
                             fgColor={theme.palette.primary.main}
@@ -79,12 +71,7 @@ const ButtonQrCode = ({ title, text, icon, tooltipText = 'QR code' }: any) => {
                                 borderRight: `1px solid ${theme.palette.divider}`
                             }}
                         >
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center'
-                                }}
-                            >
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Typography
                                     sx={{
                                         fontFamily: '"Roboto Mono", monospace',

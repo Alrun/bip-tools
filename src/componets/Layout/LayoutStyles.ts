@@ -3,26 +3,26 @@ import { styled } from '@mui/material/styles';
 import { openedMixin, closedMixin } from '../Sidebar/SidebarStyles';
 
 const StyledWrapper = styled(Box, {
-    shouldForwardProp: (prop) => prop !== 'open' && prop !== 'widthOpen' && prop !== 'widthClose'
+    shouldForwardProp: (prop) => prop !== 'open' && prop !== 'widthFull' && prop !== 'widthSlim'
 })<{
     open: boolean;
-    widthOpen: string;
-    widthClose: string;
-}>(({ theme, open, widthOpen, widthClose }) => ({
+    widthFull: string;
+    widthSlim: string;
+}>(({ theme, open, widthFull, widthSlim }) => ({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
     maxWidth: '100%',
     ...(open && {
         [theme.breakpoints.up('md')]: {
-            ...openedMixin(theme, widthOpen),
-            width: `calc(100% - ${widthClose})`
+            ...openedMixin(theme, widthFull),
+            width: `calc(100% - ${widthSlim})`
         }
     }),
     ...(!open && {
         [theme.breakpoints.up('md')]: {
-            ...closedMixin(theme, widthClose),
-            width: `calc(100% - ${widthOpen})`
+            ...closedMixin(theme, widthSlim),
+            width: `calc(100% - ${widthFull})`
         }
     })
 }));

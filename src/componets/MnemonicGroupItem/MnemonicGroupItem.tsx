@@ -1,9 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Skeleton from '../../ui/Skeleton/Skeleton';
+import { filterStr } from '../../utils/crypto/crypto';
 import { getIndex, getWord } from '../../libs/bip39/mnemonic/mnemonic';
 import enWordList from '../../libs/bip39/wordlists/english';
-import { filterStr } from '../../utils/crypto/crypto';
 import Autocomplete from '../../ui/Autocomplete/Autocomplete';
 import Typography from '../../ui/Typography/Typography';
 import Input from '../../ui/Input/Input';
@@ -130,14 +129,3 @@ const MnemonicGroupItem = ({
 };
 
 export default MnemonicGroupItem;
-
-export const GeneratorGroupItemSkeleton = () => (
-    <Box sx={{ py: 1 }}>
-        <Typography variant="xsBold" component="div" align="center">
-            <Skeleton variant="text" sx={{ width: 10, mb: 1.945, mx: 'auto' }} />
-        </Typography>
-        <Skeleton height={28} sx={{ mb: 3.6 }} />
-        <Skeleton height={28} sx={{ mb: 3.6 }} />
-        <Skeleton height={28} sx={{ mb: 1 }} />
-    </Box>
-);

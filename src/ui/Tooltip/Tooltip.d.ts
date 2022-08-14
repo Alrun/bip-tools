@@ -3,7 +3,7 @@ import { TooltipProps as MuiTooltipProps } from '@mui/material/Tooltip/Tooltip';
 
 export interface TooltipProps {
     /**
-     * If `true`, adds an arrow to the tooltip.
+     * If 'true', adds an arrow to the tooltip.
      *
      * @default false
      */
@@ -21,7 +21,7 @@ export interface TooltipProps {
     components?: MuiTooltipProps['components'];
     /**
      * The props used for each slot inside the Tooltip.
-     * Note that `componentsProps.popper` prop values win over `PopperProps`
+     * Note that 'componentsProps.popper` prop values win over `PopperProps`
      * and `componentsProps.transition` prop values win over `TransitionProps` if both are applied.
      *
      * @default {}
@@ -61,7 +61,7 @@ export interface TooltipProps {
     disableTouchListener?: boolean;
     /**
      * The number of milliseconds to wait before showing the tooltip.
-     * This prop won't impact the enter touch delay (`enterTouchDelay`).
+     * This prop won't impact to enter touch delay (`enterTouchDelay`).
      *
      * @default 100
      */

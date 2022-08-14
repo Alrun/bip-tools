@@ -1,5 +1,5 @@
 import React from 'react';
-import MuiSkeleton from '@mui/material/Skeleton/Skeleton';
+import MuiSkeleton from '@mui/material/Skeleton';
 import { SkeletonProps } from './Skeleton.d';
 
 const Skeleton = ({ variant = 'default', sx, ...props }: SkeletonProps) => (

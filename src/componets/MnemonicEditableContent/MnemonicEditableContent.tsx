@@ -11,6 +11,7 @@ import ButtonCopy from '../ButtonCopy/ButtonCopy';
 
 /**
  * HTML template
+ *
  * @param l
  */
 export const getHtml = (l: string[]) =>
@@ -22,6 +23,7 @@ export const getHtml = (l: string[]) =>
 
 /**
  * Extracts entropy from words.
+ *
  * @param words
  */
 export const extractEntropy = (words: string[]) => {
@@ -188,7 +190,7 @@ const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentPro
                             <span>Mnemonic phrase</span>
                         </legend>
                     </fieldset>
-                    <b>
+                    <b style={{position: "fixed", bottom: 120, zIndex: 2200}}>
                         {/* eslint-disable-next-line no-plusplus */}
                         Editcontent RENDER COUNT: {++rendersCount.current}
                     </b>

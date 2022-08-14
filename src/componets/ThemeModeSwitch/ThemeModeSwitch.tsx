@@ -4,12 +4,14 @@ import Box from '@mui/material/Box';
 import Tooltip from '../../ui/Tooltip/Tooltip';
 import Button from '../../ui/Button/Button';
 import { ModeAutoIcon, ModeDarkIcon, ModeLightIcon } from '../../ui/Icons/Icons';
-import { ThemeModeSwitchProps, ThemeModeType } from './ThemeModeSwitch.d';
+import { ThemeModeSwitchProps, ThemeMode } from './ThemeModeSwitch.d';
 
-const ThemeModeSwitch = ({ changeMode, mode, expanded, size = 'medium' }: ThemeModeSwitchProps) => {
+const ThemeModeSwitch = ({ changeMode, expanded, mode, size = 'medium' }: ThemeModeSwitchProps) => {
     const [expand, setExpand] = React.useState(expanded || false);
 
-    const changeModeHandle = (newMode: ThemeModeType) => () => changeMode && changeMode(newMode);
+    const changeModeHandle = (newMode: ThemeMode) => () => {
+        if (changeMode) changeMode(newMode);
+    };
 
     return (
         <Box

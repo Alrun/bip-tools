@@ -10,7 +10,8 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      */
     autoComplete?: string;
     /**
-     * If `true`, the `input` element is focused during the first mount.
+     * If 'true', the 'input' element is focused during the first mount.
+     *
      * @default false
      */
     autoFocus?: boolean;
@@ -18,6 +19,7 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/customization/palette/#adding-new-colors).
+     *
      * @default primary
      */
     color?: BaseTextFieldProps['color'];
@@ -26,17 +28,20 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      */
     defaultValue?: string;
     /**
-     * If `true`, the component is disabled.
+     * If 'true', the component is disabled.
+     *
      * @default false
      */
     disabled?: boolean;
     /**
-     * If `true`, the label is displayed in an error state.
+     * If 'true', the label is displayed in an error state.
+     *
      * @default false
      */
     error?: boolean;
     /**
-     * If `true`, the input will take up the full width of its container.
+     * If 'true', the input will take up the full width of its container.
+     *
      * @default false
      */
     fullWidth?: boolean;
@@ -45,19 +50,22 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      */
     helperText?: React.ReactNode;
     /**
-     * The content of the component, normally an `Icon` or string.
+     * The content of the component, normally an 'Icon' or string.
      */
     icon?: React.ReactNode;
     /**
-     * The position this adornment should appear relative to the `Input`.
+     * The position this adornment should appear relative to the 'Input'.
+     *
      * @default 'start'
      */
     iconPosition?: 'start' | 'end';
-
+    /**
+     * Props applied to the Icon element.
+     */
     iconProps?: any;
     /**
-     * The id of the `input` element.
-     * Use this prop to make `label` and `helperText` accessible for screen readers.
+     * The id of the 'input' element.
+     * Use this prop to make 'label' and `helperText` accessible for screen readers.
      */
     id?: string;
     /**
@@ -69,6 +77,7 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
     InputProps?: PropTypes.object;
     /**
      * Callback fired when the value is changed.
+     *
      * @param {object} event The event source of the callback.
      * You can pull out the new value by accessing event.target.value (string).
      */
@@ -79,6 +88,7 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
     label?: React.ReactNode;
     /**
      * If `true`, a `textarea` element is rendered instead of an input.
+     *
      * @default false
      */
     multiline?: boolean;
@@ -94,7 +104,15 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
      * Name attribute of the `input` element.
      */
     name?: string;
+    /**
+     * Callback fired when the `input` is blurred.
+     * Notice that the first argument (event) might be undefined.
+     */
     onBlur?: BaseTextFieldProps['onBlur'];
+    /**
+     * Callback fired when the `input` is blurred.
+     * Notice that the first argument (event) might be undefined.
+     */
     onFocus?: BaseTextFieldProps['onFocus'];
     /**
      * The short hint displayed in the `input` before the user enters a value.
@@ -102,6 +120,7 @@ export interface InputProps extends Omit<BaseTextFieldProps, 'hiddenLabel'> {
     placeholder?: string;
     /**
      * If `true`, the label is displayed as required and the `input` element is required.
+     *
      * @default false
      */
     required?: boolean;

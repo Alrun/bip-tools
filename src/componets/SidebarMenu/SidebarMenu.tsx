@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import { linkList } from '../Navigation/Navigation';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { sidebarExpand } from '../../redux/slices/app/app';
+import { setMenuExpanded } from '../../redux/slices/app/app';
 import SidebarMenuUILink from './SidebarMenuUILink';
 import { ChevronDownIcon, ChevronUpIcon } from '../../ui/Icons/Icons';
 import Typography from '../../ui/Typography/Typography';
@@ -31,12 +31,12 @@ const CharIcon = ({ char }: { char: string }) => (
 );
 
 const SidebarMenu = ({ setDrawerOpen }: SidebarMenuProps) => {
-    const { sidebarExpanded } = useAppSelector((state) => state.app);
+    const { menuExpanded } = useAppSelector((state) => state.app);
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleExpand = (panel: string) => () => dispatch(sidebarExpand(sidebarExpanded === panel ? false : panel));
+    const handleExpand = (panel: string) => () => dispatch(setMenuExpanded(menuExpanded === panel ? false : panel));
 
     const handleLinkClick = (url: string, label: string) => () => {
         navigate(url, { state: { label } });
@@ -69,13 +69,13 @@ const SidebarMenu = ({ setDrawerOpen }: SidebarMenuProps) => {
                                     >
                                         <ListItemIcon>{icon}</ListItemIcon>
                                         <ListItemText primary={label} />
-                                        {sidebarExpanded === label ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                                        {menuExpanded === label ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </ListItemButton>
                                     <Collapse
                                         sx={{ width: '100%' }}
                                         timeout="auto"
                                         unmountOnExit
-                                        in={sidebarExpanded === label}
+                                        in={menuExpanded === label}
                                     >
                                         <StyledList role="list" disablePadding>
                                             {nested.map((nestedLink) => (

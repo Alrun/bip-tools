@@ -12,15 +12,15 @@ import { ArrowDownIcon, ArrowUpIcon } from '../Icons/Icons';
 import Typography from '../Typography/Typography';
 import Checkbox from '../Checkbox/Checkbox';
 import StyledSelect from './SelectStyles';
-import { SelectProps, SelectOptionsInterface } from './Select.d';
+import { SelectProps, SelectOptions } from './Select.d';
 
 /**
  * Converts the options to the required shape.
  *
  * @param {any[]} options Raw options.
- * @returns {SelectOptionsInterface[]}
+ * @returns {SelectOptions[]}
  */
-export const getFormattedOptions = (options: any[]): SelectOptionsInterface[] =>
+export const getFormattedOptions = (options: any[]): SelectOptions[] =>
     options.map((option) => {
         if (typeof option === 'string') return { value: option.toLowerCase(), label: option };
         if (typeof option === 'number') return { value: option, label: option };
@@ -34,14 +34,14 @@ export const getFormattedOptions = (options: any[]): SelectOptionsInterface[] =>
 /**
  * Filters options by value.
  *
- * @param {SelectOptionsInterface[]} options Options to filter.
+ * @param {SelectOptions[]} options Options to filter.
  * @param {SelectProps['value'] | SelectProps['defaultValue']} value Input value to be filtered.
- * @returns {SelectOptionsInterface[]}
+ * @returns {SelectOptions[]}
  */
 export const filterOptions = (
-    options: SelectOptionsInterface[],
+    options: SelectOptions[],
     value: SelectProps['value'] | SelectProps['defaultValue']
-): SelectOptionsInterface[] => {
+): SelectOptions[] => {
     if (typeof value === 'string' || typeof value === 'number') {
         return options.filter((option) => option.value === value);
     }
@@ -55,13 +55,13 @@ export const filterOptions = (
 /**
  * Gets the text of the option label.
  *
- * @param {SelectOptionsInterface[]} options Array of options.
+ * @param {SelectOptions[]} options Array of options.
  * @param {SelectProps['value'] | SelectProps['defaultValue']} value Value by which options are selected.
  * @param {boolean | undefined} multiple Multiple selections.
  * @returns {string | undefined}
  */
 export const getLabelOption = (
-    options: SelectOptionsInterface[],
+    options: SelectOptions[],
     value: SelectProps['value'] | SelectProps['defaultValue'],
     multiple?: boolean
 ): string | undefined => {
@@ -81,13 +81,13 @@ export const getLabelOption = (
 /**
  * Gets option is selected.
  *
- * @param {SelectOptionsInterface} option Checked option.
+ * @param {SelectOptions} option Checked option.
  * @param {SelectProps['value'] | undefined} value The value against which the option is checked.
  * @param {SelectProps['defaultValue'] | undefined} defaultValue The value against which the option is checked if the default value.
  * @returns {boolean}
  */
 export const getChecked = (
-    option: SelectOptionsInterface,
+    option: SelectOptions,
     value?: SelectProps['value'],
     defaultValue?: SelectProps['defaultValue']
 ): boolean => {

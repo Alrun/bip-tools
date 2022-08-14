@@ -6,15 +6,6 @@
  */
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-/**
- * TODO: Replace package 'text-encoding' when Jest fixes the TextEncoder bug.
- * TextEncoder.encode must refer to the same Uint8Array global constructor.
- *
- * it('TextEncoder.encode references the same global Uint8Array constructor', () => {
- *     expect(new TextEncoder().encode('')).toBeInstanceOf(Uint8Array);
- * });
- */
-// import { TextEncoder } from 'util';
 import { TextEncoder } from 'text-encoding';
 
 // Adds support TextEncoder to Jest.

@@ -1,7 +1,5 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { SxProps } from '@mui/system';
-import { Theme } from '@mui/material';
+import { SkeletonProps as MuiSkeletonProps } from '@mui/material/Skeleton';
 
 export interface SkeletonProps {
     /**
@@ -23,7 +21,7 @@ export interface SkeletonProps {
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx?: SxProps<Theme>;
+    sx?: MuiSkeletonProps['sx'];
     /**
      * The type of content that will be rendered.
      *

@@ -28,6 +28,9 @@ export const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
             theme.palette.mode === 'dark'
                 ? lighten(theme.palette.background.paper, 0.015)
                 : darken(theme.palette.background.default, 0.015)
+    },
+    '& .MuiAccordionSummary-expandIconWrapper': {
+        color: theme.palette.text.primary
     }
 }));
 

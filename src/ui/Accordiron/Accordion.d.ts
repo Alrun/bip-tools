@@ -1,7 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { SxProps } from '@mui/system';
-import { Theme } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions/transition';
 import { AccordionProps as MuiAccordionProps } from '@mui/material/Accordion/Accordion';
 import { AccordionSummaryProps as MuiAccordionSummaryProps } from '@mui/material/AccordionSummary/AccordionSummary';
@@ -57,7 +54,7 @@ export interface AccordionProps extends Omit<MuiAccordionProps, 'ref'> {
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx?: SxProps<Theme>;
+    sx?: MuiAccordionProps['sx'];
     /**
      * Props applied to the transition element.
      * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.

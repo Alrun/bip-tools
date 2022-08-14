@@ -8,7 +8,7 @@ const linkApp: RoutesList[] = [
         order: 1,
         links: [
             {
-                label: 'Home',
+                label: 'Dashboard',
                 to: '/',
                 icon: <DashboardIcon />
             },

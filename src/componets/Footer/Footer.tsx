@@ -33,7 +33,7 @@ const Footer = ({ height = 50 }: FooterProps) => {
                     >
                         <Tooltip title="Go to Homepage">
                             <img
-                                src={theme.palette.mode === 'dark' ? LogoDarkIcon : LogoLightIcon}
+                                src={theme.palette.mode === 'dark' ? LogoLightIcon : LogoDarkIcon}
                                 alt="Bitcoin"
                                 style={{ display: 'block', width: 24, height: 24, marginRight: theme.spacing(3) }}
                             />
@@ -44,7 +44,7 @@ const Footer = ({ height = 50 }: FooterProps) => {
                 <Tooltip title="Open GitHub in a new tab">
                     <div style={{ marginLeft: 'auto' }}>
                         <Link
-                            href="https://github.com/"
+                            href="https://github.com/alrun/bip-tools"
                             target="_blank"
                             rel="noopener noreferrer"
                             sx={{

@@ -1,24 +1,25 @@
 import { getIndex, getWord, wordCountList } from '../../../libs/bip39/mnemonic/mnemonic';
-import { BipType, Script } from '../../../libs/bips.d'
+import { Derivation, Mnemonic, WordList } from '../../../libs/bips/bips.d'
 
-export interface WordList {
-    id: number;
-    wordBinary: string;
-    wordIndex: string;
-    wordString: string;
-}
-
-export interface GeneratorState {
-    entropy: string;
-    seed: string;
-    passphrase: string;
-    wordList: WordList[];
-    expandedPanel: string[];
-    wordCount: typeof wordCountList[number];
-    derivationPath: string;
+export interface MnemonicState extends Derivation, Mnemonic {
+    /**
+     * Derived path relative to master key.
+     */
     path: string;
-    bip: BipType;
-    coinType: string;
-    isHardened: boolean;
-    script: `${Script}`
+    /**
+     * Word list.
+     */
+    wordList: WordList[];
+    /**
+     * List of expanded panels.
+     */
+    expandedPanel: string[];
+    /**
+     * Word count.
+     */
+    wordCount: typeof wordCountList[number];
+    /**
+     * If 'true', balances are shown.
+     */
+    showBalances: boolean
 }

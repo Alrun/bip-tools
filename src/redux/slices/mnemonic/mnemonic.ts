@@ -1,83 +1,89 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GeneratorState } from './mnemonic.d';
-import { Bips, Script } from '../../../libs/bips/bips.d';
 import { getPath } from '../../../libs/bips/bips';
+import { MnemonicState } from './mnemonic.d';
+import { Bips, Script } from '../../../libs/bips/bips.d';
 
 const initialPath = "0'/0";
 
-const initialState: GeneratorState = {
-    entropy: '',
-    seed: '',
-    passphrase: '',
-    wordList: [],
-    expandedPanel: [],
-    wordCount: 12,
-    derivationPath: `${Bips.Bip44}/0'/0'/0`,
-    path: initialPath,
-    script: Script.P2PKH,
+const initialState: MnemonicState = {
     bip: 'bip44',
     coinType: '0',
-    isHardened: false
+    derivationPath: `${Bips.Bip44}/0'/0'/0`,
+    entropy: '',
+    expandedPanel: [],
+    isHardened: false,
+    path: initialPath,
+    passphrase: '',
+    seed: '',
+    script: Script.P2PKH,
+    showBalances: false,
+    wordList: [],
+    wordCount: 12
 };
 
 export const mnemonic = createSlice({
     name: 'mnemonic',
     initialState,
     reducers: {
-        setEntropy: (state, { payload }: PayloadAction<GeneratorState['entropy']>) => {
+        setBip: (state, { payload }: PayloadAction<MnemonicState['bip']>) => {
+            state.bip = payload;
+            state.path = payload === 'bip32' ? '0' : initialPath;
+            state.derivationPath = `${getPath(payload, state.coinType)}${state.path}`;
+            state.script = Script.P2PKH;
+        },
+        setCoinType: (state, { payload }: PayloadAction<MnemonicState['coinType']>) => {
+            state.coinType = payload;
+            state.derivationPath = `${getPath(state.bip, payload)}${state.path}`;
+        },
+        setEntropy: (state, { payload }: PayloadAction<MnemonicState['entropy']>) => {
             state.entropy = payload;
-        },
-        setSeed: (state, { payload }: PayloadAction<GeneratorState['seed']>) => {
-            state.seed = payload;
-        },
-        setPassphrase: (state, { payload }: PayloadAction<GeneratorState['passphrase']>) => {
-            state.passphrase = payload;
-        },
-        setWordList: (state, { payload }: PayloadAction<GeneratorState['wordList']>) => {
-            state.wordList = payload;
         },
         setExpandedPanel: (state, { payload }: PayloadAction<string>) => {
             state.expandedPanel = state.expandedPanel.includes(payload)
                 ? state.expandedPanel.filter((item) => item !== payload)
                 : [...state.expandedPanel, payload];
         },
-        setWordCount: (state, { payload }: PayloadAction<GeneratorState['wordCount']>) => {
-            state.wordCount = payload;
-        },
-        setBip: (state, { payload }: PayloadAction<GeneratorState['bip']>) => {
-            state.bip = payload;
-            state.path = payload === 'bip32' ? '0' : initialPath;
-            state.derivationPath = `${getPath(payload, state.coinType)}${state.path}`;
-            state.script = Script.P2PKH;
-        },
-        setCoinType: (state, { payload }: PayloadAction<GeneratorState['coinType']>) => {
-            state.coinType = payload;
-            state.derivationPath = `${getPath(state.bip, payload)}${state.path}`;
-        },
-        setHardened: (state, { payload }: PayloadAction<GeneratorState['isHardened']>) => {
+        setHardened: (state, { payload }: PayloadAction<MnemonicState['isHardened']>) => {
             state.isHardened = payload;
         },
-        setScript: (state, { payload }: PayloadAction<GeneratorState['script']>) => {
-            state.script = payload;
-        },
-        setPath: (state, { payload }: PayloadAction<GeneratorState['path']>) => {
+        setPath: (state, { payload }: PayloadAction<MnemonicState['path']>) => {
             state.path = payload;
             state.derivationPath = `${getPath(state.bip, state.coinType)}${payload}`;
+        },
+        setPassphrase: (state, { payload }: PayloadAction<MnemonicState['passphrase']>) => {
+            state.passphrase = payload;
+        },
+        setSeed: (state, { payload }: PayloadAction<MnemonicState['seed']>) => {
+            state.seed = payload;
+        },
+        setScript: (state, { payload }: PayloadAction<MnemonicState['script']>) => {
+            state.script = payload;
+        },
+        setShowBalances: (state, { payload }: PayloadAction<MnemonicState['showBalances']>) => {
+            state.showBalances = payload;
+        },
+        setWordCount: (state, { payload }: PayloadAction<MnemonicState['wordCount']>) => {
+            state.wordCount = payload;
+        },
+        setWordList: (state, { payload }: PayloadAction<MnemonicState['wordList']>) => {
+            state.wordList = payload;
         }
     }
 });
 
 export const {
-    setEntropy,
-    setSeed,
-    setPassphrase,
-    setWordList,
-    setExpandedPanel,
-    setWordCount,
     setBip,
-    setPath,
     setCoinType,
+    setEntropy,
+    setExpandedPanel,
+    setHardened,
+    setPassphrase,
+    setPath,
+    setSeed,
     setScript,
-    setHardened
+    setShowBalances,
+    setWordCount,
+    setWordList
 } = mnemonic.actions;
+
 export default mnemonic.reducer;

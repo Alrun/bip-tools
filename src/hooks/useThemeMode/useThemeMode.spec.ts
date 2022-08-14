@@ -1,19 +1,19 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { ThemeModeType } from '../../componets/ThemeModeSwitch/ThemeModeSwitch.d';
 import useThemeMode, { reducer } from './useThemeMode';
+import { ThemeMode } from '../../componets/ThemeModeSwitch/ThemeModeSwitch.d';
 
 describe('useThemeMode reducer', () => {
-    const initialState: ThemeModeType = 'auto';
+    const initialState: ThemeMode = 'auto';
 
-    it('should handle increment', () => {
+    it('should handle switching to dark theme', () => {
         expect(reducer(initialState, { type: 'dark' })).toBe('dark');
     });
 
-    it('should handle increment', () => {
+    it('should handle switching to light theme', () => {
         expect(reducer(initialState, { type: 'light' })).toBe('light');
     });
 
-    it('should handle increment', () => {
+    it('should handle switching to auto theme', () => {
         expect(reducer(initialState, { type: 'auto' })).toBe('light');
     });
 });

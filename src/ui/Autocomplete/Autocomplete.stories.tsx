@@ -2,27 +2,27 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Box from '@mui/material/Box';
 import Autocomplete from './Autocomplete';
-import { AutocompleteOptionInterface } from './Autocomplete.d';
+import { AutocompleteOption } from './Autocomplete.d';
 import { ChevronDownIcon } from '../Icons/Icons';
 
-const options: AutocompleteOptionInterface[] = [
+const options: AutocompleteOption[] = [
     { label: 'Option 1', value: '1' },
     { label: 'Option 2', value: '2' },
     { label: 'Option 3', value: '3' }
 ];
 
-const manyOptions = (amount: number): AutocompleteOptionInterface[] =>
+const manyOptions = (amount: number): AutocompleteOption[] =>
     Array.from(Array(amount)).map((item, idx) => ({
         value: `${idx}`,
         label: `Option ${idx + 1}`
     }));
 
-interface CountryType extends AutocompleteOptionInterface {
+interface Country extends AutocompleteOption {
     code: string;
     phone: string;
 }
 
-const countries: CountryType[] = [
+const countries: Country[] = [
     { code: 'AL', label: 'Albania', phone: '355' },
     { code: 'BY', label: 'Belarus', phone: '375' },
     { code: 'BE', label: 'Belgium', phone: '32' },
@@ -63,9 +63,9 @@ export default {
         getOptionDisabled: {
             options: ['None', 'Option 1', 'Option 2', 'Counties'],
             mapping: {
-                None: (option: AutocompleteOptionInterface) => option,
-                'Option 1': (option: AutocompleteOptionInterface) => option.value === options[0].value,
-                'Option 2': (option: AutocompleteOptionInterface) => option.value === options[1].value
+                None: (option: AutocompleteOption) => option,
+                'Option 1': (option: AutocompleteOption) => option.value === options[0].value,
+                'Option 2': (option: AutocompleteOption) => option.value === options[1].value
             }
         },
         groupBy: {
@@ -183,7 +183,7 @@ export const DisabledOptions = BaseTemplate.bind({});
 DisabledOptions.args = {
     ...Base.args,
     label: 'Disabled Options',
-    getOptionDisabled: (option: AutocompleteOptionInterface) =>
+    getOptionDisabled: (option: AutocompleteOption) =>
         option.value === options[0].value || option.value === options[1].value
 };
 
@@ -207,7 +207,7 @@ DisabledOptions.parameters = {
         }
     ]}
     label="Disabled Options"
-    getOptionDisabled={(option: AutocompleteOptionInterface) =>
+    getOptionDisabled={(option: AutocompleteOption) =>
         option.value === options[0].value || option.value === options[1].value
     }
 />`
@@ -571,7 +571,7 @@ GroupedOption.args = {
     ...Base.args,
     options: countries,
     label: 'Grouped',
-    groupBy: (option: AutocompleteOptionInterface) => option.label[0].toUpperCase()
+    groupBy: (option: AutocompleteOption) => option.label[0].toUpperCase()
 };
 
 GroupedOption.parameters = {
@@ -581,7 +581,7 @@ GroupedOption.parameters = {
 <Autocomplete
     options={options}
     label="Grouped"
-    groupBy={(option: AutocompleteOptionInterface) => option.label[0].toUpperCase()}
+    groupBy={(option: AutocompleteOption) => option.label[0].toUpperCase()}
 />`
         }
     }

@@ -9,15 +9,12 @@ import ListSubheader from '@mui/material/ListSubheader';
 import { StyledAutocomplete, StyledPopper } from './AutocompleteStyles';
 import Input from '../Input/Input';
 import Typography from '../Typography/Typography';
-import {
-    AutocompleteProps,
-    AutocompleteOptionInterface,
-    ListboxComponentProps,
-    PopperComponentProps
-} from './Autocomplete.d';
+import { AutocompleteProps, AutocompleteOption, ListboxComponentProps, PopperComponentProps } from './Autocomplete.d';
 import { ArrowDownIcon, CrossIcon } from '../Icons/Icons';
 import Preloader from '../Preloader/Preloader';
 import { Grow } from '../Transitions/Transitions';
+
+const LISTBOX_PADDING = 8; // px
 
 const useResetCache = (data: number, scroll: number) => {
     const ref = React.useRef<VariableSizeList>(null);
@@ -28,11 +25,8 @@ const useResetCache = (data: number, scroll: number) => {
             ref.current.resetAfterIndex(0, true);
         }
     }, [data]);
-
     return ref;
 };
-
-const LISTBOX_PADDING = 8; // px
 
 const PopperComponent = ({ children, ...props }: PopperComponentProps) => (
     <StyledPopper role={undefined} placement="bottom-start" transition disablePortal={false} {...props}>
@@ -109,7 +103,7 @@ const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
     return <div ref={ref} {...props} {...outerProps} />;
 });
 
-// Adapter for react-window
+// Adapter for react-window.
 const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
     ({ children, maxItems, ...props }: ListboxComponentProps, ref) => {
         const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
@@ -180,7 +174,7 @@ const HighlightOption = (
     option: unknown,
     { inputValue }: AutocompleteRenderOptionState
 ) => {
-    const { label } = option as AutocompleteOptionInterface;
+    const { label } = option as AutocompleteOption;
     const currentOption = Object.prototype.hasOwnProperty.call(option, 'label') ? label : (option as string);
     const matches = match(currentOption, inputValue);
     const parts = parse(currentOption, matches);

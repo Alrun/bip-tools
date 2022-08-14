@@ -16,23 +16,23 @@ import LogoDarkIcon from '../../assets/logo-dark.svg';
 import LogoLightIcon from '../../assets/logo-light.svg';
 import Tooltip from '../../ui/Tooltip/Tooltip';
 
-const drawerBleeding = 10;
-const title = 'BIP Tools';
+const SIDEBAR_BLEEDING = 10;
+const TITLE = 'BIP Tools';
 
 const SidebarContainer = ({
     open,
     children,
-    isCollapsed,
+    dense,
     isMobile,
     heightHeader,
     heightFooter,
-    setCollapsed,
+    setDense,
     setOpen
 }: SidebarContainerProps) => {
     const theme = useTheme();
 
     const handleCollapse = (collapse: boolean) => () => {
-        if (setCollapsed) setCollapsed(collapse);
+        if (setDense) setDense(collapse);
     };
 
     const handleSetOpen = (isOpen: boolean) => () => {
@@ -57,12 +57,12 @@ const SidebarContainer = ({
                             }}
                         >
                             <img
-                                src={theme.palette.mode === 'dark' ? LogoDarkIcon : LogoLightIcon}
+                                src={theme.palette.mode === 'dark' ? LogoLightIcon : LogoDarkIcon}
                                 alt="Logo"
                                 style={{ display: 'block', width: 32, height: 32 }}
                             />
                             <Typography variant="h4" component="span" sx={{ m: 0, pl: 6, mt: 2 }}>
-                                {title}
+                                {TITLE}
                             </Typography>
                         </Link>
                     </Tooltip>
@@ -95,7 +95,7 @@ const SidebarContainer = ({
                 }}
             >
                 <Divider sx={{ mb: 1 }} />
-                {isCollapsed ? (
+                {dense ? (
                     <Button
                         isRound
                         sx={{ ml: -1, mt: -0.25 }}
@@ -125,16 +125,16 @@ const SidebarContainer = ({
 
 const Sidebar = ({
     changeMode,
-    isCollapsed,
+    dense,
     isMobile,
     open,
     mode,
+    setOpen,
+    setDense,
     heightHeader = 50,
     heightFooter = 50,
-    setOpen,
-    setCollapsed,
-    widthExpanded = 200,
-    widthCollapsed = 60
+    widthFull = 200,
+    widthSlim = 60
 }: SidebarProps) => {
     const container = window !== undefined ? () => window.document.body : undefined;
 
@@ -145,22 +145,20 @@ const Sidebar = ({
             open={open}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
-            swipeAreaWidth={drawerBleeding}
+            swipeAreaWidth={SIDEBAR_BLEEDING}
             disableSwipeToOpen={false}
             disableBackdropTransition={!isIOS}
             disableDiscovery={isIOS}
             ModalProps={{
                 keepMounted: true,
-                sx: {
-                    '.MuiPaper-root': { width: widthExpanded }
-                }
+                sx: { '.MuiPaper-root': { width: widthFull } }
             }}
         >
             <SidebarContainer
                 heightHeader={heightHeader}
                 heightFooter={heightFooter}
-                widthExpanded={widthExpanded}
-                widthCollapsed={widthCollapsed}
+                widthFull={widthFull}
+                widthSlim={widthSlim}
                 isMobile={isMobile}
                 open={open}
                 setOpen={setOpen}
@@ -182,15 +180,15 @@ const Sidebar = ({
             </SidebarContainer>
         </SwipeableDrawer>
     ) : (
-        <StyledDrawer variant="permanent" open={!isCollapsed} widthOpen={widthExpanded} widthClose={widthCollapsed}>
+        <StyledDrawer variant="permanent" open={!dense} widthFull={widthFull} widthSlim={widthSlim}>
             <SidebarContainer
                 isMobile={isMobile}
-                isCollapsed={isCollapsed}
+                dense={dense}
                 heightHeader={heightHeader}
                 heightFooter={heightFooter}
-                setCollapsed={setCollapsed}
-                widthExpanded={widthExpanded}
-                widthCollapsed={widthCollapsed}
+                setDense={setDense}
+                widthFull={widthFull}
+                widthSlim={widthSlim}
             >
                 <SidebarMenu />
             </SidebarContainer>

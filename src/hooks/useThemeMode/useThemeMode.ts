@@ -1,12 +1,12 @@
 import React from 'react';
 import { detectColorScheme } from '../../utils/featuresDetection/featuresDetection';
-import { ThemeModeType } from '../../componets/ThemeModeSwitch/ThemeModeSwitch.d';
+import { ThemeMode } from '../../componets/ThemeModeSwitch/ThemeModeSwitch.d';
 
-type Mode = Exclude<ThemeModeType, 'auto'>;
+type Mode = Exclude<ThemeMode, 'auto'>;
 
-const init = (initialMode: ThemeModeType): Mode => (initialMode === 'auto' ? detectColorScheme() : initialMode);
+const init = (initialMode: ThemeMode): Mode => (initialMode === 'auto' ? detectColorScheme() : initialMode);
 
-export const reducer = (state: ThemeModeType, action: { type: ThemeModeType }): Mode => {
+export const reducer = (state: ThemeMode, action: { type: ThemeMode }): Mode => {
     switch (action.type) {
         case 'light':
             return 'light';
@@ -17,7 +17,7 @@ export const reducer = (state: ThemeModeType, action: { type: ThemeModeType }): 
     }
 };
 
-const useThemeMode = (mode: ThemeModeType): Mode => {
+const useThemeMode = (mode: ThemeMode): Mode => {
     const [colorScheme, dispatch] = React.useReducer(reducer, mode, init);
 
     React.useEffect(() => {

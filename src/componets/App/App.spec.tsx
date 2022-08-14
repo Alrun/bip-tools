@@ -1,18 +1,18 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { store } from '../../redux/store';
 import App from './App';
 
-it('renders mnemonic link', () => {
+it('should render App', () => {
     render(
-        <BrowserRouter>
+        <MemoryRouter initialEntries={['/']}>
             <Provider store={store}>
                 <App />
             </Provider>
-        </BrowserRouter>
+        </MemoryRouter>
     );
 
-    expect(screen.getByText(/bip tools/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/bip tools/i)).toHaveLength(2);
 });

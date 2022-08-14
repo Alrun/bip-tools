@@ -4,16 +4,10 @@ import userEvent from '@testing-library/user-event';
 import { renderWithTheme } from '../../utils/test/helpers';
 import MnemonicGroupItem from './MnemonicGroupItem';
 
-describe('generator group item', () => {
+describe('mnemonic group item', () => {
     beforeEach(() => {
         renderWithTheme(
-            <MnemonicGroupItem
-                id={1}
-                wordBinary="00000000000"
-                wordIndex="0"
-                wordString="abandon"
-                onChange={() => {}}
-            />
+            <MnemonicGroupItem id={1} wordBinary="00000000000" wordIndex="0" wordString="abandon" onChange={() => {}} />
         );
     });
 

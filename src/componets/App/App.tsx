@@ -6,7 +6,7 @@ import customTheme from '../../ui/Theme/Theme';
 import { setMode } from '../../redux/slices/app/app';
 import useThemeMode from '../../hooks/useThemeMode/useThemeMode';
 import Layout from '../Layout/Layout';
-import { ThemeModeType } from '../ThemeModeSwitch/ThemeModeSwitch.d';
+import { ThemeMode } from '../ThemeModeSwitch/ThemeModeSwitch.d';
 
 const App = () => {
     const { mode } = useAppSelector((state) => state.app);
@@ -16,7 +16,7 @@ const App = () => {
 
     const theme = React.useMemo(() => customTheme(colorScheme), [colorScheme]);
 
-    const handleChangeMode = React.useCallback((nextMode: ThemeModeType) => dispatch(setMode(nextMode)), [colorScheme]);
+    const handleChangeMode = React.useCallback((nextMode: ThemeMode) => dispatch(setMode(nextMode)), [colorScheme]);
 
     return (
         <ThemeProvider theme={theme}>

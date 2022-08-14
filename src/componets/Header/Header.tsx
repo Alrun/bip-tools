@@ -11,7 +11,7 @@ import { flatLinkList } from '../Navigation/Navigation';
 import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
 import { HeaderProps } from './Header.d';
 
-const Header = ({ changeMode, drawerOpen, isMobile, mode, height = '50px' }: HeaderProps) => {
+const Header = ({ changeMode, setSidebarOpen, isMobile, mode, height = '50px' }: HeaderProps) => {
     const [title, setTitle] = React.useState('');
     const location = useLocation();
 
@@ -41,7 +41,7 @@ const Header = ({ changeMode, drawerOpen, isMobile, mode, height = '50px' }: Hea
                             aria-label="menu"
                             color="inherit"
                             isRound
-                            onClick={() => drawerOpen(true)}
+                            onClick={() => setSidebarOpen(true)}
                             size="large"
                             sx={{ zIndex: 'drawer' }}
                         >
@@ -57,7 +57,9 @@ const Header = ({ changeMode, drawerOpen, isMobile, mode, height = '50px' }: Hea
                             ml: { xs: -56, md: 0 }
                         }}
                     >
-                        <Typography variant="h3">{title}</Typography>
+                        <Typography variant="h3" data-testid={title}>
+                            {title}
+                        </Typography>
                     </Grid>
                     <Grid item sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <ThemeModeSwitch mode={mode} changeMode={changeMode} size="small" />

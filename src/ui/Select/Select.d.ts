@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputProps } from '../Input/Input.d'
 
-export interface SelectOptionsInterface {
+export interface SelectOptions {
     /**
      * The value of the option.
      */
@@ -43,16 +43,19 @@ export interface SelectProps
     native?: boolean;
     /**
      * Enable auto native view on touch.
+     *
      * @default true
      */
     nativeOnTouch?: boolean;
     /**
      * Adds an empty option on the native selection if no default value is passed.
+     *
      * @default 'Not selected'
      */
     nativeEmptyOptionText?: string;
     /**
      * Text to display when there are no options.
+     *
      * @default 'No options'
      */
     noOptionsText?: React.ReactNode;
@@ -62,6 +65,7 @@ export interface SelectProps
     defaultOpen?: boolean;
     /**
      * Specifies the maximum number of menu items to display.
+     *
      * @default 8
      */
     maxItem?: number;

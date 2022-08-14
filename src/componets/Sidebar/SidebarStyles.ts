@@ -19,12 +19,12 @@ export const closedMixin = (theme: Theme, width: string | number): CSSObject => 
 });
 
 export const StyledDrawer = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== 'open' && prop !== 'widthOpen' && prop !== 'widthClose'
+    shouldForwardProp: (prop) => prop !== 'open' && prop !== 'widthFull' && prop !== 'widthSlim'
 })<{
-    widthOpen: string | number;
-    widthClose: string | number;
-}>(({ theme, open, widthOpen, widthClose }) => ({
-    width: widthOpen,
+    widthFull: string | number;
+    widthSlim: string | number;
+}>(({ theme, open, widthFull, widthSlim }) => ({
+    width: widthFull,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -33,16 +33,16 @@ export const StyledDrawer = styled(MuiDrawer, {
         overflow: 'hidden'
     },
     ...(open && {
-        ...openedMixin(theme, widthOpen),
-        '& .MuiDrawer-paper': openedMixin(theme, widthOpen)
+        ...openedMixin(theme, widthFull),
+        '& .MuiDrawer-paper': openedMixin(theme, widthFull)
     }),
     ...(!open && {
-        ...closedMixin(theme, widthClose),
-        '& .MuiDrawer-paper': closedMixin(theme, widthClose)
+        ...closedMixin(theme, widthSlim),
+        '& .MuiDrawer-paper': closedMixin(theme, widthSlim)
     }),
     '&:hover': {
         '.MuiDrawer-paper': {
-            width: widthOpen
+            width: widthFull
         }
     }
 }));
@@ -52,7 +52,7 @@ export const StyledScrollWrapper = styled(Box, {
 })<{
     heightHeader: string | number;
     heightFooter: string | number;
-}>(({ theme, heightHeader, heightFooter }) => ({
+}>(({ heightHeader, heightFooter }) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',

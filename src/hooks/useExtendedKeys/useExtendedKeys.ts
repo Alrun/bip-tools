@@ -19,7 +19,8 @@ const initialState: ExtendedKeys = {
 
 /**
  * Generates hierarchical deterministic keys from seed.
- * @param {string} seed
+ *
+ * @param {string} seed 64-bit hex string.
  */
 const useExtendedKeys = (seed: string): ExtendedKeys => {
     const [extendedKey, setExtendedKey] = React.useState(initialState);

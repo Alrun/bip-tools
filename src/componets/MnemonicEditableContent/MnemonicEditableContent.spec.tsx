@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import { renderWithTheme } from '../../utils/test/helpers';
 import MnemonicEditableContent, { extractEntropy } from './MnemonicEditableContent';
 
-describe('generator editable content', () => {
+describe('mnemonic editable content', () => {
     const words = ['zoo', 'abandon', 'zoo', 'abandon'];
 
     it('should render a button', () => {
