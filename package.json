@@ -1,13 +1,16 @@
 {
   "name": "bip-tools",
-  "version": "1.0.0",
+  "version": "1.0.2",
+  "homepage": "https://alrun.github.io/bip-tools/",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o storybook",
+    "predeploy": "yarn run build && build-storybook -o storybook && mv storybook build/storybook",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
@@ -24,6 +27,7 @@
     "bech32": "^2.0.0",
     "bs58": "^5.0.0",
     "copy-to-clipboard": "^3.3.1",
+    "gh-pages": "^4.0.0",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "qrcode.react": "^3.1.0",

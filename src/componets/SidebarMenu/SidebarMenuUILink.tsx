@@ -7,7 +7,7 @@ import { ComponentIcon, ExternalIcon } from '../../ui/Icons/Icons';
 
 const SidebarMenuUILink = () => (
     <ListItem role="listitem" aria-labelledby="ui" disablePadding>
-        <ListItemButton onClick={() => window.open('/storybook-static', '_blank', 'noopener,noreferrer')}>
+        <ListItemButton onClick={() => window.open('/bip-tools/storybook', '_blank', 'noopener,noreferrer')}>
             <ListItemIcon>
                 <ComponentIcon />
             </ListItemIcon>
