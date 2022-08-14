@@ -1,36 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export type ThemeModeType = 'light' | 'dark';
-
-export interface AppState {
-    locale: string;
-    mode: ThemeModeType | 'auto';
-    drawerDense: boolean;
-    sidebarExpanded: false | string;
-}
+import { AppState } from './app.d';
 
 const initialState: AppState = {
     locale: 'en',
     mode: 'auto',
-    drawerDense: false,
-    sidebarExpanded: false,
+    sidebarDense: false,
+    menuExpanded: false
 };
 
-export const appLocal = createSlice({
-    name: 'appLocal',
+export const app = createSlice({
+    name: 'app',
     initialState,
     reducers: {
-        setMode: (state, { payload }: PayloadAction<'light' | 'dark'>) => {
+        setMode: (state, { payload }: PayloadAction<AppState['mode']>) => {
             state.mode = payload;
         },
-        drawerDenseToggle: (state, { payload }: PayloadAction<boolean>) => {
-            state.drawerDense = payload;
+        setSidebarDense: (state, { payload }: PayloadAction<AppState['sidebarDense']>) => {
+            state.sidebarDense = payload;
         },
-        sidebarExpand: (state, { payload }: PayloadAction<false | string>) => {
-            state.sidebarExpanded = payload;
-        },
+        setMenuExpanded: (state, { payload }: PayloadAction<AppState['menuExpanded']>) => {
+            state.menuExpanded = payload;
+        }
     }
 });
 
-export const { setMode, drawerDenseToggle, sidebarExpand } = appLocal.actions;
-export default appLocal.reducer;
+export const { setSidebarDense, setMode, setMenuExpanded } = app.actions;
+
+export default app.reducer;

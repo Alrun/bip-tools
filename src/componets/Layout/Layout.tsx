@@ -2,72 +2,57 @@ import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { isTouch } from '../../utils/featuresDetect';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { DrawerWidthInterface, LayoutHeightInterface, LayoutProps } from './Layout.d';
-import { drawerDenseToggle } from '../../redux/slices/app/app';
+import { isTouch } from '../../utils/featuresDetection/featuresDetection';
+import { setSidebarDense } from '../../redux/slices/app/app';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import StyledWrapper from './LayoutStyles';
+import { LayoutProps } from './Layout.d';
 
-const drawerWidth: DrawerWidthInterface = {
-    open: '15rem',
-    close: '4rem'
-};
+const SIDEBAR_WIDTH_FULL = '15rem';
+const SIDEBAR_WIDTH_SLIM = '4rem';
+const LAYOUT_HEADER = '3.5rem';
+const LAYOUT_FOOTER = '3.5rem';
 
-const layoutHeight: LayoutHeightInterface = {
-    header: '3.5rem',
-    footer: '3.5rem'
-};
-
-const Layout = ({ mode, handleChangeMode }: LayoutProps) => {
-    const { drawerDense } = useAppSelector((state) => state.app);
+const Layout = ({ mode, changeMode }: LayoutProps) => {
+    const { sidebarDense } = useAppSelector((state) => state.app);
     const dispatch = useAppDispatch();
 
     const isMobile = isTouch() || useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-    const [isOpen, setOpen] = React.useState<boolean>(false);
 
-    const handleOpen = (open: boolean) => {
-        setOpen(open);
-    };
+    const [isOpen, setOpen] = React.useState(false);
 
-    const handleDense = (dense: boolean) => {
-        dispatch(drawerDenseToggle(dense));
-    };
-
-    // TODO: Remove after render check
-    const rendersCount = React.useRef<number>(0);
+    const handleOpen = React.useCallback((open: boolean) => setOpen(open), []);
+    const handleDense = React.useCallback((collapse: boolean) => dispatch(setSidebarDense(collapse)), []);
 
     return (
         <Box sx={{ display: 'flex', height: '100%' }}>
             <Sidebar
-                heightHeader={layoutHeight.header}
-                heightFooter={layoutHeight.footer}
-                widthOpen={drawerWidth.open}
-                widthClose={drawerWidth.close}
+                heightHeader={LAYOUT_HEADER}
+                heightFooter={LAYOUT_FOOTER}
+                widthFull={SIDEBAR_WIDTH_FULL}
+                widthSlim={SIDEBAR_WIDTH_SLIM}
                 isMobile={isMobile}
-                isOpen={isOpen}
-                isDense={drawerDense}
-                handleOpen={handleOpen}
-                handleDense={handleDense}
+                open={isOpen}
+                setOpen={handleOpen}
+                dense={sidebarDense}
+                setDense={handleDense}
+                mode={mode}
+                changeMode={changeMode}
             />
-            <StyledWrapper open={drawerDense} widthOpen={drawerWidth.open} widthClose={drawerWidth.close}>
+            <StyledWrapper open={sidebarDense} widthFull={SIDEBAR_WIDTH_FULL} widthSlim={SIDEBAR_WIDTH_SLIM}>
                 <Header
-                    height={layoutHeight.header}
-                    mode={mode}
+                    height={LAYOUT_HEADER}
                     isMobile={isMobile}
-                    handleDrawerOpen={handleOpen}
-                    handleChangeMode={handleChangeMode}
+                    mode={mode}
+                    changeMode={changeMode}
+                    setSidebarOpen={handleOpen}
                 />
                 <Main />
-                {/* TODO: Remove after render check */}
-                <b style={{ position: 'absolute', bottom: 60, right: 10 }}>
-                    {/* eslint-disable-next-line no-plusplus */}
-                    Layout RENDER COUNT: {++rendersCount.current}
-                </b>
-                <Footer height={layoutHeight.footer} />
+                <Footer height={LAYOUT_FOOTER} />
             </StyledWrapper>
         </Box>
     );

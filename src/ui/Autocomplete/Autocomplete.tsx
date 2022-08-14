@@ -1,33 +1,62 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete, { autocompleteClasses, createFilterOptions } from '@mui/material/Autocomplete';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import ListSubheader from '@mui/material/ListSubheader';
-import Popper from '@mui/material/Popper';
-import { useTheme, styled } from '@mui/material/styles';
+import React from 'react';
 import { VariableSizeList, ListChildComponentProps } from 'react-window';
-import Typography from '@mui/material/Typography';
+import parse from 'autosuggest-highlight/parse';
+import match from 'autosuggest-highlight/match';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { createFilterOptions, AutocompleteRenderOptionState } from '@mui/material/Autocomplete';
+import ListSubheader from '@mui/material/ListSubheader';
+import { StyledAutocomplete, StyledPopper } from './AutocompleteStyles';
+import Input from '../Input/Input';
+import Typography from '../Typography/Typography';
+import { AutocompleteProps, AutocompleteOption, ListboxComponentProps, PopperComponentProps } from './Autocomplete.d';
+import { ArrowDownIcon, CrossIcon } from '../Icons/Icons';
+import Preloader from '../Preloader/Preloader';
+import { Grow } from '../Transitions/Transitions';
 
 const LISTBOX_PADDING = 8; // px
 
-const StyledPopper = styled(Popper)({
-    [`& .${autocompleteClasses.listbox}`]: {
-        boxSizing: 'border-box',
-        '& ul': {
-            padding: 0,
-            margin: 0
-        }
-    }
-});
+const useResetCache = (data: number, scroll: number) => {
+    const ref = React.useRef<VariableSizeList>(null);
 
-function renderRow(props: ListChildComponentProps) {
-    const { data, index, style } = props;
+    React.useEffect(() => {
+        if (ref.current !== null) {
+            ref.current.scrollToItem(scroll, 'start');
+            ref.current.resetAfterIndex(0, true);
+        }
+    }, [data]);
+    return ref;
+};
+
+const PopperComponent = ({ children, ...props }: PopperComponentProps) => (
+    <StyledPopper role={undefined} placement="bottom-start" transition disablePortal={false} {...props}>
+        {({ TransitionProps, placement }) => (
+            <Grow
+                timeout={{
+                    appear: 0,
+                    enter: 100,
+                    exit: 100
+                }}
+                style={{
+                    transformOrigin: placement === 'bottom-start' ? 'top' : 'bottom'
+                }}
+                {...TransitionProps}
+            >
+                {children}
+            </Grow>
+        )}
+    </StyledPopper>
+);
+
+const renderRow = ({ data, index, style }: ListChildComponentProps) => {
     const dataSet = data[index];
     const inlineStyle = {
         ...style,
-        top: (style.top as number) + LISTBOX_PADDING
+        top: (style.top as number) + LISTBOX_PADDING,
+        listStyle: 'none'
     };
-
+    const currentOption: string = dataSet[1]?.label ? dataSet[1]?.label : dataSet[1];
+    // Adds a group header
     if (Object.prototype.hasOwnProperty.call(dataSet, 'group')) {
         return (
             <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
@@ -35,13 +64,36 @@ function renderRow(props: ListChildComponentProps) {
             </ListSubheader>
         );
     }
+    // Highlighting text in autocomplete components
+    if (dataSet[3]) {
+        const matches = match(currentOption, dataSet[2].inputValue);
+        const parts = parse(currentOption, matches);
+
+        return (
+            <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
+                <div>
+                    {parts.map((part, idx) => (
+                        <span
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={idx}
+                            style={{
+                                fontWeight: part.highlight ? 'bolder' : 'normal'
+                            }}
+                        >
+                            {part.text}
+                        </span>
+                    ))}
+                </div>
+            </Typography>
+        );
+    }
 
     return (
         <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
-            {dataSet[1]}
+            {currentOption}
         </Typography>
     );
-}
+};
 
 const OuterElementContext = React.createContext({});
 
@@ -51,34 +103,15 @@ const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
     return <div ref={ref} {...props} {...outerProps} />;
 });
 
-function useResetCache(data: number, scroll: number) {
-    const ref = React.useRef<VariableSizeList>(null);
-
-    React.useEffect(() => {
-        if (ref.current !== null) {
-            ref.current.scrollToItem(scroll, 'start');
-            ref.current.resetAfterIndex(0, true);
-        }
-    }, [data]);
-
-    return ref;
-}
-
-interface ListboxComponentProps extends React.HTMLAttributes<HTMLElement> {
-    listHeight: number;
-}
-
-// Adapter for react-window
+// Adapter for react-window.
 const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
-    ({ children, listHeight = 8, ...other }: ListboxComponentProps, ref) => {
-        const theme = useTheme();
-        const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true });
-        // const { children, listHeight, ...other }: ListboxComponentProps = props;
+    ({ children, maxItems, ...props }: ListboxComponentProps, ref) => {
+        const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
         const itemData: React.ReactChild[] = [];
 
         (children as React.ReactChild[]).forEach((item: React.ReactChild & { children?: React.ReactChild[] }) => {
             itemData.push(item);
-            itemData.push(...(item.children || []));
+            itemData.push(...(item.children || [])); // Adds group item
         });
 
         const itemCount = itemData.length;
@@ -90,14 +123,11 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
             return itemSize;
         };
 
-        // console.log(props);
-
-        const getHeight = () => {
-            if (itemCount > listHeight) return listHeight * itemSize;
+        const getHeight = React.useMemo(() => {
+            if (itemCount > maxItems) return maxItems * itemSize;
 
             return itemData.map(getChildSize).reduce((a, b) => a + b, 0);
-        };
-
+        }, [itemCount, maxItems]);
         // Index and padding to scroll to selected item
         const scrollTo = itemData.reduce(
             (acc, cur) => {
@@ -119,16 +149,16 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
 
         return (
             <div ref={ref}>
-                <OuterElementContext.Provider value={other}>
+                <OuterElementContext.Provider value={props}>
                     <VariableSizeList
                         itemData={itemData}
-                        height={getHeight() + 2 * LISTBOX_PADDING}
+                        height={getHeight + 2 * LISTBOX_PADDING}
                         width="100%"
                         ref={gridRef}
                         outerElementType={OuterElementType}
                         innerElementType="ul"
-                        itemSize={(index) => getChildSize(itemData[index])}
-                        overscanCount={5}
+                        itemSize={(idx) => getChildSize(itemData[idx])}
+                        overscanCount={4}
                         itemCount={itemCount}
                     >
                         {renderRow}
@@ -139,73 +169,125 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
     }
 );
 
-interface AutocompleteProps {
-    options: string[];
-    onChange: (newValue: string) => void;
-    id?: string;
-    listHeight?: number;
-    value?: string;
-    /**
-     * Group options
-     * @param option
-     * (option) => (option as string)[0].toUpperCase()
-     */
-    groupBy?: (option: unknown) => string;
-    /**
-     * getOptionLabel: {(option: any) => option.title}
-     */
-    getOptionLabel?: (option: any) => string;
-    color?: string;
-    disabled?: boolean;
-}
+const HighlightOption = (
+    props: React.HTMLAttributes<HTMLLIElement>,
+    option: unknown,
+    { inputValue }: AutocompleteRenderOptionState
+) => {
+    const { label } = option as AutocompleteOption;
+    const currentOption = Object.prototype.hasOwnProperty.call(option, 'label') ? label : (option as string);
+    const matches = match(currentOption, inputValue);
+    const parts = parse(currentOption, matches);
 
-export default function Virtualize({
-    options,
-    value,
-    onChange,
-    id = 'virtualize-autocomplete',
+    return (
+        <li {...props}>
+            <div>
+                {parts.map((part, idx) => (
+                    <span
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={idx}
+                        style={{
+                            fontWeight: part.highlight ? 'bolder' : 'normal'
+                        }}
+                    >
+                        {part.text}
+                    </span>
+                ))}
+            </div>
+        </li>
+    );
+};
+
+const Autocomplete = ({
+    autoHighlight,
+    disabled,
+    filterOptions,
+    forcePopupIcon = true,
     groupBy,
-    getOptionLabel,
-    listHeight,
-    disabled
-}: AutocompleteProps) {
-    // const handleChange = (e: any, newValue: string | null) => {
-    const handleChange = (e: any, newValue: unknown) => {
-        if (typeof newValue === 'string') onChange(newValue);
+    highlight,
+    inputProps,
+    onChange,
+    open,
+    options = [],
+    label,
+    loading,
+    maxItems = 8,
+    renderOption,
+    size = 'medium',
+    value,
+    virtualize,
+    ...props
+}: AutocompleteProps) => {
+    const handleChange = (e: React.SyntheticEvent, newValue: unknown) => {
+        if (onChange && typeof newValue === 'string') onChange(newValue);
     };
 
-    const filterOptions = createFilterOptions({
+    const defineFilterOptions = createFilterOptions({
         matchFrom: 'start',
         trim: true
     });
 
+    const defineRenderOption = React.useMemo(() => {
+        if (renderOption) return renderOption;
+
+        if (virtualize) {
+            return (
+                listProps: React.HTMLAttributes<HTMLLIElement>,
+                option: unknown,
+                state: AutocompleteRenderOptionState
+            ) => [listProps, option, state, highlight];
+        }
+
+        if (highlight) return HighlightOption;
+
+        return undefined;
+    }, []);
+
     return (
-        <Autocomplete
-            id={id}
-            size="small"
-            value={value}
-            options={options}
+        <StyledAutocomplete
+            open={open}
+            autoComplete
+            autoHighlight={autoHighlight}
             disabled={disabled}
-            disableListWrap
-            onChange={handleChange}
-            filterOptions={filterOptions}
-            PopperComponent={StyledPopper}
-            ListboxComponent={ListboxComponent}
-            ListboxProps={{ listHeight } as ListboxComponentProps}
+            forcePopupIcon={forcePopupIcon}
             groupBy={groupBy}
-            getOptionLabel={getOptionLabel}
+            options={options}
+            loading={loading}
+            size={size}
+            value={value}
+            onChange={handleChange}
+            clearIcon={<CrossIcon fontSize="small" />}
+            popupIcon={<ArrowDownIcon fontSize="medium" />}
+            componentsProps={{ paper: { elevation: 6 } }}
+            filterOptions={filterOptions || defineFilterOptions}
+            PopperComponent={PopperComponent}
+            ListboxComponent={virtualize ? ListboxComponent : undefined}
+            ListboxProps={virtualize ? ({ maxItems } as ListboxComponentProps) : undefined}
             renderInput={(params) => (
-                <TextField
+                <Input
                     {...params}
-                    label="Word"
-                    autoComplete="new-password" // disable autocomplete and autofill
+                    {...inputProps}
+                    autoComplete="new-password" // Disable autocomplete and autofill
+                    label={label}
                     InputLabelProps={{
-                        shrink: true // fixed label
+                        shrink: value ? true : undefined // Shrink label if input is filled
+                    }}
+                    InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                            <>
+                                {loading && <Preloader color="inherit" size={size === 'medium' ? 20 : 16} />}
+                                {params.InputProps.endAdornment}
+                            </>
+                        )
                     }}
                 />
             )}
-            renderOption={(props, option) => [props, option]}
-            renderGroup={(params) => params}
+            renderOption={defineRenderOption}
+            renderGroup={virtualize ? (params) => params : undefined}
+            {...props}
         />
     );
-}
+};
+
+export default Autocomplete;

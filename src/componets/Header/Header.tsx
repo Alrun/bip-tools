@@ -1,32 +1,29 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
-import MenuIcon from '@mui/icons-material/Menu';
-import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
-import { ModeDarkIcon, ModeLightIcon } from '../../ui/Icons/Icons';
+import Button from '../../ui/Button/Button';
+import { MenuIcon } from '../../ui/Icons/Icons';
 import { flatLinkList } from '../Navigation/Navigation';
+import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch';
+import { HeaderProps } from './Header.d';
 
-const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawerOpen }: any) => {
-    const [title, setTitle] = React.useState<string>('');
+const Header = ({ changeMode, setSidebarOpen, isMobile, mode, height = '50px' }: HeaderProps) => {
+    const [title, setTitle] = React.useState('');
     const location = useLocation();
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         const currentLabel = () => {
             const currentLink = flatLinkList.find((item) => item.to === location.pathname);
 
-            return currentLink ? currentLink.label : '';
+            return currentLink ? currentLink.label : 'Not Found';
         };
 
         setTitle(currentLabel);
     }, [location.pathname]);
-
-    // TODO: Remove after render check
-    const rendersCount = React.useRef<number>(0);
 
     return (
         <AppBar
@@ -37,50 +34,35 @@ const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawe
                 color: 'text.primary'
             }}
         >
-            <Toolbar
-                sx={{
-                    height,
-                    minHeight: 'auto',
-                    px: {
-                        lg: 8
-                    }
-                }}
-                variant="dense"
-            >
+            <Toolbar variant="dense" sx={{ height, minHeight: 'auto', px: { lg: 8 } }}>
                 <Grid container justifyContent="space-between" alignItems="center" spacing={4}>
                     <Grid item sx={{ display: isMobile ? 'block' : 'none' }}>
-                        <IconButton
-                            // edge="start"
-                            size="small"
-                            color="inherit"
+                        <Button
                             aria-label="menu"
+                            color="inherit"
+                            isRound
+                            onClick={() => setSidebarOpen(true)}
+                            size="large"
                             sx={{ zIndex: 'drawer' }}
-                            onClick={() => handleDrawerOpen(true)}
                         >
                             <MenuIcon fontSize="large" />
-                        </IconButton>
+                        </Button>
                     </Grid>
-                    <Grid item xs justifyContent={{ xs: 'center', md: 'flex-start' }} sx={{ display: 'flex' }}>
-                        <Typography variant="h3">{title}</Typography>
-                        {/* TODO: Remove after render check */}
-                        <div style={{ position: 'fixed', right: 10, bottom: '6rem' }}>
-                            <b>
-                                {/* eslint-disable-next-line no-plusplus */}
-                                Header RENDER COUNT: {++rendersCount.current}
-                            </b>
-                        </div>
+                    <Grid
+                        item
+                        xs
+                        sx={{
+                            display: 'flex',
+                            justifyContent: { xs: 'center', md: 'flex-start' },
+                            ml: { xs: -56, md: 0 }
+                        }}
+                    >
+                        <Typography variant="h3" data-testid={title}>
+                            {title}
+                        </Typography>
                     </Grid>
-                    <Grid item>
-                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton
-                                // sx={{ ml: 1, position: 'absolute', right: 0 }}
-                                onClick={handleChangeMode}
-                                color="inherit"
-                                aria-label={mode === 'light' ? 'Light' : 'Dark'}
-                            >
-                                {mode === 'light' ? <ModeLightIcon /> : <ModeDarkIcon />}
-                            </IconButton>
-                        </Box>
+                    <Grid item sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <ThemeModeSwitch mode={mode} changeMode={changeMode} size="small" />
                     </Grid>
                 </Grid>
             </Toolbar>
@@ -89,4 +71,4 @@ const Header = ({ height = '50px', mode, isMobile, handleChangeMode, handleDrawe
     );
 };
 
-export default React.memo(Header);
+export default Header;

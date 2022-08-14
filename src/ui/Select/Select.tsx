@@ -1,117 +1,238 @@
 import React from 'react';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import Input from '../Input/Input';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import toLowercase from '../../utils/toLowercase/toLowercase';
+import { isTouch } from '../../utils/featuresDetection/featuresDetection';
+import { Grow } from '../Transitions/Transitions';
 import { ArrowDownIcon, ArrowUpIcon } from '../Icons/Icons';
-import { isTouch } from '../../utils/featuresDetect';
+import Typography from '../Typography/Typography';
+import Checkbox from '../Checkbox/Checkbox';
+import StyledSelect from './SelectStyles';
+import { SelectProps, SelectOptions } from './Select.d';
 
-interface SelectProps {
-    id: string;
-    label: string;
-    options: {
-        value: string;
-        label: string;
-    }[];
-    defaultValue: string;
-    helperText?: string;
-    variant?: 'standard' | 'outlined' | 'filled';
-}
+/**
+ * Converts the options to the required shape.
+ *
+ * @param {any[]} options Raw options.
+ * @returns {SelectOptions[]}
+ */
+export const getFormattedOptions = (options: any[]): SelectOptions[] =>
+    options.map((option) => {
+        if (typeof option === 'string') return { value: option.toLowerCase(), label: option };
+        if (typeof option === 'number') return { value: option, label: option };
 
-const Select = ({ id, label, options, defaultValue, variant = 'outlined', helperText }: SelectProps) => {
-    const defineOption = (value: string) => options.filter((item) => item.value === value)[0].label;
+        if (typeof option === 'object' && option !== null) {
+            return { ...option, value: option.value.toLowerCase() };
+        }
 
-    const [selected, setSelected] = React.useState(() => defineOption(defaultValue));
+        return [];
+    });
+/**
+ * Filters options by value.
+ *
+ * @param {SelectOptions[]} options Options to filter.
+ * @param {SelectProps['value'] | SelectProps['defaultValue']} value Input value to be filtered.
+ * @returns {SelectOptions[]}
+ */
+export const filterOptions = (
+    options: SelectOptions[],
+    value: SelectProps['value'] | SelectProps['defaultValue']
+): SelectOptions[] => {
+    if (typeof value === 'string' || typeof value === 'number') {
+        return options.filter((option) => option.value === value);
+    }
+
+    if (Array.isArray(value)) {
+        return options.filter((option) => value.includes(option.value));
+    }
+
+    return [];
+};
+/**
+ * Gets the text of the option label.
+ *
+ * @param {SelectOptions[]} options Array of options.
+ * @param {SelectProps['value'] | SelectProps['defaultValue']} value Value by which options are selected.
+ * @param {boolean | undefined} multiple Multiple selections.
+ * @returns {string | undefined}
+ */
+export const getLabelOption = (
+    options: SelectOptions[],
+    value: SelectProps['value'] | SelectProps['defaultValue'],
+    multiple?: boolean
+): string | undefined => {
+    if (value) {
+        const currentOptions = filterOptions(options, value);
+        /**
+         * TODO: Add display of multiple selected options on overflow.
+         * (el.offsetWidth < el.scrollWidth);
+         */
+        if (multiple) return currentOptions.map((item) => item.label).join(', ');
+
+        return currentOptions[0].label as string;
+    }
+
+    return undefined;
+};
+/**
+ * Gets option is selected.
+ *
+ * @param {SelectOptions} option Checked option.
+ * @param {SelectProps['value'] | undefined} value The value against which the option is checked.
+ * @param {SelectProps['defaultValue'] | undefined} defaultValue The value against which the option is checked if the default value.
+ * @returns {boolean}
+ */
+export const getChecked = (
+    option: SelectOptions,
+    value?: SelectProps['value'],
+    defaultValue?: SelectProps['defaultValue']
+): boolean => {
+    if (value) {
+        if (Array.isArray(value)) return value.includes(option.value);
+
+        return value === option.value;
+    }
+
+    if (defaultValue) {
+        if (Array.isArray(defaultValue)) return defaultValue.includes(option.value);
+
+        return defaultValue === option.value;
+    }
+
+    return false;
+};
+
+const Select = ({
+    id,
+    defaultOpen,
+    defaultValue,
+    disabled,
+    maxItem = 8,
+    multiple,
+    native,
+    nativeEmptyOptionText = 'Not selected',
+    nativeOnTouch = true,
+    noOptionsText = 'No options',
+    onChange,
+    options = [],
+    size,
+    value,
+    ...props
+}: SelectProps) => {
+    const formattedOptions = getFormattedOptions(options as any[]);
+    const lowercaseDefaultValue = React.useMemo(() => toLowercase(defaultValue), [defaultValue]);
     const [open, setOpen] = React.useState(false);
-
+    const isNative = native || (nativeOnTouch && isTouch());
     const anchorRef = React.useRef<HTMLButtonElement>(null);
+    /**
+     * Native select handler.
+     *
+     * @param {React.ChangeEvent<HTMLSelectElement>} event The event source of the callback.
+     */
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        if (!onChange) return;
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelected(event.target.value);
+        if (multiple) {
+            const values = Array.from(event.target.options)
+                .filter((option) => option.selected)
+                .map((option) => option.value);
+
+            onChange(values);
+        } else onChange(event.target.value);
     };
 
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
+    const handleOpen = (bool: boolean) => () => {
+        if (!disabled) setOpen(bool);
     };
 
     const handleClose = (event: Event | React.SyntheticEvent) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-            return;
-        }
+        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) return;
 
         setOpen(false);
     };
 
     const handleListKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === 'Tab') {
+        if (event.key === 'Escape') setOpen(false);
+        else if (event.key === 'Tab') {
             event.preventDefault();
-            setOpen(false);
-        } else if (event.key === 'Escape') {
             setOpen(false);
         }
     };
 
-    const handleSelect = (option: string) => {
-        setSelected(defineOption(option));
-        setOpen(false);
+    const handleSelect = (nextValue: string | number) => () => {
+        if (!onChange) return;
+
+        if (multiple) {
+            const checkedOptions: Array<string | number> = value.includes(nextValue)
+                ? value.filter((item: string | number) => item !== nextValue)
+                : [...value, nextValue];
+            onChange(checkedOptions);
+        } else {
+            onChange(filterOptions(formattedOptions, nextValue)[0].value);
+            setOpen(false);
+        }
     };
 
     React.useEffect(() => {
-        const timer = setTimeout(() => {
-            if (open) {
-                anchorRef.current?.focus();
-            }
-        });
-        return () => clearTimeout(timer);
-    }, [open]);
+        if (defaultOpen) setOpen(true);
+    }, []);
 
-    return isTouch() ? (
+    return isNative ? (
         <div>
-            <Input
-                select
+            <StyledSelect
+                defaultValue={defaultValue}
+                disabled={disabled}
                 id={id}
-                label={label}
-                value={selected}
-                variant={variant}
-                SelectProps={{
-                    native: true
+                inputRef={anchorRef}
+                InputLabelProps={{
+                    shrink: true
                 }}
                 onChange={handleChange}
-                helperText={helperText}
-                inputRef={anchorRef}
-                aria-controls={open ? `${id}-composition-menu"}` : undefined}
-                aria-expanded={open ? 'true' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
+                onClick={handleOpen(!open)}
+                select
+                SelectProps={{
+                    native: true,
+                    multiple
+                }}
+                size={size}
+                value={value}
+                {...props}
             >
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                {!lowercaseDefaultValue && !multiple && <option>{nativeEmptyOptionText}</option>}
+                {formattedOptions.map((option) => (
+                    <option key={option.value} value={option.value} disabled={option.disabled}>
                         {option.label}
                     </option>
                 ))}
-            </Input>
+            </StyledSelect>
         </div>
     ) : (
         <>
-            <Input
+            <StyledSelect
+                defaultValue={getLabelOption(formattedOptions, lowercaseDefaultValue, multiple)}
+                disabled={disabled}
+                focused={open ? true : undefined}
                 id={id}
-                label={label}
-                value={selected}
-                variant={variant}
-                onClick={handleToggle}
-                helperText={helperText}
-                inputRef={anchorRef}
                 icon={open ? <ArrowUpIcon fontSize="medium" /> : <ArrowDownIcon fontSize="medium" />}
                 iconPosition="end"
                 inputProps={{
                     readOnly: true,
-                    role: 'button',
+                    type: 'button',
                     tabIndex: 0,
-                    'aria-haspopup': true
+                    'aria-label': 'Select',
+                    'aria-haspopup': true,
+                    'aria-expanded': open,
+                    'aria-controls': open && id ? `${id}-composition-menu` : undefined
                 }}
+                inputRef={anchorRef}
+                onClick={handleOpen(!open)}
+                size={size}
+                value={value ? getLabelOption(formattedOptions, value, multiple) : value}
+                {...props}
             />
             <Popper
                 open={open}
@@ -127,30 +248,53 @@ const Select = ({ id, label, options, defaultValue, variant = 'outlined', helper
             >
                 {({ TransitionProps, placement }) => (
                     <Grow
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...TransitionProps}
-                        style={{
-                            transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom'
+                        timeout={{
+                            appear: 0,
+                            enter: 100,
+                            exit: 100
                         }}
+                        style={{
+                            transformOrigin: placement === 'bottom-start' ? 'top' : 'bottom'
+                        }}
+                        {...TransitionProps}
                     >
-                        <Paper>
+                        <Paper elevation={6} sx={{ maxHeight: maxItem * 34.5, overflowX: 'hidden' }}>
                             <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList
-                                    autoFocusItem={open}
-                                    id={`${id}-composition-menu"}`}
-                                    aria-labelledby="composition-button"
-                                    onKeyDown={handleListKeyDown}
-                                >
-                                    {options.map((option) => (
-                                        <MenuItem
-                                            key={option.value}
-                                            selected={option.value === selected}
-                                            onClick={() => handleSelect(option.value)}
-                                        >
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </MenuList>
+                                {!options.length ? (
+                                    <Box sx={{ padding: '10px' }}> {noOptionsText} </Box>
+                                ) : (
+                                    <MenuList
+                                        autoFocusItem={open}
+                                        id={id && `${id}-composition-menu`}
+                                        aria-labelledby="composition-button"
+                                        onKeyDown={handleListKeyDown}
+                                    >
+                                        {formattedOptions.map((option) => (
+                                            <MenuItem
+                                                key={option.value}
+                                                selected={getChecked(option, value, defaultValue)}
+                                                onClick={handleSelect(option.value)}
+                                                dense={size === 'small'}
+                                                disabled={option.disabled}
+                                                sx={{
+                                                    paddingLeft: '10px',
+                                                    paddingRight: '10px'
+                                                }}
+                                            >
+                                                {multiple && (
+                                                    <Checkbox
+                                                        checked={getChecked(option, value, defaultValue)}
+                                                        sx={{ mr: 0 }}
+                                                        disableRipple
+                                                    />
+                                                )}
+                                                <Typography variant="inherit" noWrap>
+                                                    {option.label}
+                                                </Typography>
+                                            </MenuItem>
+                                        ))}
+                                    </MenuList>
+                                )}
                             </ClickAwayListener>
                         </Paper>
                     </Grow>

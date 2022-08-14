@@ -1,66 +1,65 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import { linkList } from '../Navigation/Navigation';
-import { SidebarProps } from './SidebarMenu.d';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { sidebarExpand } from '../../redux/slices/app/app';
+import { setMenuExpanded } from '../../redux/slices/app/app';
+import SidebarMenuUILink from './SidebarMenuUILink';
+import { ChevronDownIcon, ChevronUpIcon } from '../../ui/Icons/Icons';
+import Typography from '../../ui/Typography/Typography';
+import { StyledList } from './SidebarMenuStyles';
+import { SidebarMenuProps } from './SidebarMenu.d';
 
-export default function SidebarMenu({ width = '100%', handleDrawerOpen }: SidebarProps) {
-    const { sidebarExpanded } = useAppSelector((state) => state.app);
+const CharIcon = ({ char }: { char: string }) => (
+    <Typography
+        sx={{
+            width: '1.5em',
+            height: '1.5em',
+            textAlign: 'center',
+            fontSize: '1.15em',
+            textTransform: 'uppercase',
+            fontWeight: (theme) => theme.typography.fontWeightMedium
+        }}
+    >
+        {char}
+    </Typography>
+);
+
+const SidebarMenu = ({ setDrawerOpen }: SidebarMenuProps) => {
+    const { menuExpanded } = useAppSelector((state) => state.app);
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleExpand = (panel: string) => (): void => {
-        dispatch(sidebarExpand(sidebarExpanded === panel ? false : panel));
-    };
+    const handleExpand = (panel: string) => () => dispatch(setMenuExpanded(menuExpanded === panel ? false : panel));
 
-    const handleLinkClick = (url: string, label: string): void => {
+    const handleLinkClick = (url: string, label: string) => () => {
         navigate(url, { state: { label } });
-
-        /**
-         * Close drawer after click on mobile
-         */
-        if (handleDrawerOpen) {
-            handleDrawerOpen(false);
-        }
+        // Close drawer after click on mobile
+        if (setDrawerOpen) setDrawerOpen(false);
     };
 
     return (
-        <List
-            // subheader={<li />}
-            sx={{
-                width,
-                position: 'relative',
-                // overflow: 'auto',
-                '& ul': { padding: 0 }
-            }}
-            subheader={<li />}
-            // component="nav"
-            aria-labelledby="nested-list-subheader"
-            // subheader={
-            //     <ListSubheader component="div" id="nested-list-subheader">
-            //         Nested List Items
-            //     </ListSubheader>
-            // }
-        >
-            {linkList.map(({ header, links }) => (
+        <StyledList subheader={<li />} aria-labelledby="list-subheader">
+            {linkList.map(({ header, links }, idx) => (
                 <li key={header}>
                     <ul className="static-list">
-                        <ListSubheader /* sx={{ color: (theme) => theme.palette.error.main }} */>
+                        <ListSubheader
+                            sx={{
+                                userSelect: 'none',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap'
+                            }}
+                        >
                             {header}
                         </ListSubheader>
-
-                        {links.map(({ label, to, icon, requireAuth, nested }) =>
+                        {links.map(({ label, to, icon, nested }) =>
                             nested ? (
                                 <ListItem key={label} disablePadding sx={{ flexDirection: 'column' }}>
                                     <ListItemButton
@@ -70,16 +69,15 @@ export default function SidebarMenu({ width = '100%', handleDrawerOpen }: Sideba
                                     >
                                         <ListItemIcon>{icon}</ListItemIcon>
                                         <ListItemText primary={label} />
-                                        {sidebarExpanded === label ? <ExpandLess /> : <ExpandMore />}
+                                        {menuExpanded === label ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </ListItemButton>
-
                                     <Collapse
                                         sx={{ width: '100%' }}
                                         timeout="auto"
                                         unmountOnExit
-                                        in={sidebarExpanded === label}
+                                        in={menuExpanded === label}
                                     >
-                                        <List role="list" disablePadding>
+                                        <StyledList role="list" disablePadding>
                                             {nested.map((nestedLink) => (
                                                 <ListItemButton
                                                     key={nestedLink.label}
@@ -88,58 +86,35 @@ export default function SidebarMenu({ width = '100%', handleDrawerOpen }: Sideba
                                                     role="listitem"
                                                     aria-labelledby={nestedLink.label}
                                                     selected={location.pathname === nestedLink.to}
-                                                    onClick={() => handleLinkClick(nestedLink.to, nestedLink.label)}
+                                                    onClick={handleLinkClick(nestedLink.to, nestedLink.label)}
                                                 >
                                                     <ListItemIcon>
-                                                        {/* TODO: StyledIcon component */}
-                                                        {nestedLink.icon || (
-                                                            <span
-                                                                style={{
-                                                                    width: '1.25em',
-                                                                    textAlign: 'center',
-                                                                    fontSize: '1.25em',
-                                                                    textTransform: 'uppercase'
-                                                                }}
-                                                            >
-                                                                {nestedLink.label[0]}
-                                                            </span>
-                                                        )}
+                                                        {nestedLink.icon || <CharIcon char={nestedLink.label[0]} />}
                                                     </ListItemIcon>
                                                     <ListItemText primary={nestedLink.label} />
                                                 </ListItemButton>
                                             ))}
-                                        </List>
+                                        </StyledList>
                                     </Collapse>
                                 </ListItem>
                             ) : (
                                 <ListItem key={label} role="listitem" aria-labelledby={label} disablePadding>
                                     <ListItemButton
                                         selected={location.pathname === to}
-                                        onClick={() => handleLinkClick(to, label)}
+                                        onClick={handleLinkClick(to, label)}
                                     >
-                                        {/* TODO: StyledIcon component */}
-                                        <ListItemIcon>
-                                            {icon || (
-                                                <span
-                                                    style={{
-                                                        width: '1.25em',
-                                                        textAlign: 'center',
-                                                        fontSize: '1.25em',
-                                                        textTransform: 'uppercase'
-                                                    }}
-                                                >
-                                                    {label[0]}
-                                                </span>
-                                            )}
-                                        </ListItemIcon>
+                                        <ListItemIcon>{icon || <CharIcon char={label[0]} />}</ListItemIcon>
                                         <ListItemText primary={label} />
                                     </ListItemButton>
                                 </ListItem>
                             )
                         )}
+                        {idx === 1 && <SidebarMenuUILink />}
                     </ul>
                 </li>
             ))}
-        </List>
+        </StyledList>
     );
-}
+};
+
+export default SidebarMenu;

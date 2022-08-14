@@ -1,20 +1,16 @@
-import appReducer, { AppState, drawerDenseToggle, setMode } from './app';
+import appReducer, { setMode, setSidebarDense, setMenuExpanded } from './app';
+import { AppState } from './app.d';
 
-describe('appSession reducer', () => {
+describe('app reducer', () => {
     const initialState: AppState = {
         locale: 'en',
         mode: 'auto',
-        drawerDense: false,
-        sidebarExpanded: false,
+        sidebarDense: false,
+        menuExpanded: false
     };
 
     it('should return the initial state', () => {
-        expect(appReducer(undefined, { type: 'unknown' })).toEqual({
-            locale: 'en',
-            mode: 'auto',
-            drawerDense: false,
-            sidebarExpanded: false,
-        });
+        expect(appReducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
 
     it('should handle change theme mode', () => {
@@ -24,8 +20,14 @@ describe('appSession reducer', () => {
     });
 
     it('should handle set sidebar dense', () => {
-        const actual = appReducer(initialState, drawerDenseToggle(false));
+        const actual = appReducer(initialState, setSidebarDense(false));
 
-        expect(actual.drawerDense).toBeFalsy();
+        expect(actual.sidebarDense).toBeFalsy();
+    });
+
+    it('should handle set sidebar dense', () => {
+        const actual = appReducer(initialState, setMenuExpanded(false));
+
+        expect(actual.menuExpanded).toBeFalsy();
     });
 });

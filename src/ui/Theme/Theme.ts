@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material';
 import StyledShadows from '../Shadows/ShadowsStyles';
-import typography from '../Typography/Typography';
+import { typoStyles } from '../Typography/Typography';
 
 const colors = {
     light: {
@@ -27,7 +27,6 @@ const colors = {
             main: '#e52828'
         },
         info: {
-            // main: '#0288d1'
             main: '#007EB5'
         },
         warning: {
@@ -66,8 +65,45 @@ const colors = {
             main: '#ffa726'
         },
         disabled: {
-            main: '#d1d1d1'
+            main: '#d1d1d1',
+            text: 'rgba(255,255,255,0.3)'
         }
+    },
+    grey: {
+        500: '#616161',
+        600: '#535353',
+        700: '#424242',
+        800: '#323232',
+        900: '#282828'
+    }
+};
+
+const transitions = {
+    duration: {
+        shortest: 150,
+        shorter: 200,
+        short: 250,
+        // most basic recommended timing
+        standard: 300,
+        // this is to be used in complex animations
+        complex: 375,
+        // recommended when something is entering screen
+        enteringScreen: 225,
+        // recommended when something is leaving screen
+        leavingScreen: 195
+    },
+    easing: {
+        // This is the most common easing curve.
+        easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        /**
+         * Objects enter the screen at full velocity from off-screen and
+         * slowly decelerate to a resting point.
+         */
+        easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
+        // Objects leave the screen at full velocity. They do not decelerate when off-screen.
+        easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+        // The sharp curve is used by objects that may return to the screen at any time.
+        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
     }
 };
 
@@ -85,24 +121,21 @@ const customTheme = (mode: 'light' | 'dark') =>
         components: {
             MuiCssBaseline: {
                 styleOverrides: {
-                    /* Mozilla */
+                    // Mozilla
                     '@supports (-moz-appearance:none)': {
-                        /* Scroll styling */
+                        // Scroll styling
                         '*': {
                             scrollbarColor: '#eee #ccc',
                             scrollbarWidth: 'thin'
                         }
                     },
-                    /* Chrome */
-                    /* Scroll styling */
+                    // Chrome
+                    // Scroll styling
                     '::-webkit-scrollbar': {
                         width: '6px',
                         height: '6px',
                         backgroundColor: 'transparent'
                     },
-                    // '::-webkit-scrollbar-track': {
-                    //     backgroundColor: '#ccc'
-                    // },
                     '::-webkit-scrollbar-thumb': {
                         borderRadius: '3px',
                         background:
@@ -114,32 +147,33 @@ const customTheme = (mode: 'light' | 'dark') =>
                         fontSize: 14
                     },
                     body: {
-                        // ...darkScrollbar(),
                         height: '100%',
-                        // color: 'darkred',
-                        // backgroundColor: 'grey',
-                        // '& h1': {
-                        //     color: 'black'
-                        // }
                         '#root': {
                             height: '100%'
                         }
                     },
-                    h1: typography.h1,
-                    h2: typography.h2,
-                    h3: typography.h3,
-                    h4: typography.h4,
-                    h5: typography.h5,
-                    h6: typography.h6,
+                    h1: typoStyles.h1,
+                    h2: typoStyles.h2,
+                    h3: typoStyles.h3,
+                    h4: typoStyles.h4,
+                    h5: typoStyles.h5,
+                    h6: typoStyles.h6,
+                    a: {
+                        textDecoration: 'none',
+                        color: mode === 'light' ? colors.light.info.main : colors.dark.info.main,
+                        borderBottom: '1px solid transparent',
+                        transition: `border ${transitions.duration.shortest}ms ${transitions.easing.easeOut}`,
+                        '&:hover': {
+                            borderBottomColor: 'currentColor'
+                        }
+                    },
                     ul: {
                         '&:not([class])': {
                             paddingLeft: 0,
                             listStyleType: 'none',
-
                             '& > li': {
                                 position: 'relative',
                                 padding: '0 0 0 1rem',
-
                                 '&::before': {
                                     content: '""',
                                     position: 'absolute',
@@ -153,22 +187,14 @@ const customTheme = (mode: 'light' | 'dark') =>
                                     top: '1em',
                                     left: 0
                                 },
-
                                 '& > ul:not([class]) > li': {
                                     padding: '0 0 0 1rem',
-
                                     '&::before': {
                                         backgroundColor: 'transparent',
                                         border: '1px solid currentColor'
                                     }
                                 }
                             }
-                            // '& ul:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // },
-                            // '& ol:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // },
                         }
                     },
                     ol: {
@@ -176,11 +202,9 @@ const customTheme = (mode: 'light' | 'dark') =>
                             paddingLeft: 0,
                             listStyleType: 'none',
                             counterReset: 'list 0',
-
                             '& > li': {
                                 position: 'relative',
                                 padding: '0 0 0 1.2rem',
-
                                 '&::before': {
                                     content: 'counter(list, decimal) "."',
                                     counterIncrement: 'list',
@@ -190,13 +214,10 @@ const customTheme = (mode: 'light' | 'dark') =>
                                     fontWeight: 500,
                                     letterSpacing: '-0.05rem'
                                 },
-
                                 '& > ol:not([class])': {
                                     counterReset: 'list2 0',
-
                                     '& > li': {
                                         padding: '0 0 0 2em',
-
                                         '&::before': {
                                             content: 'counter(list, decimal) "." counter(list2, decimal) "."',
                                             counterIncrement: 'list2'
@@ -204,12 +225,6 @@ const customTheme = (mode: 'light' | 'dark') =>
                                     }
                                 }
                             }
-                            // '& ul:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // },
-                            // '& ol:not([class])': {
-                            //     margin: '0.3em 0 0.7em 0'
-                            // }
                         }
                     }
                 }
@@ -227,13 +242,19 @@ const customTheme = (mode: 'light' | 'dark') =>
                         backgroundImage: 'none'
                     }
                 }
+            },
+            MuiUseMediaQuery: {
+                defaultProps: {
+                    noSsr: true // disable double hook rendering for client application only
+                }
             }
         },
         palette: {
             mode,
+            grey: colors.grey,
             ...(mode === 'light'
                 ? {
-                      // palette values for light mode
+                      // Palette values for light mode
                       primary: {
                           main: colors.light.primary.main
                       },
@@ -247,13 +268,11 @@ const customTheme = (mode: 'light' | 'dark') =>
                           main: colors.light.error.main
                       },
                       warning: {
-                          main: colors.light.warning.main,
-                          contrastText: 'pink'
+                          main: colors.light.warning.main
                       },
                       info: {
                           main: colors.light.info.main
                       },
-                      // divider: amber[200],
                       background: {
                           default: colors.light.body.background,
                           paper: colors.light.paper.background
@@ -263,7 +282,7 @@ const customTheme = (mode: 'light' | 'dark') =>
                       }
                   }
                 : {
-                      // palette values for dark mode
+                      // Palette values for dark mode
                       primary: {
                           main: colors.dark.primary.main
                       },
@@ -283,13 +302,13 @@ const customTheme = (mode: 'light' | 'dark') =>
                       info: {
                           main: colors.dark.info.main
                       },
-                      // divider: deepOrange[700],
                       background: {
                           default: colors.dark.body.background,
                           paper: colors.dark.paper.background
                       },
                       text: {
-                          primary: colors.dark.body.color
+                          primary: colors.dark.body.color,
+                          disabled: colors.dark.disabled.text
                       }
                   })
         },
@@ -306,210 +325,34 @@ const customTheme = (mode: 'light' | 'dark') =>
                 '"Segoe UI Emoji"',
                 '"Segoe UI Symbol"'
             ].join(','),
-            h1: { ...typography.h1, ...typography.bold },
-            h2: { ...typography.h2, ...typography.bold },
-            h3: { ...typography.h3, ...typography.bold },
-            h4: { ...typography.h4, ...typography.bold },
-            h5: { ...typography.h5, ...typography.bold },
-            h6: { ...typography.h6, ...typography.bold },
+            h1: { ...typoStyles.h1, ...typoStyles.bold },
+            h2: { ...typoStyles.h2, ...typoStyles.bold },
+            h3: { ...typoStyles.h3, ...typoStyles.bold },
+            h4: { ...typoStyles.h4, ...typoStyles.bold },
+            h5: { ...typoStyles.h5, ...typoStyles.bold },
+            h6: { ...typoStyles.h6, ...typoStyles.bold },
             subtitle1: undefined,
             subtitle2: undefined,
             body2: undefined,
             button: {},
             caption: undefined,
             overline: undefined,
-            smThin: {
-                ...typography.sm,
-                ...typography.thin
-            },
-            xsThin: {
-                ...typography.xs,
-                ...typography.thin
-            },
-            xxsThin: {
-                ...typography.xxs,
-                ...typography.thin
-            },
-            smRegular: {
-                ...typography.sm,
-                ...typography.regular
-            },
-            xsRegular: {
-                ...typography.xs,
-                ...typography.regular
-            },
-            xxsRegular: {
-                ...typography.xxs,
-                ...typography.regular
-            },
-            smBold: {
-                ...typography.sm,
-                ...typography.bold
-            },
-            xsBold: {
-                ...typography.xs,
-                ...typography.bold
-            },
-            xxsBold: {
-                ...typography.xxs,
-                ...typography.bold
-            }
+            smThin: { ...typoStyles.sm, ...typoStyles.thin },
+            xsThin: { ...typoStyles.xs, ...typoStyles.thin },
+            xxsThin: { ...typoStyles.xxs, ...typoStyles.thin },
+            smRegular: { ...typoStyles.sm, ...typoStyles.regular },
+            xsRegular: { ...typoStyles.xs, ...typoStyles.regular },
+            xxsRegular: { ...typoStyles.xxs, ...typoStyles.regular },
+            smBold: { ...typoStyles.sm, ...typoStyles.bold },
+            xsBold: { ...typoStyles.xs, ...typoStyles.bold },
+            xxsBold: { ...typoStyles.xxs, ...typoStyles.bold }
         },
         shadows: StyledShadows,
         spacing: (factor: number) => `${0.25 * factor}rem`, // (Bootstrap strategy)
         shape: {
             borderRadius: 6
-        }
-        // overrides: {
-        //     MuiSvgIcon: {
-        //         fontSizeLarge: {
-        //             fontSize: '2rem'
-        //         }
-        //     }
-        // }
+        },
+        transitions
     });
 
 export default customTheme;
-// theme.typography.h2 = typoHeaderStyles(theme).h2;
-// theme.typography.h3 = typoHeaderStyles(theme).h3;
-// theme.typography.h4 = typoHeaderStyles(theme).h4;
-// theme.typography.h5 = typoHeaderStyles(theme).h5;
-// theme.typography.h6 = typoHeaderStyles(theme).h6;
-
-// export const GlobalCss = withStyles((theme: Theme) => ({
-//     '@global': {
-//         ['html, body, #__next']: {
-//             height: '100%'
-//         },
-//         // div: {outline: '1px solid #eee'},
-//         html: {
-//             '-webkit-text-size-adjust': '100%', // disable auto change font size on landscape IOS
-//             fontSize: 14,
-//             [theme.breakpoints.up('sm')]: {
-//                 fontSize: 16
-//             },
-//             [theme.breakpoints.up('xl')]: {
-//                 fontSize: 18
-//             },
-//             '@media (min-width:2560px)': {
-//                 fontSize: 20
-//             },
-//             '@media (min-width:3840px)': {
-//                 fontSize: 24
-//             }
-//         },
-//         body: {
-//             fontSize: '1rem',
-//             lineHeight: '1.5',
-//             letterSpacing: '0.015rem'
-//         },
-//         a: {
-//             textDecoration: 'none',
-//             color: theme.palette.text.primary,
-//             transition: theme.transitions.create('color', {
-//                 duration: theme.transitions.duration.shortest
-//             }),
-//             '&:not([class])': {
-//                 color: theme.palette.secondary.dark
-//             },
-//             '&:hover': {
-//                 color: theme.palette.secondary.main
-//             }
-//         },
-//         img: {
-//             '&:not([class])': {
-//                 maxWidth: '100%'
-//             }
-//         },
-//         ['ul:not([class]), ol:not([class])']: {
-//             paddingLeft: 0,
-//             listStyleType: 'none'
-//         },
-//         ['ul:not([class]) > li, ol:not([class]) > li']: {
-//             position: 'relative',
-//             padding: 0
-//         },
-//         ['ul:not([class]) > li, li > ul:not([class]) > li']: {
-//             padding: '0 0 0 1rem'
-//         },
-//         ['ul:not([class]) > li::before']: {
-//             content: '""',
-//             position: 'absolute',
-//             borderRadius: '50%',
-//             width: '0.375rem',
-//             height: '0.375rem',
-//             color: theme.palette.secondary.dark,
-//             backgroundColor: theme.palette.secondary.dark,
-//             top: '0.65em',
-//             left: 0
-//         },
-//         ['ul:not([class]) > li > ul:not([class]) > li::before']: {
-//             backgroundColor: 'transparent',
-//             border: '1px solid currentColor'
-//         },
-//         ['ol:not([class])']: {
-//             counterReset: 'list 0'
-//         },
-//         ['ol:not([class]) > li::before']: {
-//             content: 'counter(list, decimal) "."',
-//             counterIncrement: 'list',
-//             position: 'absolute',
-//             left: 0,
-//             color: theme.palette.secondary.dark,
-//             fontWeight: 'bolder',
-//             letterSpacing: '-0.05rem'
-//         },
-//         ['ol:not([class]) > li']: {
-//             padding: '0 0 0 1.2rem'
-//         },
-//         ['ol:not([class]) > li > ol:not([class])']: {
-//             counterReset: 'list2 0'
-//         },
-//         ['ol:not([class]) > li > ol:not([class]) > li::before']: {
-//             content: 'counter(list, decimal) "." counter(list2, decimal) "."',
-//             counterIncrement: 'list2'
-//         },
-//         ['ol:not([class]) > li > ol:not([class]) > li']: {
-//             padding: '0 0 0 2em'
-//         },
-//         h1: typoHeaderStyles(theme).h1,
-//         h2: typoHeaderStyles(theme).h2,
-//         h3: typoHeaderStyles(theme).h3,
-//         h4: typoHeaderStyles(theme).h4,
-//         h5: typoHeaderStyles(theme).h5,
-//         h6: typoHeaderStyles(theme).h6,
-//
-//         /* Mozilla */
-//         ['@supports (-moz-appearance:none)']: {
-//             /* Scroll styling */
-//             '*': {
-//                 scrollbarColor: '#eee #ccc',
-//                 scrollbarWidth: 'thin'
-//             }
-//         },
-//
-//         /* Chrome */
-//         /* Scroll styling */
-//         '::-webkit-scrollbar': {
-//             width: 10,
-//             borderRadius: 2
-//         },
-//         '::-webkit-scrollbar-track': {
-//             backgroundColor: '#ccc'
-//         },
-//         '::-webkit-scrollbar-thumb': {
-//             backgroundColor: '#999',
-//             borderRadius: 2
-//         },
-//         /* Change Autocomplete styles */
-//         ['input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus']: {
-//             '-webkit-text-fill-color': theme.palette.text.primary,
-//             '-webkit-box-shadow': '0 0 0px 1000px #fff inset',
-//             height: '0.9em'
-//         }
-//         // ['textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus']
-//         // ['select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus']: {
-//         // -webkit-box-shadow: 0 0 0px 1000px #000 inset;
-//         // transition: background-color 5000s ease-in-out 0s;
-//     }
-// }))(() => null);
