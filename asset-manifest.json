@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/bip-tools/static/js/main.41700960.js",
+    "main.js": "/bip-tools/static/js/main.f85dea1f.js",
     "static/js/637.a27f4122.chunk.js": "/bip-tools/static/js/637.a27f4122.chunk.js",
     "static/js/893.599d1d9c.chunk.js": "/bip-tools/static/js/893.599d1d9c.chunk.js",
     "static/media/bitcoin.svg": "/bip-tools/static/media/bitcoin.6ddf3a733104c9e9fe2e1d89e452cca5.svg",
@@ -8,11 +8,11 @@
     "static/media/logo-dark.svg": "/bip-tools/static/media/logo-dark.3c833edb7fc63bff8542e252313a0ed3.svg",
     "static/media/logo-light.svg": "/bip-tools/static/media/logo-light.b553ad3562feeaa3d3130d6da3a29aaf.svg",
     "static/media/ether.svg": "/bip-tools/static/media/ether.159b4a026c22f99c2a78af6a8287ddf2.svg",
-    "main.41700960.js.map": "/bip-tools/static/js/main.41700960.js.map",
+    "main.f85dea1f.js.map": "/bip-tools/static/js/main.f85dea1f.js.map",
     "637.a27f4122.chunk.js.map": "/bip-tools/static/js/637.a27f4122.chunk.js.map",
     "893.599d1d9c.chunk.js.map": "/bip-tools/static/js/893.599d1d9c.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.41700960.js"
+    "static/js/main.f85dea1f.js"
   ]
 }
