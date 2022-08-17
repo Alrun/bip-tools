@@ -8,6 +8,7 @@ import LogoLightIcon from '../../assets/logo-light.svg';
 import { GitHubIcon } from '../../ui/Icons/Icons';
 import Typography from '../../ui/Typography/Typography';
 import Link from '../../ui/Link/Link';
+import Button from '../../ui/Button/Button';
 import Tooltip from '../../ui/Tooltip/Tooltip';
 import { FooterProps } from './Footer.d';
 
@@ -17,7 +18,7 @@ const Footer = ({ height = 50 }: FooterProps) => {
     return (
         <Box component="footer" sx={{ height, minHeight: height }}>
             <Divider />
-            <Box sx={{ display: 'flex', alignItems: 'center', height: '100%', px: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', height: 'calc(100% - 1px)', px: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <RouterLink
                         to="/"
@@ -41,21 +42,31 @@ const Footer = ({ height = 50 }: FooterProps) => {
                     </RouterLink>
                     <Typography component="span">© 2022 BIP Tools</Typography>
                 </Box>
-                <Tooltip title="Open GitHub in a new tab">
-                    <div style={{ marginLeft: 'auto' }}>
-                        <Link
-                            href="https://github.com/alrun/bip-tools"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                <Link
+                    href="https://github.com/alrun/bip-tools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                        marginLeft: 'auto',
+                        border: 'none',
+                        color: 'inherit'
+                    }}
+                >
+                    <Tooltip title="Open GitHub in a new tab">
+                        <Button
+                            isRound
+                            disableRipple
                             sx={{
-                                border: 'none',
-                                color: 'inherit'
+                                color: 'text.primary',
+                                '&:hover': {
+                                    background: 'none'
+                                }
                             }}
                         >
                             <GitHubIcon sx={{ fontSize: 28 }} />
-                        </Link>
-                    </div>
-                </Tooltip>
+                        </Button>
+                    </Tooltip>
+                </Link>
             </Box>
         </Box>
     );

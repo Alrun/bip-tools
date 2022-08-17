@@ -133,6 +133,7 @@ const AddressListTable = ({ length, list, isLoaded, showBalances, xlUp }: Addres
                                                       variant="smRegular"
                                                       sx={{
                                                           mr: 1,
+                                                          whiteSpace: 'nowrap',
                                                           color: (theme) =>
                                                               theme.palette.mode === 'dark'
                                                                   ? theme.palette.secondary.dark
@@ -146,6 +147,7 @@ const AddressListTable = ({ length, list, isLoaded, showBalances, xlUp }: Addres
                                                   <Typography
                                                       sx={{
                                                           mr: 1,
+                                                          whiteSpace: 'nowrap',
                                                           color: (theme) =>
                                                               theme.palette.mode === 'dark'
                                                                   ? theme.palette.secondary.dark

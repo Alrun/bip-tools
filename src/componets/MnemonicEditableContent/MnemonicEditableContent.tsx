@@ -2,51 +2,25 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
-import { binToHex } from '../../utils/crypto/crypto';
 import enWordList from '../../libs/bip39/wordlists/english';
-import { setCaret } from './setCaret';
+import { setCaret } from '../../libs/setCaret/setCaret';
+import { extractEntropy } from '../../libs/bip39/mnemonic/mnemonic';
+import { checkPhrase } from '../../libs/bip39/validate/validate';
+import ButtonCopy from '../ButtonCopy/ButtonCopy';
 import { StyledEditableContent, StyledFormControl } from './MnemonicEditableContentStyles';
 import { MnemonicEditableContentProps } from './MnemonicEditableContent.d';
-import ButtonCopy from '../ButtonCopy/ButtonCopy';
 
 /**
- * HTML template
+ * HTML template.
  *
- * @param l
+ * @param {string[]} wordList Word list.
  */
-export const getHtml = (l: string[]) =>
-    l.reduce((acc, cur, idx) => {
+export const getHtml = (wordList: string[]) =>
+    wordList.reduce((acc, cur, idx) => {
         const span = `<span id="word-${idx + 1}" class="word${enWordList.includes(cur) ? ' valid' : ''}">${cur}</span>`;
 
         return acc.concat(`${span}`);
     }, '');
-
-/**
- * Extracts entropy from words.
- *
- * @param words
- */
-export const extractEntropy = (words: string[]) => {
-    const indexList: number[] = words.map((item) => enWordList.indexOf(item)).filter((item) => item !== -1);
-    const rawBinList = indexList.map((item) => item.toString(2).padStart(11, '0'));
-    const binEntropyStr = rawBinList.join('');
-    const binEntropy = binEntropyStr.slice(0, Math.trunc(binEntropyStr.length / 8) * 8);
-    const hexEntropy = binToHex(binEntropy);
-
-    return { binEntropy, hexEntropy, rawBinList };
-};
-
-const validatePhrase = (wordsArr: string[]) => {
-    const invalidWords = wordsArr.filter((item) => !enWordList.includes(item));
-
-    if (invalidWords.length) {
-        return `The word${invalidWords.length > 1 ? 's' : ''} "${invalidWords.join(', ')}" ${
-            invalidWords.length > 1 ? 'are' : 'is'
-        } incorrect!`;
-    }
-
-    return '';
-};
 
 const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentProps) => {
     const [error, setError] = React.useState('');
@@ -61,7 +35,7 @@ const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentPro
         const selection = window.getSelection();
         const innerText = e.target.innerText
             .toLowerCase()
-            .replace(/[^a-z\s]/gi, '') // TODO: add multilingual support
+            .replace(/[^a-z\s]/gi, '') // remove unavailable characters
             .replace(/(\r\n|\n|\r)$/, '') // remove last newline
             .replace(/(\r\n|\n|\r)/gm, ' ') // replace newlines with spaces
             .replace(/\s+/g, ' ') // disable double spaces
@@ -112,13 +86,13 @@ const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentPro
         }
     };
 
-    const handleBlur = (e: any) => {
-        const inputText = e.target.innerText;
+    const handleBlur = (e: React.SyntheticEvent) => {
+        const inputText = (e.target as HTMLElement).innerText;
 
         if (inputText) {
             const arr: string[] = inputText.split(/\r?\n/);
             const { hexEntropy } = extractEntropy(arr);
-            const errorMessage = validatePhrase(arr);
+            const errorMessage = checkPhrase(arr);
 
             if (errorMessage) {
                 setError(errorMessage);
@@ -138,18 +112,11 @@ const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentPro
         setError('');
     }, [words]);
 
-    // TODO: Remove after render check
-    const rendersCount = React.useRef(0);
-
     return (
         <StyledEditableContent>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
                 <Box sx={{ display: 'inline-flex' }}>
-                    <ButtonCopy
-                        // TODO: Fix copy
-                        // text={rootRef.current ? rootRef.current.innerText.replace(/(\r\n|\n|\r)/gm, ' '): ''}
-                        text={text.join(' ')}
-                    />
+                    <ButtonCopy text={text.join(' ')} />
                 </Box>
             </Box>
             <StyledFormControl fullWidth error={!!error} focused={focused}>
@@ -190,10 +157,6 @@ const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentPro
                             <span>Mnemonic phrase</span>
                         </legend>
                     </fieldset>
-                    <b style={{position: "fixed", bottom: 120, zIndex: 2200}}>
-                        {/* eslint-disable-next-line no-plusplus */}
-                        Editcontent RENDER COUNT: {++rendersCount.current}
-                    </b>
                 </Box>
                 {!!error && (
                     <FormHelperText sx={{ mt: -1.5 }} color="error">

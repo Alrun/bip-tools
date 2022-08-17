@@ -1,6 +1,6 @@
 import React from 'react';
-import { TooltipProps } from './Tooltip.d';
 import { StyledTooltip } from './TooltipStyles';
+import { TooltipProps } from './Tooltip.d';
 
 const Tooltip = ({ children, ...props }: TooltipProps) => (
     <StyledTooltip disableInteractive {...props}>

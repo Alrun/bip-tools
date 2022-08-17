@@ -27,7 +27,7 @@ export const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
         backgroundColor:
             theme.palette.mode === 'dark'
                 ? lighten(theme.palette.background.paper, 0.015)
-                : darken(theme.palette.background.default, 0.015)
+                : darken(theme.palette.background.default, 0.01)
     },
     '& .MuiAccordionSummary-expandIconWrapper': {
         color: theme.palette.text.primary
@@ -39,5 +39,5 @@ export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
     backgroundColor:
         theme.palette.mode === 'dark'
             ? darken(theme.palette.background.paper, 0.15)
-            : darken(theme.palette.background.default, 0.04)
+            : darken(theme.palette.background.default, 0.02)
 }));

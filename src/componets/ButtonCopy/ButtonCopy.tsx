@@ -31,16 +31,9 @@ const ButtonCopy = ({
     return (
         <>
             <Tooltip title={tooltipText} {...TooltipProps}>
-                <div
-                    style={{
-                        width: '100%',
-                        height: '100%'
-                    }}
-                >
-                    <Button isRound size="small" onClick={handleClick} {...ButtonProps}>
-                        <CopyIcon fontSize="inherit" />
-                    </Button>
-                </div>
+                <Button isRound size="small" onClick={handleClick} {...ButtonProps}>
+                    <CopyIcon fontSize="inherit" />
+                </Button>
             </Tooltip>
             <Snackbar
                 open={showSnack}

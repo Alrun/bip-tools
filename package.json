@@ -1,6 +1,6 @@
 {
   "name": "bip-tools",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "homepage": "https://alrun.github.io/bip-tools/",
   "private": true,
   "scripts": {
@@ -99,7 +99,10 @@
       "!src/index.tsx",
       "!src/**/*.d.ts",
       "!src/**/*Styles.ts"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": 30
+    }
   },
   "overrides": {
     "@types/react": "17.0.44"

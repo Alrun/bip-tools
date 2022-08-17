@@ -30,7 +30,6 @@ const AddressListGrid = ({ list, showBalances, isLoaded, length }: AddressListGr
                               {row.path}
                           </Typography>
                       </Box>
-
                       <Grid container sx={{ mb: 0 }} alignItems="center">
                           <Grid item>
                               <Typography
@@ -97,7 +96,6 @@ const AddressListGrid = ({ list, showBalances, isLoaded, length }: AddressListGr
                               Keys
                           </Typography>
                       </Box>
-
                       <Grid container sx={{ mb: 0 }} alignItems="center">
                           <Grid item>
                               <Typography
@@ -131,7 +129,6 @@ const AddressListGrid = ({ list, showBalances, isLoaded, length }: AddressListGr
                               </Box>
                           </Grid>
                       </Grid>
-
                       <Grid container sx={{ mb: 0 }} alignItems="center">
                           <Grid item>
                               <Typography
