@@ -1,5 +1,5 @@
 import BitcoinIcon from '../../assets/icons/coins/bitcoin.svg';
-import EtherIcon from '../../assets/icons/coins/ether.svg';
+import EthereumIcon from '../../assets/icons/coins/ethereum.svg';
 
 interface CoinTypeList {
     type: string;
@@ -18,8 +18,8 @@ const coinTypeList: Readonly<CoinTypeList[]> = [
     {
         type: '60',
         symbol: 'ETH',
-        coin: 'Ether',
-        iconURL: EtherIcon
+        coin: 'Ethereum',
+        iconURL: EthereumIcon
     }
 ];
 

@@ -21,11 +21,9 @@ const ButtonQrCode = ({ icon, text, title, tooltipText = 'QR code' }: ButtonQrCo
     return (
         <>
             <Tooltip title={tooltipText}>
-                <div>
-                    <Button isRound size="small" onClick={handleShowModal}>
-                        <QrCodeIcon fontSize="inherit" />
-                    </Button>
-                </div>
+                <Button isRound size="small" onClick={handleShowModal}>
+                    <QrCodeIcon fontSize="inherit" />
+                </Button>
             </Tooltip>
             <Modal idPrefix="qr-code" open={showModal} title={title} onClose={handleCloseModal} scroll="body">
                 <Box

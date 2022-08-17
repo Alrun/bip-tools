@@ -107,26 +107,20 @@ const AddressDerivation = ({
 
     return (
         <>
-            <Grid
-                container
-                spacing={{ xs: 8, xl: 4 }}
-                sx={{ mb: 6 }}
-                alignItems="flex-end"
-                justifyContent={{ xs: 'space-between' }}
-            >
-                <Grid item xs={12} sm order={{ xs: 0 }}>
+            <Grid container spacing={{ xs: 4, xl: 4 }} sx={{ mb: 6 }} alignItems="flex-end" justifyContent="flex-start">
+                <Grid item>
                     <ToggleButtons
                         options={bipOptions}
                         selected={bipValue}
                         onChange={handleChangeBip}
                         sx={{ pt: 2 }}
                         ButtonsProps={{
-                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3 }
+                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3.8 }
                         }}
                     />
                 </Grid>
-                {bip === 'bip32' && (
-                    <Grid item xs={12} sm order={{ xs: 1 }}>
+                {bip === 'bip32' && coinType !== '60' && (
+                    <Grid item>
                         <ToggleButtons
                             options={scriptOptions}
                             selected={script}
@@ -142,28 +136,7 @@ const AddressDerivation = ({
                         />
                     </Grid>
                 )}
-                <Grid item xs={12} sm order={{ xs: 2 }}>
-                    <Select
-                        fullWidth
-                        options={coinOptions}
-                        label="Coin"
-                        value={coinType}
-                        onChange={handleChangeCoin}
-                        sx={{ minWidth: 140 }}
-                    />
-                </Grid>
-                <Grid item order={{ xs: 4 }}>
-                    <ToggleButtons
-                        options={hardenedOptions}
-                        selected={isHardened ? 'hardened' : 'normal'}
-                        onChange={handleChangeHardened}
-                        sx={{ pt: 2 }}
-                        ButtonsProps={{
-                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3 }
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm order={{ xs: 3 }}>
+                <Grid item>
                     <Input
                         label="Derivation Path"
                         fullWidth
@@ -180,10 +153,34 @@ const AddressDerivation = ({
                             }
                         }}
                         onChange={handleChangePath}
-                        sx={{ minWidth: 140, '& input': { pl: '0 !important' } }}
+                        sx={{
+                            width: '100%',
+                            minWidth: 249,
+                            '& input': { pl: '0 !important' }
+                        }}
                     />
                 </Grid>
-                <Grid item order={{ xs: 5 }}>
+                <Grid item>
+                    <Select
+                        options={coinOptions}
+                        label="Coin"
+                        value={coinType}
+                        onChange={handleChangeCoin}
+                        sx={{ width: 140 }}
+                    />
+                </Grid>
+                <Grid item sx={{ marginLeft: { xl: 'auto' } }}>
+                    <ToggleButtons
+                        options={hardenedOptions}
+                        selected={isHardened ? 'hardened' : 'normal'}
+                        onChange={handleChangeHardened}
+                        sx={{ pt: 2 }}
+                        ButtonsProps={{
+                            sx: { fontSize: (theme) => theme.typography.smRegular.fontSize, px: 3 }
+                        }}
+                    />
+                </Grid>
+                <Grid item>
                     <Switch
                         label="Show balances"
                         labelPlacement="end"

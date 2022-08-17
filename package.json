@@ -99,7 +99,10 @@
       "!src/index.tsx",
       "!src/**/*.d.ts",
       "!src/**/*Styles.ts"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": 30
+    }
   },
   "overrides": {
     "@types/react": "17.0.44"

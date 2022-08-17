@@ -1,4 +1,4 @@
-import { bufferToHex, hexToBin, sha256, strToChunks } from '../../../utils/crypto/crypto';
+import { binToHex, bufferToHex, hexToBin, sha256, strToChunks } from '../../../utils/crypto/crypto';
 import enWordList from '../wordlists/english';
 
 export const wordCountList = [12, 15, 18, 21, 24] as const;
@@ -44,3 +44,18 @@ export const getIndex = (bin: string) => parseInt(bin, 2);
  * @param {string} bin Binary value.
  */
 export const getWord = (bin: string) => enWordList[parseInt(bin, 2)];
+
+/**
+ * Extracts entropy from mnemonic phrase words.
+ *
+ * @param words Mnemonic phrase words.
+ */
+export const extractEntropy = (words: string[]) => {
+    const indexList: number[] = words.map((item) => enWordList.indexOf(item)).filter((item) => item !== -1);
+    const rawBinList = indexList.map((item) => item.toString(2).padStart(11, '0'));
+    const binEntropyStr = rawBinList.join('').slice(0, 256);
+    const binEntropy = binEntropyStr.slice(0, Math.trunc(binEntropyStr.length / 8) * 8);
+    const hexEntropy = binToHex(binEntropy);
+
+    return { binEntropy, hexEntropy, rawBinList };
+};

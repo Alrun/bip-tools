@@ -68,6 +68,7 @@ const AddressListTableSkeleton = ({ xlUp, showBalances }: Pick<AddressListTableP
                                 variant="smRegular"
                                 sx={{
                                     mr: 1,
+                                    whiteSpace: 'nowrap',
                                     color: (theme) =>
                                         theme.palette.mode === 'dark'
                                             ? theme.palette.secondary.dark
@@ -81,6 +82,7 @@ const AddressListTableSkeleton = ({ xlUp, showBalances }: Pick<AddressListTableP
                             <Typography
                                 sx={{
                                     mr: 1,
+                                    whiteSpace: 'nowrap',
                                     color: (theme) =>
                                         theme.palette.mode === 'dark'
                                             ? theme.palette.secondary.dark

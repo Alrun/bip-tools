@@ -1,4 +1,4 @@
-import { getIndex, getMnemonicList, getWord } from './mnemonic';
+import { extractEntropy, getIndex, getMnemonicList, getWord } from './mnemonic';
 
 describe('BIP39 mnemonic', () => {
     describe('getMnemonicList', () => {
@@ -67,6 +67,48 @@ describe('BIP39 mnemonic', () => {
     describe('getWord', () => {
         it('should return word', () => {
             expect(getWord('00000100100')).toBe('afraid');
+        });
+    });
+
+    describe('extractEntropy', () => {
+        it('should extract entropy for 12 words', () => {
+            expect(extractEntropy([...Array(11).fill('zoo'), 'wrong'])).toEqual({
+                binEntropy: '1'.repeat(128),
+                hexEntropy: 'f'.repeat(32),
+                rawBinList: [...Array(11).fill('11111111111'), '11111110101']
+            });
+        });
+
+        it('should extract entropy for 15 words', () => {
+            expect(extractEntropy([...Array(14).fill('zoo'), 'wrist'])).toEqual({
+                binEntropy: '1'.repeat(160),
+                hexEntropy: 'f'.repeat(40),
+                rawBinList: [...Array(14).fill('11111111111'), '11111110011']
+            });
+        });
+
+        it('should extract entropy for 17 words', () => {
+            expect(extractEntropy([...Array(17).fill('zoo'), 'when'])).toEqual({
+                binEntropy: '1'.repeat(192),
+                hexEntropy: 'f'.repeat(48),
+                rawBinList: [...Array(17).fill('11111111111'), '11111010001']
+            });
+        });
+
+        it('should extract entropy for 21 words', () => {
+            expect(extractEntropy([...Array(20).fill('zoo'), 'veteran'])).toEqual({
+                binEntropy: '1'.repeat(224),
+                hexEntropy: 'f'.repeat(56),
+                rawBinList: [...Array(20).fill('11111111111'), '11110011001']
+            });
+        });
+
+        it('should extract entropy for 24 words', () => {
+            expect(extractEntropy([...Array(23).fill('zoo'), 'vote'])).toEqual({
+                binEntropy: '1'.repeat(256),
+                hexEntropy: 'f'.repeat(64),
+                rawBinList: [...Array(23).fill('11111111111'), '11110101111']
+            });
         });
     });
 });

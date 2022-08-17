@@ -38,7 +38,7 @@ describe('theme mode switch', () => {
 
         userEvent.hover(buttonAuto);
 
-        await waitFor(() => expect(screen.getByText(autoText)).toBeInTheDocument(), { timeout: 100 });
+        await waitFor(() => expect(screen.getByText(autoText)).toBeInTheDocument(), { timeout: 1000 });
 
         userEvent.unhover(buttonAuto);
 
@@ -49,7 +49,7 @@ describe('theme mode switch', () => {
 
         userEvent.hover(buttonDark);
 
-        await waitFor(() => expect(screen.getByText(darkText)).toBeInTheDocument(), { timeout: 100 });
+        await waitFor(() => expect(screen.getByText(darkText)).toBeInTheDocument(), { timeout: 1000 });
 
         userEvent.unhover(buttonDark);
 
@@ -60,7 +60,7 @@ describe('theme mode switch', () => {
 
         userEvent.hover(buttonLight);
 
-        await waitFor(() => expect(screen.getByText(lightText)).toBeInTheDocument(), { timeout: 100 });
+        await waitFor(() => expect(screen.getByText(lightText)).toBeInTheDocument(), { timeout: 1000 });
 
         userEvent.unhover(buttonLight);
 

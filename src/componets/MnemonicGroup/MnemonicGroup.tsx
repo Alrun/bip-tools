@@ -36,7 +36,11 @@ const MnemonicGroup = ({
             }}
         >
             {!(entropy && list.length) ? (
-                <Typography color="primary">Press generate button or enter your entropy value.</Typography>
+                <Typography
+                    sx={{ color: (theme) => (theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark') }}
+                >
+                    Press generate button or enter your entropy value.
+                </Typography>
             ) : (
                 <Grid container spacing={4}>
                     {wordList.map(({ id, wordBinary, wordIndex, wordString }) => (

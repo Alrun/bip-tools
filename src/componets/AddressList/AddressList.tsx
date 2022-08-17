@@ -3,6 +3,8 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '../../ui/Button/Button';
+import { ChevronDownIcon } from '../../ui/Icons/Icons';
+import Tooltip from '../../ui/Tooltip/Tooltip';
 import AddressListTable from '../AddressListTable/AddressListTable';
 import AddressListGrid from '../AddressListGrid/AddressListGrid';
 import { AddressListProps } from './AddressList.d';
@@ -35,9 +37,13 @@ const AddressList = ({ length, list, onShowMore, showBalances }: AddressListProp
                 <AddressListGrid isLoaded={isLoaded} length={length} list={list} showBalances={showBalances} />
             )}
             {list.length && (
-                <Box sx={{ textAlign: 'center', mt: 4 }} onClick={onShowMore}>
-                    <Button variant="text">Show next 20</Button>
-                </Box>
+                <Tooltip title="Show more">
+                    <Box sx={{ textAlign: 'center', mt: 4 }} onClick={onShowMore}>
+                        <Button variant="text" size="small" sx={{ px: '2rem !important' }}>
+                            <ChevronDownIcon />
+                        </Button>
+                    </Box>
+                </Tooltip>
             )}
         </>
     ) : null;
