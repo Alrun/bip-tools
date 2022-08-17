@@ -66,7 +66,6 @@ export const StyledEditableContent = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledFormControl = styled(FormControl)(({ theme }) => ({
-    // marginBottom: 20,
     '&:hover': {
         '& fieldset': {
             borderColor: theme.palette.text.primary

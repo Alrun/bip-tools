@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { binToHex, filterStr, getRandomHex, hexToBin } from '../../utils/crypto/crypto';
 import { wordCountList } from '../../libs/bip39/mnemonic/mnemonic';
-import { isEntropyValidLength } from '../../libs/bip39/validateEntropy/validateEntropy';
+import { isEntropyValidLength } from '../../libs/bip39/validate/validate';
 import Input from '../../ui/Input/Input';
 import Button from '../../ui/Button/Button';
 import Typography from '../../ui/Typography/Typography';

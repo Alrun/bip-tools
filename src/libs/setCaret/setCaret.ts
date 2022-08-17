@@ -1,9 +1,10 @@
 /**
  * Replaces the caret.
- * @param target
- * @param selection
- * @param offset
- * @param root
+ *
+ * @param {string} target Target element ID.
+ * @param {Selection} selection A Selection object represents the range of text selected by the user or the current position of the caret.
+ * @param {number} offset Range offset.
+ * @param {HTMLDivElement} root Root HTML element.
  */
 export const replaceCaret = (target: string, selection: Selection, offset: number, root: HTMLDivElement) => {
     const range = document.createRange();
@@ -46,12 +47,13 @@ export const replaceCaret = (target: string, selection: Selection, offset: numbe
 
 /**
  * Sets the caret.
- * @param target
- * @param siblingNext
- * @param anchorNode
- * @param anchorOffset
- * @param selection
- * @param root
+ *
+ * @param {HTMLElement} target Target HTML element.
+ * @param {Element | null} siblingNext Next sibling element.
+ * @param {Node} anchorNode The Node in which the selection begins.
+ * @param {number} anchorOffset The offset of the selection's anchor within the anchorNode.
+ * @param {Selection} selection A Selection object represents the range of text selected by the user or the current position of the caret.
+ * @param {HTMLDivElement} root Root HTML element.
  */
 export const setCaret = (
     target: HTMLElement,
