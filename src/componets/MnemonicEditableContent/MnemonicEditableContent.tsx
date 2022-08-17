@@ -90,7 +90,7 @@ const MnemonicEditableContent = ({ words, onChange }: MnemonicEditableContentPro
         const inputText = (e.target as HTMLElement).innerText;
 
         if (inputText) {
-            const arr: string[] = inputText.split(/\r?\n/);
+            const arr: string[] = inputText.split(/\r?\n/).filter((el) => el);
             const { hexEntropy } = extractEntropy(arr);
             const errorMessage = checkPhrase(arr);
 
