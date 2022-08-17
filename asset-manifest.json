@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/bip-tools/static/js/main.98d8254a.js",
-    "static/js/609.1c1b6413.chunk.js": "/bip-tools/static/js/609.1c1b6413.chunk.js",
+    "main.js": "/bip-tools/static/js/main.e60a2ffa.js",
+    "static/js/609.7985d007.chunk.js": "/bip-tools/static/js/609.7985d007.chunk.js",
     "static/js/893.599d1d9c.chunk.js": "/bip-tools/static/js/893.599d1d9c.chunk.js",
     "static/media/bitcoin.svg": "/bip-tools/static/media/bitcoin.6ddf3a733104c9e9fe2e1d89e452cca5.svg",
     "index.html": "/bip-tools/index.html",
     "static/media/logo-dark.svg": "/bip-tools/static/media/logo-dark.3c833edb7fc63bff8542e252313a0ed3.svg",
     "static/media/logo-light.svg": "/bip-tools/static/media/logo-light.b553ad3562feeaa3d3130d6da3a29aaf.svg",
     "static/media/ethereum.svg": "/bip-tools/static/media/ethereum.159b4a026c22f99c2a78af6a8287ddf2.svg",
-    "main.98d8254a.js.map": "/bip-tools/static/js/main.98d8254a.js.map",
-    "609.1c1b6413.chunk.js.map": "/bip-tools/static/js/609.1c1b6413.chunk.js.map",
+    "main.e60a2ffa.js.map": "/bip-tools/static/js/main.e60a2ffa.js.map",
+    "609.7985d007.chunk.js.map": "/bip-tools/static/js/609.7985d007.chunk.js.map",
     "893.599d1d9c.chunk.js.map": "/bip-tools/static/js/893.599d1d9c.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.98d8254a.js"
+    "static/js/main.e60a2ffa.js"
   ]
 }
